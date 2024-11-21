@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:next_crib/screens/logIn/ui/logIn.dart';
 
 
 class SliderPage extends StatefulWidget {
@@ -24,81 +25,6 @@ class _SliderPageState extends State<SliderPage> {
       ),
        body: Column(
          children:[
-                         // Expanded(
-                         //   child: CarouselSlider(items: [
-                         //     Container(
-                         //           decoration:  BoxDecoration(
-                         //             image: DecorationImage(image: AssetImage("images/slider_hammer.jpg"),),
-                         //           ),
-                         //          // child: Align(
-                         //          //   alignment: Alignment.bottomLeft,
-                         //          //   child: Padding(
-                         //          //     padding: const EdgeInsets.only(left: 20.0, top: 570),
-                         //          //  child: Column(
-                         //          //      children: [
-                         //          //        Text("Connect With", style: TextStyle(color: Colors.white, fontSize: 28.0),),
-                         //          //        Text("Service Providers", style: TextStyle(color: Colors.white, fontSize: 28.0),),
-                         //          //        Text("Find, Hire and Connect with Service Providers near you....", style: TextStyle(color: Colors.white, fontSize: 10.0),),
-                         //          //      ],
-                         //          //      ),
-                         //          //   ),
-                         //          // ),
-                         //           ),
-                         //
-                         //
-                         //      Container(
-                         //         decoration:  BoxDecoration(
-                         //           image: DecorationImage(image: AssetImage("images/slider_house.jpg"),),
-                         //         ),
-                         //        // child: Align(
-                         //        //   alignment: Alignment.bottomLeft,
-                         //        //   child: Padding(
-                         //        //     padding: const EdgeInsets.only(left: 20.0, top: 570),
-                         //        //     child: Column(
-                         //        //    children: [
-                         //        //    Text("Let Your Voice", style: TextStyle(color: Colors.white, fontSize: 28.0),),
-                         //        //    Text("Here even a Mason has a voice. Scale up and", style: TextStyle(color: Colors.white, fontSize: 10.0),),
-                         //        //    Text("become that next big thing to happen", style: TextStyle(color: Colors.white, fontSize: 10.0),)
-                         //        //    ],
-                         //        //   ),
-                         //        //    ),
-                         //        // ),
-                         //       ),
-                         //
-                         //
-                         //      Container(
-                         //         decoration:  BoxDecoration(
-                         //           image: DecorationImage(image: AssetImage("images/slider_people.jpg"),),
-                         //         ),
-                         //        // child: Align(
-                         //        //   alignment: Alignment.bottomLeft,
-                         //        //   child:  Padding(
-                         //        //     padding: const EdgeInsets.only(left: 20.0, top: 570),
-                         //        //      child: Column(
-                         //        //   children: [
-                         //        //   Text("Increase Your", style: TextStyle(color: Colors.white, fontSize: 28.0),),
-                         //        //   Text("Revenue", style: TextStyle(color: Colors.white, fontSize: 28.0),),
-                         //        //   Text("We empower the well-trained Artisan and handymen by providing ", style: TextStyle(color: Colors.white, fontSize: 10.0),),
-                         //        //   Text("them with an increased revenue and a larger pool of clients", style: TextStyle(color: Colors.white, fontSize: 10.0),)
-                         //        //    ],
-                         //        //    ),
-                         //        //     ),
-                         //        // ),
-                         //       ),
-                         //   ],
-                         //       // slider container properties
-                         //       options: CarouselOptions(
-                         //         height: MediaQuery.sizeOf(context).height,
-                         //
-                         //         autoPlay: true,
-                         //         aspectRatio: 16/9,
-                         //         autoPlayCurve: Curves.fastOutSlowIn,
-                         //         enableInfiniteScroll: true,
-                         //         viewportFraction: 1,
-                         //           autoPlayAnimationDuration: Duration(milliseconds: 800),
-                         //       ),
-                         //   ),
-                         // ),
 
            Align(
                alignment: Alignment.bottomCenter ,
@@ -111,7 +37,9 @@ class _SliderPageState extends State<SliderPage> {
                    alignment: Alignment.bottomRight,
                        child: InkWell(
                          onTap: (){
-
+                       Navigator.push(context, MaterialPageRoute(builder: (context){
+                         return LogInPage();
+                       }));
                          },
                          child: Container(
                            height: 50.0,
