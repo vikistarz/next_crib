@@ -482,7 +482,7 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                     child: TextFormField(
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter password';
+                          return 'Enter password';
                         }
                         if (value.length < 6) {
                           return 'must be at least 6 characters long';
@@ -596,7 +596,7 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                             //  makePostRequest();
                           }
                               : null, // Disable button if form is invalid() {
-                            child: Text("Sign Up Agent", style: TextStyle(fontSize: 15.0),),
+                            child: Text("Sign Up Customer", style: TextStyle(fontSize: 15.0),),
                             style: ElevatedButton.styleFrom(
                               foregroundColor: Colors.white, backgroundColor: HexColor("#00B578"), padding: EdgeInsets.all(10.0),
                               minimumSize: Size(MediaQuery.of(context).size.width, 50.0),

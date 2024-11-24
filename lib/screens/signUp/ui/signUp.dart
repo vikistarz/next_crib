@@ -48,9 +48,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: Text("Hello Newbie! Welcome", style: TextStyle(color: HexColor("#00B578"), fontSize: 28.0, fontWeight: FontWeight.bold),),
               ),
 
-              Padding(
-                  padding: const EdgeInsets.only(top: 00.0),
-                  child: Text("to Next Crib", style: TextStyle(color: HexColor("#00B578"), fontSize: 28.0, fontWeight: FontWeight.bold),)),
+              // Padding(
+              //     padding: const EdgeInsets.only(top: 00.0),
+              //     child: Text("to Next Crib", style: TextStyle(color: HexColor("#00B578"), fontSize: 28.0, fontWeight: FontWeight.bold),)),
 
 
               Padding(

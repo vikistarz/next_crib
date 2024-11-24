@@ -26,7 +26,7 @@ class _LogInPageState extends State<LogInPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: HexColor("#212529"),
+          backgroundColor: Colors.white,
           toolbarHeight: 5.0,
         ),
         backgroundColor: Colors.white,
@@ -50,9 +50,9 @@ class _LogInPageState extends State<LogInPage> {
                 child: Text("Welcome Back", style: TextStyle(color: HexColor("#00B578"), fontSize: 30.0, fontWeight: FontWeight.bold),),
               ),
 
-              Padding(
-                  padding: const EdgeInsets.only(top: 00.0),
-                  child: Text("to Next Crib", style: TextStyle(color: HexColor("#00B578"), fontSize: 30.0, fontWeight: FontWeight.bold),)),
+              // Padding(
+              //     padding: const EdgeInsets.only(top: 00.0),
+              //     child: Text("to Next Crib", style: TextStyle(color: HexColor("#00B578"), fontSize: 30.0, fontWeight: FontWeight.bold),)),
 
 
               Padding(
@@ -64,7 +64,9 @@ class _LogInPageState extends State<LogInPage> {
                 padding: const EdgeInsets.only(top: 30.0),
                 child: Row(
                       children: [
-                        Expanded(child: SizedBox()),
+                        Expanded(
+                            flex: 1,
+                            child: SizedBox()),
 
                         Stack(
                           children: [
@@ -154,7 +156,9 @@ class _LogInPageState extends State<LogInPage> {
                         ),
 
 
-                        Expanded(child: SizedBox()),
+                        Expanded(
+                            flex: 1,
+                            child: SizedBox()),
                       ],
                     ),
                 ),

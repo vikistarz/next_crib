@@ -482,7 +482,7 @@ class _SignUpAgentPageState extends State<SignUpAgentPage> {
                         child: TextFormField(
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter password';
+                              return 'Enter password';
                             }
                             if (value.length < 6) {
                               return 'must be at least 6 characters long';
