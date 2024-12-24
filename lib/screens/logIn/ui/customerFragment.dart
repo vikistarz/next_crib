@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-
-import '../../signUp/ui/signUp.dart';
-import 'logIn.dart';
+import '../../signUp/signUp.dart';
 
 class CustomerFragment extends StatefulWidget {
   const CustomerFragment({super.key});

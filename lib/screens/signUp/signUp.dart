@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:next_crib/screens/signUp/ui/signUpAgent.dart';
-import 'package:next_crib/screens/signUp/ui/signUpCustomer.dart';
+import 'package:next_crib/screens/signUp/signUpAgent/ui/signUpAgent.dart';
+import 'package:next_crib/screens/signUp/signUpCustomer/ui/signUpCustomer.dart';
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
 
