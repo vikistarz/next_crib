@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import '../../../logIn/ui/logIn.dart';
 
-import '../../logIn/ui/logIn.dart';
 
 class SignUpCustomerPage extends StatefulWidget {
   const SignUpCustomerPage({super.key});

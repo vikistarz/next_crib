@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:next_crib/screens/signUp/ui/signUp.dart';
+import '../../agentDashboard/AgentDashboard.dart';
+import '../../signUp/signUp.dart';
 
 class AgentFragment extends StatefulWidget {
   const AgentFragment({super.key});
@@ -189,7 +190,7 @@ class _AgentFragmentState extends State<AgentFragment> {
                   ),
                 ),
 
-                InkWell(
+               new GestureDetector(
                   onTap: () {
 
                   },
@@ -212,6 +213,9 @@ class _AgentFragmentState extends State<AgentFragment> {
                           // Action to be taken on button press
                           // loading();
                           //  makePostRequest();
+                          Navigator.push(context, MaterialPageRoute(builder: (context){
+                               return AgentDashboardPage();
+                          }));
                         }
                             : null, // Disable button if form is invalid() {
                           child: Text("Sign in", style: TextStyle(fontSize: 18.0),),
