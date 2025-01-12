@@ -4,19 +4,20 @@ import'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
-import 'package:next_crib/screens/agentDashboard/fragments/agentAccountFragment.dart';
-import 'package:next_crib/screens/agentDashboard/fragments/agentHomeFragment.dart';
-import 'package:next_crib/screens/agentDashboard/fragments/agentMessageFragment.dart';
-import 'package:next_crib/screens/agentDashboard/fragments/agentWishlistFragment.dart';
+import 'fragments/CustomerAccountFragment.dart';
+import 'fragments/customerHome/CustomerHomeFragment.dart';
+import 'fragments/CustomerMessageFragment.dart';
+import 'fragments/CustomerWishlistFragment.dart';
 
-class AgentDashboardPage extends StatefulWidget {
-  const AgentDashboardPage({super.key});
+
+class CustomerDashboardPage extends StatefulWidget {
+  const CustomerDashboardPage({super.key});
 
   @override
-  State<AgentDashboardPage> createState() => _AgentDashboardPageState();
+  State<CustomerDashboardPage> createState() => _CustomerDashboardPageState();
 }
 
-class _AgentDashboardPageState extends State<AgentDashboardPage> {
+class _CustomerDashboardPageState extends State<CustomerDashboardPage> {
 
   int pageIndex = 0;
   int? customerId ;
@@ -86,10 +87,10 @@ class _AgentDashboardPageState extends State<AgentDashboardPage> {
 
 
   final pages = [
-    const AgentHomeFragment(),
-    const AgentWishlistFragment(),
-    const AgentMessageFragment(),
-    const AgentAccountFragment(),
+    const CustomerHomeFragment(),
+    const CustomerWishlistFragment(),
+    const CustomerMessageFragment(),
+    const CustomerAccountFragment(),
   ];
 
   // open log out dialog

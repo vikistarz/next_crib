@@ -1,8 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import '../../agentDashboard/AgentDashboard.dart';
+import 'package:next_crib/screens/CustomerDashboard/CustomerDashboard.dart';
+import '../../dialogs/errorMessageDialog.dart';
+import '../../dialogs/successMessageDialog.dart';
 import '../../signUp/signUp.dart';
+import 'package:http/http.dart' as http;
+
+import '../../webService/apiConstant.dart';
 
 class AgentFragment extends StatefulWidget {
   const AgentFragment({super.key});
@@ -37,13 +44,13 @@ class _AgentFragmentState extends State<AgentFragment> {
   }
 
 
-  TextEditingController emailAddressPhoneController = TextEditingController();
+  TextEditingController emailAddressController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
 
   @override
   void dispose() {
-    emailAddressPhoneController.dispose();
+    emailAddressController.dispose();
     passwordController.dispose();
     super.dispose();
   }
@@ -59,6 +66,103 @@ class _AgentFragmentState extends State<AgentFragment> {
       isLoadingVisible = true;
     });
   }
+
+  Future<void> makePostRequest() async {
+    loading();
+    const String apiUrl = ApiConstant.logInApi;
+    try {
+      final response = await http.post(Uri.parse(apiUrl),
+        headers:<String, String>{
+          "Content-type": "application/json"
+        },
+        body: jsonEncode(<String, dynamic>{
+          "email": emailAddressController.text,
+          "password": passwordController.text
+        }),
+      );
+
+      print("request: " + response.toString());
+      print(response.statusCode);
+
+      if (response.statusCode == 200) {
+        isNotLoading();
+        print('Response Body: ${response.body}');
+        // successful post request, handle the response here
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        setState(() {
+          token = responseData['token'];
+          // customerId = responseData['customer']['id'];
+          showModalBottomSheet(
+              isDismissible: false,
+              enableDrag: false,
+              context: context,
+              builder: (context) {
+                return SuccessMessageDialog(
+                  content: "Login Successful",
+                  onButtonPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                      return const CustomerDashboardPage();
+                    }));
+                    // Add any additional action here
+                    // saveUserDetails();
+                  },
+                );
+              });
+        });
+      }
+
+      else{
+        isNotLoading();
+        print('Response Body: ${response.body}');
+        // if the server return an error response
+        final Map<String, dynamic> errorData = json.decode(response.body);
+        errorMessage = errorData['message'] ?? 'Unknown error occurred';
+
+        showModalBottomSheet(
+            isDismissible: false,
+            enableDrag: false,
+            context: context,
+            builder: (BuildContext context) {
+              return ErrorMessageDialog(
+                content: errorMessage,
+                onButtonPressed: () {
+                  Navigator.of(context).pop();
+                  // Add any additional action here
+                  isNotLoading();
+                },
+              );
+            });
+      }
+    }
+    catch (e) {
+      isNotLoading();
+      print('Response Body: $e');
+      setState(() {
+        showModalBottomSheet(
+            isDismissible: false,
+            enableDrag: false,
+            context: context,
+            builder: (BuildContext context) {
+              return ErrorMessageDialog(
+                content: "Sorry no internet Connection",
+                onButtonPressed: () {
+                  Navigator.of(context).pop();
+                  // Add any additional action here
+                  isNotLoading();
+                },
+              );
+            });
+      });
+    }
+  }
+
+  // void saveUserDetails() async {
+  //
+  //   SaveValues mySaveValues = SaveValues();
+  //
+  //   await mySaveValues.saveInt(AppPreferenceHelper.CUSTOMER_ID, customerId);
+  //
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +208,7 @@ class _AgentFragmentState extends State<AgentFragment> {
                               return null; // Return null if the input is valid
                             }
                           },
-                          controller: emailAddressPhoneController,
+                          controller: emailAddressController,
                           keyboardType:TextInputType.text,
                           decoration: InputDecoration(
                             filled: true, // Set this to true to enable the background color
@@ -211,11 +315,7 @@ class _AgentFragmentState extends State<AgentFragment> {
                         child: ElevatedButton(onPressed: _isButtonEnabled
                             ? () {
                           // Action to be taken on button press
-                          // loading();
-                          //  makePostRequest();
-                          Navigator.push(context, MaterialPageRoute(builder: (context){
-                               return AgentDashboardPage();
-                          }));
+                            makePostRequest();
                         }
                             : null, // Disable button if form is invalid() {
                           child: Text("Sign in", style: TextStyle(fontSize: 18.0),),
@@ -245,7 +345,7 @@ class _AgentFragmentState extends State<AgentFragment> {
                         width: MediaQuery.of(context).size.width,
                         margin: EdgeInsets.only(top: 20.0, left: 30.0, right: 30.0, bottom: 10.0),
                         decoration: BoxDecoration(
-                          color: HexColor("#A7A8DC"),
+                          color: Colors.greenAccent,
                           borderRadius: BorderRadius.all(Radius.circular(15.0)),
                         ),
                         child: Row(

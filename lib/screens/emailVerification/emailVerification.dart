@@ -39,7 +39,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
     });
   }
 
-  Future<void> makePostRequest(int value) async {
+  Future<void> makePostRequest() async {
     loading();
     const String apiUrl = ApiConstant.emailVerification;
     try {
@@ -48,7 +48,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
           "Content-type": "application/json"
         },
         body: jsonEncode(<String, dynamic>{
-          "emailVerificationCode": value,
+          "emailVerificationCode": otpString.toString(),
         }),
       );
 
@@ -182,74 +182,75 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                 child: Text("Enter the One Time Password sent to your email.",style: TextStyle(color:HexColor("#7E7E7E"), fontWeight: FontWeight.normal, fontSize:12.0,),),
               ),
 
-              // Padding(
-              //   padding: const EdgeInsets.all(16.0),
-              //   child: OtpTextField(
-              //     numberOfFields: 4,
-              //     // Set the number of OTP fields you want
-              //     fillColor: HexColor("#D9D9D9"),
-              //     filled: true,
-              //     // borderColor: HexColor("#D9D9D9"),
-              //     focusedBorderColor: HexColor("#D9D9D9"),
-              //     borderRadius: BorderRadius.all(Radius.circular(10)),
-              //     fieldHeight: 55.0,// Set the border color for the OTP field
-              //     fieldWidth: 55.0,
-              //     // obscureText: true,
-              //     showFieldAsBox: true, // If true, show the fields with a box
-              //     onCodeChanged: (code) {
-              //       setState(() {
-              //         otpString = code;
-              //       });
-              //     },
-              //     onSubmit: (code) {
-              //       setState(() {
-              //         otpString = code;
-              //       });
-              //       print("OTP Submitted: $code");
-              //     },
-              //   ),
-              // ),
-
               Padding(
-                padding: const EdgeInsets.only(top: 30.0, left: 16.0, right: 16.0),
-                child: TextFormField(
-                  // validator: (value) {
-                  //   final regex = RegExp(r'^[+-]?\d+(\.\d+)?$');
-                  //   if (value == null || value.isEmpty) {
-                  //     return 'Please enter phone Number';
-                  //   }
-                  //   if (value.length < 11) {
-                  //     return 'Please enter a valid Phone Number';
-                  //   }
-                  //   if (!regex.hasMatch(value)) {
-                  //     return 'Please enter a valid Phone Number';
-                  //   }
-                  //   else{
-                  //     return null; // Return null if the input is valid
-                  //   }
+                padding: const EdgeInsets.all(16.0),
+                child: OtpTextField(
+                  numberOfFields: 4,
+                  // Set the number of OTP fields you want
+                  fillColor: HexColor("#D9D9D9"),
+                  filled: true,
+                  // borderColor: HexColor("#D9D9D9"),
+                  focusedBorderColor: HexColor("#D9D9D9"),
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  fieldHeight: 55.0,// Set the border color for the OTP field
+                  fieldWidth: 55.0,
+                  // obscureText: true,
+                  showFieldAsBox: true, // If true, show the fields with a box
+                  // onCodeChanged: (code) {
+                  //   setState(() {
+                  //     // otpString = code;
+                  //   });
+                  //   // print("OTP Submitted: $code");
                   // },
-                  controller: controller,
-                  keyboardType:TextInputType.number,
-                  maxLength: 4,
-                  decoration: InputDecoration(
-                    hintText: "Mobile 2 (Optional)",
-                    hintStyle: TextStyle(color: HexColor("#C3BDBD"), fontSize: 14.0, fontWeight: FontWeight.normal),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: HexColor("#212529"), width: 1.0),
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: HexColor("#212529"), width: 1.0),
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    counterText: '',
-                  ),
-                  style: TextStyle(color: HexColor("#212529"), fontSize: 14.0, fontWeight: FontWeight.normal),
+                  onSubmit: (code) {
+                    setState(() {
+                      otpString = code;
+                    });
+                    print("OTP Submitted: $code");
+                  },
                 ),
               ),
+
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 30.0, left: 16.0, right: 16.0),
+              //   child: TextFormField(
+              //     // validator: (value) {
+              //     //   final regex = RegExp(r'^[+-]?\d+(\.\d+)?$');
+              //     //   if (value == null || value.isEmpty) {
+              //     //     return 'Please enter phone Number';
+              //     //   }
+              //     //   if (value.length < 11) {
+              //     //     return 'Please enter a valid Phone Number';
+              //     //   }
+              //     //   if (!regex.hasMatch(value)) {
+              //     //     return 'Please enter a valid Phone Number';
+              //     //   }
+              //     //   else{
+              //     //     return null; // Return null if the input is valid
+              //     //   }
+              //     // },
+              //     controller: controller,
+              //     keyboardType:TextInputType.number,
+              //     maxLength: 4,
+              //     decoration: InputDecoration(
+              //       hintText: "Mobile 2 (Optional)",
+              //       hintStyle: TextStyle(color: HexColor("#C3BDBD"), fontSize: 14.0, fontWeight: FontWeight.normal),
+              //       border: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(5.0),
+              //       ),
+              //       enabledBorder: OutlineInputBorder(
+              //         borderSide: BorderSide(color: HexColor("#212529"), width: 1.0),
+              //         borderRadius: BorderRadius.circular(5.0),
+              //       ),
+              //       focusedBorder: OutlineInputBorder(
+              //         borderSide: BorderSide(color: HexColor("#212529"), width: 1.0),
+              //         borderRadius: BorderRadius.circular(5.0),
+              //       ),
+              //       counterText: '',
+              //     ),
+              //     style: TextStyle(color: HexColor("#212529"), fontSize: 14.0, fontWeight: FontWeight.normal),
+              //   ),
+              // ),
 
 
               SizedBox(
@@ -264,18 +265,8 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                         child: ElevatedButton(onPressed:() {
                           // Action to be taken on button press
                           // loading();
-                          // Retrieve the value from the TextInput and convert to int
-                          String inputText = controller.text;
-                          if (inputText.isNotEmpty) {
-                            try {
-                              int intValue = int.parse(inputText); // Convert string to int
-                              makePostRequest(intValue);  // Call the POST request function
-                            } catch (e) {
-                              print("Invalid number entered");
-                            }
-                          } else {
-                            print("Please enter a value");
-                          }
+                          makePostRequest();
+
                         },// Disable button if form is invalid() {
                           child: Text("Confirm", style: TextStyle(fontSize: 16.0),),
                           style: ElevatedButton.styleFrom(

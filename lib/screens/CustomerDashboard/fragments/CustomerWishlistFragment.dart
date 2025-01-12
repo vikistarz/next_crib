@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-class AgentWishlistFragment extends StatefulWidget {
-  const AgentWishlistFragment({super.key});
+class CustomerWishlistFragment extends StatefulWidget {
+  const CustomerWishlistFragment({super.key});
 
   @override
-  State<AgentWishlistFragment> createState() => _AgentWishlistFragmentState();
+  State<CustomerWishlistFragment> createState() => _CustomerWishlistFragmentState();
 }
 
-class _AgentWishlistFragmentState extends State<AgentWishlistFragment> {
+class _CustomerWishlistFragmentState extends State<CustomerWishlistFragment> {
 
   bool isAllVisible =  true;
   bool isTopVisible = true;

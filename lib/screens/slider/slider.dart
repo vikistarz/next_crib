@@ -3,10 +3,11 @@ import 'package:flutter/cupertino.dart';
 import'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:next_crib/screens/agentDashboard/AgentDashboard.dart';
-import 'package:next_crib/screens/emailVerification/emailVerification.dart';
 import 'package:next_crib/screens/logIn/ui/logIn.dart';
+import 'package:next_crib/screens/propertyDetail/ui/propertydetail.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+
+import '../CustomerDashboard/CustomerDashboard.dart';
 
 
 
@@ -44,7 +45,7 @@ class _SliderPageState extends State<SliderPage> {
     return Scaffold(
       backgroundColor:Colors.white,
       appBar: AppBar(
-        toolbarHeight: 10.0,
+        toolbarHeight: 7.0,
         backgroundColor: HexColor("#212529"),
       ),
        body: Stack(
@@ -127,8 +128,9 @@ class _SliderPageState extends State<SliderPage> {
                        child: ElevatedButton(onPressed: () {
 
                          Navigator.push(context, MaterialPageRoute(builder: (context){
-                             return LogInPage();
-                           // return AgentDashboardPage();
+                             // return LogInPage();
+                           return const CustomerDashboardPage();
+                           // return PropertyDetailPage();
                            // return EmailVerificationPage();
                          }));
                        },
