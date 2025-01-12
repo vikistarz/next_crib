@@ -340,7 +340,7 @@ class _CustomerFragmentState extends State<CustomerFragment> {
                          width: MediaQuery.of(context).size.width,
                          margin: EdgeInsets.only(top: 20.0, left: 30.0, right: 30.0, bottom: 10.0),
                          decoration: BoxDecoration(
-                         color: HexColor("#A7A8DC"),
+                           color: Colors.greenAccent,
                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
                          ),
                            child: Row(

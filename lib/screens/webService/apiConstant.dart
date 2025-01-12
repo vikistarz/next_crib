@@ -9,11 +9,9 @@ class ApiConstant {
 
   static const String emailVerification = baseUri + 'users/verify-email';
 
-  // static const String customerLogInApi = baseUri + 'auth/login/customer';
-  // static const String serviceProviderLogInApi = baseUri + 'auth/login/skill-provider';
- // static const String serviceProviderSignUpApi = baseUri + 'skill-providers/create';
-// static const String customerSignUpApi = baseUri + 'customers/create';
+  static const String logInApi = baseUri + 'users/login';
 
+  static const String getAllProperties = baseUri + 'properties';
 
 
 }

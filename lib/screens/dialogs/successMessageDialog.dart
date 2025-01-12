@@ -27,10 +27,10 @@ class SuccessMessageDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 50.0),
-              child: Image(image: AssetImage("images/success_icon.png"),width: 50.0, height: 50.0,),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 50.0),
+            //   child: Image(image: AssetImage("images/success_icon.png"),width: 50.0, height: 50.0,),
+            // ),
             Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: Text("Success", style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold, color: HexColor("#068F13")),

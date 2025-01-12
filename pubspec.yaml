@@ -55,6 +55,8 @@ dev_dependencies:
   intl: ^0.18.0
   smooth_page_indicator: ^1.0.0
   google_maps_flutter: ^2.3.2
+  geolocator: ^10.0.1
+  permission_handler: ^11.0.1
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -90,6 +92,9 @@ flutter:
     - images/naira_logo.png
     - images/map_image.png
     - images/wishlist.png
+    - images/new_house.png
+    - images/dimension.png
+    - images/time_lapse.png
 
 
 
