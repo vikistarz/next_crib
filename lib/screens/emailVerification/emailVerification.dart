@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -105,6 +106,8 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
             });
       }
     }
+
+
     catch (e) {
       isNotLoading();
       print('Response Body: $e');
@@ -138,7 +141,13 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PopScope(
+        canPop: false,
+        onPopInvoked: (didPop) async{
+      SystemNavigator.pop();
+    },
+    child:
+     Scaffold(
         backgroundColor: HexColor("#EEEEEE"),
          appBar: AppBar(
          toolbarHeight: 0.0,
@@ -147,13 +156,13 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
         onTap: (){
       Navigator.pop(context);
     },
-    child: Container(
-    margin: EdgeInsets.only(left: 20.0),
-    width: 16.0,
-    height: 18.0,
-    child: Icon(Icons.arrow_back_ios,color: Colors.black),
-    ),
-    ),
+        child: Container(
+        margin: EdgeInsets.only(left: 20.0),
+        width: 16.0,
+          height: 18.0,
+         child: Icon(Icons.arrow_back_ios,color: Colors.black),
+       ),
+     ),
         ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -281,6 +290,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
           ),
         ),
       ),
+     ),
     );
   }
 }

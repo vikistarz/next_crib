@@ -231,7 +231,7 @@ class _CustomerHomeFragmentState extends State<CustomerHomeFragment> {
                           Padding(
                             padding: const EdgeInsets.only(
                                 top: 10.0, left: 16.0),
-                            child: Text("Location", style: TextStyle(
+                            child: Text(longitude == null ? "Location" : "$longitude", style: TextStyle(
                               color: HexColor("#838383"),
                               fontWeight: FontWeight.normal,
                               fontSize: 14.0,),),
