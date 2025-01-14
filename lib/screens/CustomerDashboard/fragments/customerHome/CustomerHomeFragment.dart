@@ -79,62 +79,6 @@ class _CustomerHomeFragmentState extends State<CustomerHomeFragment> {
     }
   }
 
-  void viewAll(){
-    isViewAllVisible = false;
-  }
-
-  void flipCard() {
-    isFlipCardVisible = false;
-    isNearYouVisible = true;
-    isMostRecentVisible = true;
-    isViewAllVisible = true;
-  }
-
-  void nearYou(){
-    isNearYouVisible = false;
-    isViewAllVisible = true;
-    isMostRecentVisible = true;
-    isFlipCardVisible = true;
-  }
-
-  void mostRecent(){
-    isMostRecentVisible = false;
-    isViewAllVisible = true;
-    isFlipCardVisible = true;
-    isNearYouVisible = true;
-  }
-
-
-  void top() {
-    isTopVisible = false;
-    isAllVisible = false;
-    isNearVisible = true;
-    isMostVisible = true;
-  }
-
-  void near() {
-    isNearVisible = false;
-    isTopVisible = true;
-    isAllVisible = false;
-    isMostVisible = true;
-  }
-
-  void all() {
-    isTopVisible = true;
-    isAllVisible = true;
-    isNearVisible = true;
-    isMostVisible = true;
-  }
-
-  void most() {
-    isMostVisible = false;
-    isTopVisible = true;
-    isAllVisible = false;
-    isNearVisible = true;
-  }
-
-
-
   Future<List<AllPropertiesResponseModel>> fetchAllProperties() async {
     const String apiUrl = ApiConstant.getAllProperties;
     final response = await http.get(
@@ -161,7 +105,8 @@ class _CustomerHomeFragmentState extends State<CustomerHomeFragment> {
   }
 
   Future<List<AllPropertiesResponseModel>> fetchNearByProperties(double lat, double long) async {
-    final String apiUrl = ApiConstant.baseUri + 'properties/properties-within/2/center/$lat,$long/unit/km';
+    final String apiUrl = ApiConstant.baseUri + 'properties/properties-within/10/center/$lat,$long/unit/km';
+    print(apiUrl);
     final response = await http.get(
         Uri.parse(apiUrl));
 
@@ -198,6 +143,66 @@ class _CustomerHomeFragmentState extends State<CustomerHomeFragment> {
       // items.add("Item ${items.length + 1}");
     });
   }
+
+
+  void top() {
+    isTopVisible = false;
+    isAllVisible = false;
+    isNearVisible = true;
+    isMostVisible = true;
+  }
+
+  void near() {
+    isNearVisible = false;
+    isTopVisible = true;
+    isAllVisible = false;
+    isMostVisible = true;
+  }
+
+  void all() {
+    isTopVisible = true;
+    isAllVisible = true;
+    isNearVisible = true;
+    isMostVisible = true;
+  }
+
+  void most() {
+    isMostVisible = false;
+    isTopVisible = true;
+    isAllVisible = false;
+    isNearVisible = true;
+  }
+
+
+
+  void viewAll(){
+    isViewAllVisible = true;
+    isNearYouVisible = true;
+    isMostRecentVisible = true;
+    isFlipCardVisible = true;
+  }
+
+  void flipCard() {
+    isFlipCardVisible = false;
+    isNearYouVisible = true;
+    isMostRecentVisible = true;
+    isViewAllVisible = true;
+  }
+
+  void nearYou(){
+    isNearYouVisible = false;
+    isViewAllVisible = true;
+    isMostRecentVisible = true;
+    isFlipCardVisible = true;
+  }
+
+  void mostRecent(){
+    isMostRecentVisible = false;
+    isViewAllVisible = true;
+    isFlipCardVisible = true;
+    isNearYouVisible = true;
+  }
+
 
 
   @override
@@ -625,7 +630,6 @@ class _CustomerHomeFragmentState extends State<CustomerHomeFragment> {
                                           margin: EdgeInsets.only(left: 7.5, right: 7.5, top: 10.0),
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(10.0),
-                                            // image: DecorationImage(image: NetworkImage(property.propertyImages.first),fit: BoxFit.fitWidth)
                                           ),
                                           child: property.propertyImages
                                               .isNotEmpty

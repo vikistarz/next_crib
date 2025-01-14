@@ -130,6 +130,14 @@ class _CustomerDashboardPageState extends State<CustomerDashboardPage> {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(topLeft: Radius.circular(5.0), topRight: Radius.circular(5.0)),
+              boxShadow: [
+                BoxShadow(
+                  color: HexColor("#C3BDBD"),
+                  blurRadius: 0.5,
+                  spreadRadius: 0.4,
+                  offset: Offset(1,1),
+                ),
+              ]
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

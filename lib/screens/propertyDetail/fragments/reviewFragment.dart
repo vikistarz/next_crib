@@ -457,19 +457,19 @@ class _ReviewFragmentState extends State<ReviewFragment> {
 
             Padding(
               padding: const EdgeInsets.only(top:5.0),
-              child: Text("Product reviews are managed by a third party to verify authenticity", style: TextStyle(color: HexColor("#838383"), fontSize: 11.0),),
+              child: Text("Product reviews are managed by a third party to verify and compliance with our Ratings & Reviews Guidelines.", style: TextStyle(color: HexColor("#838383"), fontSize: 11.0),),
             ),
 
             Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top:0.0),
-                  child: Text("and compliance with our", style: TextStyle(color: HexColor("#838383"), fontSize: 11.0),),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(top:0.0),
+                //   child: Text("and compliance with our", style: TextStyle(color: HexColor("#838383"), fontSize: 11.0),),
+                // ),
 
                 Padding(
-                  padding: const EdgeInsets.only(left:3.0),
-                  child: Text("Ratings & Reviews Guidelines", style: TextStyle(color: HexColor("#42A5F5"), fontSize: 11.0),),
+                  padding: const EdgeInsets.only(left:0.0),
+                  child: Text("View Ratings & Reviews Guidelines", style: TextStyle(color: HexColor("#42A5F5"), fontSize: 11.0),),
                 ),
               ],
             ),
@@ -478,7 +478,7 @@ class _ReviewFragmentState extends State<ReviewFragment> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: 5.0, top: 10.0),
-                  child: Text("Leave a Review", style: TextStyle(color: Colors.black, fontSize: 22.0),),
+                  child: Text("Rate and Review", style: TextStyle(color: Colors.black, fontSize: 22.0),),
                 ),
 
                 Expanded(
