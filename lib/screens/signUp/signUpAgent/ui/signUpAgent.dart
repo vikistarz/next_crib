@@ -36,10 +36,11 @@ class _SignUpAgentPageState extends State<SignUpAgentPage> {
   String token = "";
   String errorMessage = "";
   int customerWalletId = 0;
+  File? _image;
 
   // Function to validate the form and update button state
   void _validateFormField() {
-    if (_formKey.currentState!.validate()) {
+    if (_formKey.currentState!.validate() == true  && _image!= null) {
       setState(() {
         _isButtonEnabled = true;
       });
@@ -63,7 +64,7 @@ class _SignUpAgentPageState extends State<SignUpAgentPage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController officeAddressController = TextEditingController();
-  TextEditingController referralCodeController = TextEditingController();
+
 
 
   @override
@@ -80,7 +81,6 @@ class _SignUpAgentPageState extends State<SignUpAgentPage> {
     passwordController.dispose();
     confirmPasswordController.dispose();
     officeAddressController.dispose();
-    referralCodeController.dispose();
 
     super.dispose();
   }
@@ -116,7 +116,6 @@ class _SignUpAgentPageState extends State<SignUpAgentPage> {
     });
   }
 
-  File? _image;
 
   // Function to pick an image
   Future<void> pickImage() async {
@@ -143,12 +142,11 @@ class _SignUpAgentPageState extends State<SignUpAgentPage> {
   // }
 
 
-  Future<void> makePostRequest() async {
+  Future<void> signUpAgent() async {
     loading();
 
     const String apiUrl = ApiConstant.agentSignUpApi;
     try{
-
       if(_image == null) return;
 
       final uri = Uri.parse(apiUrl);
@@ -202,8 +200,9 @@ class _SignUpAgentPageState extends State<SignUpAgentPage> {
                 return SuccessMessageDialog(
                   content: 'Agent Sign up Successful',
                   onButtonPressed: () {
+                    Navigator.pop(context);
                     Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return EmailVerificationPage();
+                      return const EmailVerificationPage();
                     }));
                     // Add any additional action here
                     // saveUserDetails();
@@ -288,9 +287,6 @@ class _SignUpAgentPageState extends State<SignUpAgentPage> {
         return 'octet-stream';
     }
   }
-
-
-
 
 
   @override
@@ -909,7 +905,7 @@ class _SignUpAgentPageState extends State<SignUpAgentPage> {
                           ? () {
                         // Action to be taken on button press
                         // loading();
-                         makePostRequest();
+                        signUpAgent();
                       }
                           : null, // Disable button if form is invalid() {
                         child: Text("Sign Up Agent", style: TextStyle(fontSize: 15.0),),
@@ -951,8 +947,8 @@ class _SignUpAgentPageState extends State<SignUpAgentPage> {
                             size: 20.0,
                           ),
 
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10.0),
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10.0),
                             child: Text("Loading",style: TextStyle(color: Colors.white, fontWeight: FontWeight.normal, fontSize:12.0,),),
                           ),
                         ],

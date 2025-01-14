@@ -45,7 +45,7 @@ class _SliderPageState extends State<SliderPage> {
     return Scaffold(
       backgroundColor:Colors.white,
       appBar: AppBar(
-        toolbarHeight: 7.0,
+        toolbarHeight: 0.0,
         backgroundColor: HexColor("#212529"),
       ),
        body: Stack(
@@ -128,10 +128,8 @@ class _SliderPageState extends State<SliderPage> {
                        child: ElevatedButton(onPressed: () {
 
                          Navigator.push(context, MaterialPageRoute(builder: (context){
-                             // return LogInPage();
-                           return const CustomerDashboardPage();
-                           // return PropertyDetailPage();
-                           // return EmailVerificationPage();
+                             return LogInPage();
+                           // return const CustomerDashboardPage();
                          }));
                        },
                          child: Text("Get Started", style: TextStyle(fontSize: 17.0),),

@@ -4,7 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import '../../CustomerDashboard/CustomerDashboard.dart';
 import '../../signUp/signUp.dart';
+import '../../dialogs/errorMessageDialog.dart';
+import '../../dialogs/successMessageDialog.dart';
+import 'package:http/http.dart' as http;
+
+import '../../webService/apiConstant.dart';
 
 class CustomerFragment extends StatefulWidget {
   const CustomerFragment({super.key});
@@ -20,6 +26,7 @@ class _CustomerFragmentState extends State<CustomerFragment> {
   bool isLoadingVisible = true;
   bool passwordVisible =  false;
   String token = "";
+  String role = "";
   String errorMessage = "";
   int customerId = 0;
 
@@ -39,13 +46,13 @@ class _CustomerFragmentState extends State<CustomerFragment> {
   }
 
 
-  TextEditingController emailAddressPhoneController = TextEditingController();
+  TextEditingController emailAddressController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
 
   @override
   void dispose() {
-    emailAddressPhoneController.dispose();
+    emailAddressController.dispose();
     passwordController.dispose();
     super.dispose();
   }
@@ -62,92 +69,117 @@ class _CustomerFragmentState extends State<CustomerFragment> {
     });
   }
 
-  // Future<void> makePostRequest() async {
-  //   loading();
-  //   final String apiUrl = ApiConstant.customerLogInApi;
-  //   try {
-  //     final response = await http.post(Uri.parse(apiUrl),
-  //       headers:<String, String>{
-  //         "Content-type": "application/json"
-  //       },
-  //       body: jsonEncode(<String, dynamic>{
-  //         "emailOrPhone": emailAddressPhoneController.text,
-  //         "password": passwordController.text,
-  //       }),
-  //     );
-  //
-  //     print("request: " + response.toString());
-  //     print(response.statusCode);
-  //
-  //     if (response.statusCode == 200 || response.statusCode == 201) {
-  //       isNotLoading();
-  //       print('Response Body: ${response.body}');
-  //       // successful post request, handle the response here
-  //       final Map<String, dynamic> responseData = jsonDecode(response.body);
-  //       setState(() {
-  //         token = responseData['token'];
-  //         customerId = responseData['customer']['id'];
-  //         showModalBottomSheet(
-  //             isDismissible: false,
-  //             enableDrag: false,
-  //             context: context,
-  //             builder: (context) {
-  //               return SuccessMessageDialog(
-  //                 content: "Customer Log in Successful",
-  //                 onButtonPressed: () {
-  //                   Navigator.push(context, MaterialPageRoute(builder: (context){
-  //                     return CustomerDashboardPage();
-  //                   }));
-  //                   // Add any additional action here
-  //                   saveUserDetails();
-  //                 },
-  //               );
-  //             });
-  //       });
-  //     }
-  //
-  //     else{
-  //       isNotLoading();
-  //       // if the server return an error response
-  //       final Map<String, dynamic> errorData = json.decode(response.body);
-  //       errorMessage = errorData['error'] ?? 'Unknown error occurred';
-  //
-  //       showModalBottomSheet(
-  //           isDismissible: false,
-  //           enableDrag: false,
-  //           context: context,
-  //           builder: (BuildContext context) {
-  //             return ErrorMessageDialog(
-  //               content: errorMessage,
-  //               onButtonPressed: () {
-  //                 Navigator.of(context).pop();
-  //                 // Add any additional action here
-  //                 isNotLoading();
-  //               },
-  //             );
-  //           });
-  //     }
-  //   }
-  //   catch (e) {
-  //     isNotLoading();
-  //     setState(() {
-  //       showModalBottomSheet(
-  //           isDismissible: false,
-  //           enableDrag: false,
-  //           context: context,
-  //           builder: (BuildContext context) {
-  //             return ErrorMessageDialog(
-  //               content: "Sorry no internet Connection",
-  //               onButtonPressed: () {
-  //                 Navigator.of(context).pop();
-  //                 // Add any additional action here
-  //                 isNotLoading();
-  //               },
-  //             );
-  //           });
-  //     });
-  //   }
-  // }
+  Future<void> makePostRequest() async {
+    loading();
+    const String apiUrl = ApiConstant.logInApi;
+    print(apiUrl);
+    try {
+      final response = await http.post(Uri.parse(apiUrl),
+        headers:<String, String>{
+          "Content-type": "application/json"
+        },
+        body: jsonEncode(<String, dynamic>{
+          "email": emailAddressController.text,
+          "password": passwordController.text
+        }),
+      );
+
+      print("request: " + response.toString());
+      print(response.statusCode);
+
+      if (response.statusCode == 200) {
+        isNotLoading();
+        print('Response Body: ${response.body}');
+        // successful post request, handle the response here
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        setState(() {
+          role = responseData['data']['user']['role'];
+          token = responseData['token'];
+
+          if(role == 'customer'){
+            showModalBottomSheet(
+                isDismissible: false,
+                enableDrag: false,
+                context: context,
+                builder: (context) {
+                  return SuccessMessageDialog(
+                    content: "Login Successful",
+                    onButtonPressed: () {
+                        Navigator.pop(context);
+                        Navigator.push(context, MaterialPageRoute(builder: (context){
+                          return const CustomerDashboardPage();
+                        }));
+                      // saveUserDetails();
+                    },
+                  );
+                });
+          }
+
+          else{
+            showModalBottomSheet(
+                isDismissible: false,
+                enableDrag: false,
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorMessageDialog(
+                    content: "User is not a Customer",
+                    onButtonPressed: () {
+                      Navigator.of(context).pop();
+                      // Add any additional action here
+                      isNotLoading();
+                    },
+                  );
+                });
+            }
+
+        });
+      }
+
+      else{
+        isNotLoading();
+        print('Response Body: ${response.body}');
+        // if the server return an error response
+        final Map<String, dynamic> errorData = json.decode(response.body);
+        errorMessage = errorData['message'] ?? 'Unknown error occurred';
+
+        showModalBottomSheet(
+            isDismissible: false,
+            enableDrag: false,
+            context: context,
+            builder: (BuildContext context) {
+              return ErrorMessageDialog(
+                content: errorMessage,
+                onButtonPressed: () {
+                  Navigator.of(context).pop();
+                  // Add any additional action here
+                  isNotLoading();
+                },
+              );
+            });
+      }
+    }
+    catch (e) {
+      isNotLoading();
+      print('Response Body: $e');
+      setState(() {
+        showModalBottomSheet(
+            isDismissible: false,
+            enableDrag: false,
+            context: context,
+            builder: (BuildContext context) {
+              return ErrorMessageDialog(
+                content: "Sorry no internet Connection",
+                onButtonPressed: () {
+                  Navigator.of(context).pop();
+                  // Add any additional action here
+                  isNotLoading();
+                },
+              );
+            });
+      });
+    }
+  }
+
   //
   // void saveUserDetails() async {
   //
@@ -202,8 +234,8 @@ class _CustomerFragmentState extends State<CustomerFragment> {
                        return null; // Return null if the input is valid
                      }
                           },
-                      controller: emailAddressPhoneController,
-                      keyboardType:TextInputType.text,
+                      controller: emailAddressController,
+                      keyboardType:TextInputType.emailAddress,
                       decoration: InputDecoration(
                         filled: true, // Set this to true to enable the background color
                         fillColor: Colors.white, // Set the desired background color
@@ -309,8 +341,7 @@ class _CustomerFragmentState extends State<CustomerFragment> {
                          child: ElevatedButton(onPressed: _isButtonEnabled
                                 ? () {
                            // Action to be taken on button press
-                           // loading();
-                           //  makePostRequest();
+                            makePostRequest();
                           }
                        : null, // Disable button if form is invalid() {
                            child: Text("Sign in", style: TextStyle(fontSize: 18.0),),

@@ -141,7 +141,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
     return Scaffold(
         backgroundColor: HexColor("#EEEEEE"),
          appBar: AppBar(
-         toolbarHeight: 40.0,
+         toolbarHeight: 0.0,
           backgroundColor: HexColor("#EEEEEE"),
         leading:  GestureDetector(
         onTap: (){
@@ -211,46 +211,6 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                 ),
               ),
 
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 30.0, left: 16.0, right: 16.0),
-              //   child: TextFormField(
-              //     // validator: (value) {
-              //     //   final regex = RegExp(r'^[+-]?\d+(\.\d+)?$');
-              //     //   if (value == null || value.isEmpty) {
-              //     //     return 'Please enter phone Number';
-              //     //   }
-              //     //   if (value.length < 11) {
-              //     //     return 'Please enter a valid Phone Number';
-              //     //   }
-              //     //   if (!regex.hasMatch(value)) {
-              //     //     return 'Please enter a valid Phone Number';
-              //     //   }
-              //     //   else{
-              //     //     return null; // Return null if the input is valid
-              //     //   }
-              //     // },
-              //     controller: controller,
-              //     keyboardType:TextInputType.number,
-              //     maxLength: 4,
-              //     decoration: InputDecoration(
-              //       hintText: "Mobile 2 (Optional)",
-              //       hintStyle: TextStyle(color: HexColor("#C3BDBD"), fontSize: 14.0, fontWeight: FontWeight.normal),
-              //       border: OutlineInputBorder(
-              //         borderRadius: BorderRadius.circular(5.0),
-              //       ),
-              //       enabledBorder: OutlineInputBorder(
-              //         borderSide: BorderSide(color: HexColor("#212529"), width: 1.0),
-              //         borderRadius: BorderRadius.circular(5.0),
-              //       ),
-              //       focusedBorder: OutlineInputBorder(
-              //         borderSide: BorderSide(color: HexColor("#212529"), width: 1.0),
-              //         borderRadius: BorderRadius.circular(5.0),
-              //       ),
-              //       counterText: '',
-              //     ),
-              //     style: TextStyle(color: HexColor("#212529"), fontSize: 14.0, fontWeight: FontWeight.normal),
-              //   ),
-              // ),
 
 
               SizedBox(
@@ -317,8 +277,6 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
                     ),
                   ],
                 ),
-
-              Text(otpCode.toString()),
             ],
           ),
         ),

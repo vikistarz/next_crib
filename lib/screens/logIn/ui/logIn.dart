@@ -27,7 +27,7 @@ class _LogInPageState extends State<LogInPage> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          toolbarHeight: 5.0,
+          toolbarHeight: 0.0,
         ),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
@@ -38,7 +38,7 @@ class _LogInPageState extends State<LogInPage> {
 
                  Container(
                     margin: EdgeInsets.only(left: 25.0, right: 25.0, top: 0.0),
-                    height: 200.0,
+                    height: 250.0,
                     decoration: BoxDecoration(
                       image: DecorationImage(image: AssetImage("images/login_logo.png",), fit: BoxFit.fitWidth),
                       borderRadius: BorderRadius.only(bottomRight: Radius.circular(50.0),),
@@ -46,14 +46,9 @@ class _LogInPageState extends State<LogInPage> {
                   ),
 
               Padding(
-                padding: const EdgeInsets.only(top: 50.0),
+                padding: const EdgeInsets.only(top: 30.0),
                 child: Text("Welcome Back", style: TextStyle(color: HexColor("#00B578"), fontSize: 30.0, fontWeight: FontWeight.bold),),
               ),
-
-              // Padding(
-              //     padding: const EdgeInsets.only(top: 00.0),
-              //     child: Text("to Next Crib", style: TextStyle(color: HexColor("#00B578"), fontSize: 30.0, fontWeight: FontWeight.bold),)),
-
 
               Padding(
                 padding: const EdgeInsets.only(top: 0.0),
@@ -61,7 +56,7 @@ class _LogInPageState extends State<LogInPage> {
               ),
 
               Padding(
-                padding: const EdgeInsets.only(top: 30.0),
+                padding: const EdgeInsets.only(top: 10.0),
                 child: Row(
                       children: [
                         Expanded(
@@ -119,7 +114,7 @@ class _LogInPageState extends State<LogInPage> {
 
                             Visibility(
                               visible: isAgentVisible,
-                              child: new GestureDetector(
+                              child: GestureDetector(
                                 onTap:() {
                                   setState(() {
                                      isAgentVisible = !isAgentVisible;
@@ -167,8 +162,9 @@ class _LogInPageState extends State<LogInPage> {
 
 
               SizedBox(
-                height: 30.0,
+                height: 10.0,
               ),
+
               Stack(
                 children: [
                   Visibility(

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:next_crib/screens/CustomerDashboard/CustomerDashboard.dart';
+import '../../agentDashboard/agentDashboard.dart';
 import '../../dialogs/errorMessageDialog.dart';
 import '../../dialogs/successMessageDialog.dart';
 import '../../signUp/signUp.dart';
@@ -25,6 +25,7 @@ class _AgentFragmentState extends State<AgentFragment> {
   bool isLoadingVisible = true;
   bool passwordVisible =  false;
   String token = "";
+  String role = "";
   String errorMessage = "";
   int customerId = 0;
 
@@ -70,6 +71,7 @@ class _AgentFragmentState extends State<AgentFragment> {
   Future<void> makePostRequest() async {
     loading();
     const String apiUrl = ApiConstant.logInApi;
+    print(apiUrl);
     try {
       final response = await http.post(Uri.parse(apiUrl),
         headers:<String, String>{
@@ -90,24 +92,45 @@ class _AgentFragmentState extends State<AgentFragment> {
         // successful post request, handle the response here
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         setState(() {
+          role = responseData['data']['user']['role'];
           token = responseData['token'];
-          // customerId = responseData['customer']['id'];
-          showModalBottomSheet(
-              isDismissible: false,
-              enableDrag: false,
-              context: context,
-              builder: (context) {
-                return SuccessMessageDialog(
-                  content: "Login Successful",
-                  onButtonPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return const CustomerDashboardPage();
-                    }));
-                    // Add any additional action here
-                    // saveUserDetails();
-                  },
-                );
-              });
+
+          if(role == 'agent'){
+            showModalBottomSheet(
+                isDismissible: false,
+                enableDrag: false,
+                context: context,
+                builder: (context) {
+                  return SuccessMessageDialog(
+                    content: "Login Successful",
+                    onButtonPressed: () {
+                      Navigator.pop(context);
+                      Navigator.push(context, MaterialPageRoute(builder: (context){
+                        return const AgentDashboardPage();
+                      }));
+                      // saveUserDetails();
+                    },
+                  );
+                });
+          }
+
+          else{
+            showModalBottomSheet(
+                isDismissible: false,
+                enableDrag: false,
+                context: context,
+                builder: (BuildContext context) {
+                  return ErrorMessageDialog(
+                    content: "User is not an Agent",
+                    onButtonPressed: () {
+                      Navigator.of(context).pop();
+                      // Add any additional action here
+                      isNotLoading();
+                    },
+                  );
+                });
+          }
+
         });
       }
 
@@ -209,7 +232,7 @@ class _AgentFragmentState extends State<AgentFragment> {
                             }
                           },
                           controller: emailAddressController,
-                          keyboardType:TextInputType.text,
+                          keyboardType:TextInputType.emailAddress,
                           decoration: InputDecoration(
                             filled: true, // Set this to true to enable the background color
                             fillColor: Colors.white, // Set the desired background color

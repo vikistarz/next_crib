@@ -36,6 +36,7 @@ class LocationService {
   static void _showLocationServiceDialog(BuildContext context) {
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (context) {
         return AlertDialog(
           title: Text('Enable Location Services'),

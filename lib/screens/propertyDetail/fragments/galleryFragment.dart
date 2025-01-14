@@ -41,6 +41,7 @@ class _GalleryFragmentState extends State<GalleryFragment> {
 
               Container(
                 height: 400.0,
+                width: MediaQuery.of(context).size.width,
                 child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2, // Number of columns
@@ -54,8 +55,8 @@ class _GalleryFragmentState extends State<GalleryFragment> {
                     return Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        image: DecorationImage(image: NetworkImage(widget.propertyImages[index]), fit: BoxFit.fitHeight),
-                        borderRadius: BorderRadius.circular(2.0),
+                        image: DecorationImage(image: NetworkImage(widget.propertyImages[index]), fit: BoxFit.fill),
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
                     );
                   },

@@ -25,7 +25,7 @@ class _SignUpPageState extends State<SignUpPage> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: HexColor("#212529"),
-          toolbarHeight: 5.0,
+          toolbarHeight: 0.0,
         ),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(

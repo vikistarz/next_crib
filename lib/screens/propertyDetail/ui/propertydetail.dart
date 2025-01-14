@@ -77,6 +77,10 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
 
     return Scaffold(
       backgroundColor: HexColor("#F9F9F9"),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        toolbarHeight: 0.0,
+      ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
@@ -99,7 +103,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                   child: Container(
                     height: 40.0,
                     width: 40.0,
-                    margin: EdgeInsets.only(left: 16.0, top: 50.0),
+                    margin: EdgeInsets.only(left: 16.0, top: 20.0),
                     decoration: BoxDecoration(
                       color: HexColor("#F5F5F5"),
                       borderRadius: BorderRadius.circular(20.0),
@@ -341,12 +345,12 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
               ),
             ),
 
-            SizedBox(
+            const SizedBox(
               height: 25.0,
             ),
 
             Container(
-              margin: EdgeInsets.only(right: 16.0, left: 16.0),
+              margin: const EdgeInsets.only(right: 16.0, left: 16.0),
               child: Stack(
                 children: [
                   Visibility(
