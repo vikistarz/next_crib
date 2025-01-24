@@ -48,6 +48,7 @@ dependencies:
   google_maps_flutter: ^2.3.2
   geolocator: ^10.0.1
   permission_handler: ^11.0.1
+  photo_view: ^0.14.0
 
 
 
@@ -102,6 +103,7 @@ flutter:
     - images/new_house.png
     - images/dimension.png
     - images/time_lapse.png
+    - images/cancel_x.png
 
 
 

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:next_crib/screens/signUp/signUpAgent/dialogs/countryDialog.dart';
 import '../../../dialogs/errorMessageDialog.dart';
 import '../../../dialogs/successMessageDialog.dart';
 import '../../../emailVerification/emailVerification.dart';
@@ -11,6 +12,7 @@ import '../../../webService/apiConstant.dart';
 import '../../signUpAgent/dialogs/cityDialog.dart';
 import 'package:http/http.dart' as http;
 import '../../signUpAgent/dialogs/stateOfResidenceDialog.dart';
+import '../../signUpAgent/models/userData.dart';
 
 
 class SignUpCustomerPage extends StatefulWidget {
@@ -337,46 +339,21 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                               style: TextStyle(color: HexColor("#212529"), fontSize: 14.0, fontWeight: FontWeight.normal),
                             ),
                           ),
-
                         ],
                       ),
                     ),
-
                   ],
                 ),
 
-                Padding(
+                 Padding(
                   padding: const EdgeInsets.only(top: 10.0, left: 30.0),
                   child: Text("Phone Number", style: TextStyle(color: HexColor("#5B5B5B"), fontSize: 12.0, fontWeight: FontWeight.bold),),
                 ),
-
-
 
                 Padding(
                   padding: const EdgeInsets.only(top: 5.0, left: 30.0, right: 30.0),
                   child: Stack(
                     children: [
-
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 0.0, left: 10.0),
-                            child: Image(image: AssetImage("images/nigerian_flag.png"), width: 30.0, height: 30.0,),
-                          ),
-
-                          Padding(
-                            padding: const EdgeInsets.only(top: 0.0, left: 1.0),
-                            child: Text("+234", style: TextStyle(color: HexColor("#00B578"), fontSize: 13.0, fontWeight: FontWeight.normal),),
-                          ),
-
-                          Container(
-                            margin: EdgeInsets.only(left: 2.0),
-                            height: 48.0,
-                            width: 1.0,
-                            color: HexColor("#A3A3A3"),
-                          ),
-                        ],
-                      ),
                       TextFormField(
                         validator: (value) {
                           final regex = RegExp(r'^[+-]?\d+(\.\d+)?$');
@@ -384,10 +361,10 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                             return 'Enter phone Number';
                           }
                           if (value.length < 11) {
-                            return 'Enter a valid Phone Number';
+                            return 'Enter Phone Number';
                           }
                           if (!regex.hasMatch(value)) {
-                            return 'Enter a valid Phone Number';
+                            return 'Enter Phone Number';
                           }
                           else{
                             return null; // Return null if the input is valid
@@ -397,7 +374,7 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                         keyboardType:TextInputType.phone,
                         maxLength: 11,
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 80.0),
+                          contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 100.0),
                           // hintText: "Mobile",
                           hintStyle: TextStyle(color: HexColor("#C3BDBD"), fontSize: 14.0, fontWeight: FontWeight.normal),
                           border: OutlineInputBorder(
@@ -415,9 +392,31 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                         ),
                         style: TextStyle(color: HexColor("#212529"), fontSize: 14.0, fontWeight: FontWeight.normal),
                       ),
+
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 0.0, left: 10.0, right: 10.0),
+                            // emailAddress == null ? "Email Address" : "$capitalisedEmail"
+                            child: GestureDetector(
+                                onTap: (){
+                                  _openCountryDialog();
+                                },
+                                child: Text(flag  == null ? "🇳🇬 +234" : '$flag + $countryCode', style: TextStyle(color: HexColor("#00B578"), fontSize: 13.0, fontWeight: FontWeight.normal),)),
+                          ),
+
+                          Container(
+                            margin: EdgeInsets.only(left: 2.0),
+                            height: 48.0,
+                            width: 1.0,
+                            color: HexColor("#A3A3A3"),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
+
 
                 Padding(
                   padding: const EdgeInsets.only(top: 10.0, left: 30.0),
@@ -844,6 +843,34 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
       });
     }
   }
+
+  String? countryCode;
+  String? flag;
+
+  Future<void> _openCountryDialog() async {
+    final result = await showModalBottomSheet<UserData>(
+    // final result = await showModalBottomSheet<String>(
+      context: context,
+      isScrollControlled: true, // Allows the bottom sheet to expand fully
+      builder: (BuildContext context) {
+        return const CountryDialog();
+      },
+    );
+
+    // Handle the result from the bottom sheet
+    if (result != null) {
+      setState(() {
+        countryCode = result.phoneCode;
+        flag = result.flag;
+      });
+    }
+    else {
+      setState(() {
+        // cityVisible = false;
+      });
+    }
+  }
+
 
   String? city;
 

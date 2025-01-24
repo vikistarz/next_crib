@@ -8,7 +8,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-import '../../CustomerDashboard/CustomerDashboard.dart';
+import '../../CustomerDashboard/ui/CustomerDashboard.dart';
 import '../../agentDashboard/agentDashboard.dart';
 import '../../dialogs/errorMessageDialog.dart';
 import '../../dialogs/successMessageDialog.dart';
@@ -313,8 +313,8 @@ class _LogInPageState extends State<LogInPage> {
                           if (value == null || value.isEmpty) {
                             return 'Please enter password';
                           }
-                          if (value.length < 6) {
-                            return 'must be at least 6 characters long';
+                          if (value.length < 8) {
+                            return 'must be at least 8 characters long';
                           }
                           // if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
                           //     return 'Please enter a valid email';

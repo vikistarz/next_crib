@@ -40,7 +40,7 @@ class LocationService {
       builder: (context) {
         return AlertDialog(
           title: Text('Enable Location Services'),
-          content: Text('Please enable location services to use this feature.'),
+          content: Text('Please enable location services to continue.'),
           actions: [
             TextButton(
               onPressed: () {

@@ -3,11 +3,9 @@ import 'package:flutter/cupertino.dart';
 import'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:next_crib/screens/logIn/ui/logIn.dart';
-import 'package:next_crib/screens/propertyDetail/ui/propertydetail.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
-import '../CustomerDashboard/CustomerDashboard.dart';
+import '../CustomerDashboard/ui/CustomerDashboard.dart';
+import '../logIn/ui/logIn.dart';
 
 
 
