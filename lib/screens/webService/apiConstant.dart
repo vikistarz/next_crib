@@ -3,6 +3,8 @@ class ApiConstant {
 
   static const String baseUri = "https://next-crib-backend.onrender.com/api/";
 
+  static const String getSCountryApi = baseUri + 'location/countries';
+
   static const String getStateApi = baseUri + 'location/states/NG';
 
   static const String agentSignUpApi = baseUri + 'users/signup';

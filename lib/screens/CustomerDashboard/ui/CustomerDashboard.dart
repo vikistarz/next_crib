@@ -4,10 +4,10 @@ import'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
-import 'fragments/CustomerAccountFragment.dart';
-import 'fragments/customerHome/CustomerHomeFragment.dart';
-import 'fragments/CustomerMessageFragment.dart';
-import 'fragments/CustomerWishlistFragment.dart';
+import '../fragments/CustomerAccountFragment.dart';
+import '../fragments/customerHome/ui/CustomerHomeFragment.dart';
+import '../fragments/CustomerMessageFragment.dart';
+import '../fragments/CustomerWishlistFragment.dart';
 
 
 class CustomerDashboardPage extends StatefulWidget {
@@ -235,7 +235,7 @@ class _CustomerDashboardPageState extends State<CustomerDashboardPage> {
                         Padding(
                           padding: const EdgeInsets.only(left: 0.0, top: 2.0 ),
                           child: IconButton(onPressed: null,
-                            icon: pageIndex == 3 ? Icon(Icons.person_outline, size: 25.0, color: HexColor("#00B578"),) :
+                            icon: pageIndex == 3 ? Icon(Icons.person, size: 25.0, color: HexColor("#00B578"),) :
                             Icon(Icons.person_outline, size: 25.0, color: HexColor("#838383"),), enableFeedback: false,),
                         ),
                         Padding(
