@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:next_crib/screens/CustomerDashboard/fragments/customerHome/fragment/allProperties.dart';
 import 'package:next_crib/screens/CustomerDashboard/fragments/customerHome/fragment/nearByProperties.dart';
+import '../fragment/flipsCard.dart';
 import 'package:next_crib/screens/CustomerDashboard/fragments/customerHome/model/AllPropertiesResponseModel.dart';
 import 'package:http/http.dart' as http;
-import 'package:next_crib/screens/CustomerDashboard/fragments/customerHome/fragment/flipcard.dart';
-import 'package:next_crib/screens/propertyDetail/ui/propertydetail.dart';
 import '../../../../search/searchPage.dart';
 import '../../../../utilities/locationService.dart';
 import '../../../../webService/apiConstant.dart';
@@ -15,7 +14,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 
 
 class CustomerHomeFragment extends StatefulWidget {
@@ -177,8 +175,6 @@ class _CustomerHomeFragmentState extends State<CustomerHomeFragment> {
     isNearVisible = true;
   }
 
-
-
   void viewAll(){
     isViewAllVisible = true;
     isNearYouVisible = true;
@@ -207,8 +203,8 @@ class _CustomerHomeFragmentState extends State<CustomerHomeFragment> {
     isNearYouVisible = true;
   }
 
-  ScrollController controller = ScrollController();
-  double topContainer = 0;
+  // ScrollController controller = ScrollController();
+  // double topContainer = 0;
 
 
   @override
@@ -221,8 +217,6 @@ class _CustomerHomeFragmentState extends State<CustomerHomeFragment> {
         backgroundColor: Colors.grey,
         displacement: 40.0,
         strokeWidth: 3.0,
-        child: Scrollbar(
-          // thumbVisibility: true,
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(
@@ -237,21 +231,14 @@ class _CustomerHomeFragmentState extends State<CustomerHomeFragment> {
                           Padding(
                             padding: const EdgeInsets.only(
                                 top: 10.0, left: 16.0),
-                            child: Text(longitude == null ? "Location" : "$longitude", style: TextStyle(
-                              color: HexColor("#838383"),
-                              fontWeight: FontWeight.normal,
-                              fontSize: 14.0,),),
+                            child: Text("Location", style: TextStyle(color: HexColor("#838383"), fontWeight: FontWeight.normal, fontSize: 14.0,),),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 16.0, top: 5.0),
-                                child: Image(image: AssetImage(
-                                    "images/location_icon.png"),
-                                    width: 15.0,
-                                    height: 15.0),
+                                padding: const EdgeInsets.only(left: 16.0, top: 5.0),
+                                child: Image(image: AssetImage("images/location_icon.png"), width: 15.0, height: 15.0),
                               ),
 
                               Padding(
@@ -272,19 +259,33 @@ class _CustomerHomeFragmentState extends State<CustomerHomeFragment> {
                       ),
 
                       Padding(
-                        padding: const EdgeInsets.only(top: 13.0, right: 10.0),
-                        child: Icon(
-                          Icons.notifications_none_rounded, size: 30.0,
-                          color: Colors.black,),
+                        padding: const EdgeInsets.only(top: 18.0, right: 10.0),
+                        child: Stack(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(),
+                              child: Icon(Icons.notifications_none_rounded, size: 30.0, color: Colors.black,),
+                            ),
+
+                            Container(
+                              margin: EdgeInsets.only(left: 15.0),
+                              height: 13.0,
+                              width: 14.0,
+                              decoration: BoxDecoration(
+                                color: HexColor("#E30909"),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              child: Center(child: Text("0", style: TextStyle(color: Colors.white, fontWeight: FontWeight.normal, fontSize: 7.0,),)),
+                            )
+                          ],
+                        ),
                       ),
 
                       Padding(
                         padding: const EdgeInsets.only(top: 13.0, right: 16.0),
                         child: CircleAvatar(
                           backgroundColor: HexColor("#E3E3E3"),
-                          child: Text("F", style: TextStyle(color: Colors.black,
-                            fontWeight: FontWeight.normal,
-                            fontSize: 16.0,),),
+                          child: Text("F", style: TextStyle(color: Colors.black, fontWeight: FontWeight.normal, fontSize: 16.0,),),
                         ),
                       ),
                     ],
@@ -307,8 +308,7 @@ class _CustomerHomeFragmentState extends State<CustomerHomeFragment> {
                                 Icons.search, color: HexColor("#C3BDBD"),
                                 size: 22.0,),
                               hintText: "Search here",
-                              hintStyle: TextStyle(fontSize: 13.0,
-                                  color: Colors.grey,
+                              hintStyle: TextStyle(fontSize: 13.0, color: Colors.grey,
                                   fontWeight: FontWeight.normal),
                               // Customize label color
                               enabledBorder: OutlineInputBorder(
@@ -583,9 +583,8 @@ class _CustomerHomeFragmentState extends State<CustomerHomeFragment> {
 
                   Visibility(
                     visible: !isFlipCardVisible,
-                    child: FlipCardPage(),
+                    child: FlipsCardPage(),
                   ),
-
 
                   Visibility(
                     visible: !isNearYouVisible,
@@ -605,7 +604,6 @@ class _CustomerHomeFragmentState extends State<CustomerHomeFragment> {
             ),
           ),
         ),
-      ),
     );
   }
 }

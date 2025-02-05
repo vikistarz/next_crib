@@ -41,8 +41,7 @@ class _GalleryFragmentState extends State<GalleryFragment> {
               ),
 
               Container(
-                height: 400.0,
-                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
                 child: GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2, // Number of columns
@@ -50,6 +49,8 @@ class _GalleryFragmentState extends State<GalleryFragment> {
                     mainAxisSpacing: 10, // Vertical spacing
                     childAspectRatio: 0.8, // Aspect ratio of the grid items
                   ),
+                  shrinkWrap: true, // Important!
+                  physics: NeverScrollableScrollPhysics(), //
                   itemCount: widget.propertyImages.length, // Number of items
                   padding: EdgeInsets.only(left: 0.0, right: 0.0, top: 5.0, bottom: 20.0),
                   itemBuilder: (context, index) {

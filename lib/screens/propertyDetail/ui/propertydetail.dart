@@ -2,28 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:next_crib/screens/propertyDetail/fragments/galleryFragment.dart';
 import 'package:intl/intl.dart';
+import '../../CustomerDashboard/fragments/customerHome/model/AllPropertiesResponseModel.dart';
 import '../fragments/descriptionFragment.dart';
 import '../fragments/reviewFragment.dart';
 class PropertyDetailPage extends StatefulWidget {
    PropertyDetailPage({super.key, required this.ratingsAverage, required this.ratingsQuantity,
-    required this.propertyImages, required this.coordinates, required this.createdAt, required this.ids,
-    required this.title, required this.stock, required this.dimension, required this.annualCost,
-    required this.totalPackage, required this.description, required this.category, required this.state,
-    required this.city,required this.location, required this.sku, required this.id});
+     required this.propertyImages, required this.coordinates, required this.createdAt, required this.ids,
+     required this.title, required this.stock, required this.dimension, required this.annualCost,
+     required this.totalPackage, required this.description, required this.category,  required this.toilets,
+     required this.agent, required this.bedroom, required this.state, required this.city,required this.location,
+     required this.sku, required this.id});
 
    double ratingsAverage;
    int ratingsQuantity;
    List<String> propertyImages;
    List<double> coordinates;
    String createdAt;
-  String ids;
+   String ids;
    String title;
    int stock;
-   String dimension;
+   int dimension;
    int annualCost;
    int totalPackage;
-  String description;
-  String category;
+   String description;
+   String category;
+   int bedroom;
+   int toilets;
+   Agent agent;
    String state;
    String city;
    String location;
@@ -162,7 +167,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
             ),
 
             Padding(
-                padding: const EdgeInsets.only(top: 5.0, left: 15.0, bottom: 10.0),
+                padding: const EdgeInsets.only(top: 5.0, left: 12.0, bottom: 10.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -355,7 +360,8 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                 children: [
                   Visibility(
                     visible:  isDescriptionVisible,
-                    child:  DescriptionFragment(description: capitalisedDescription, createdAt: widget.createdAt, totalPackage: widget.totalPackage, dimension: widget.dimension),
+                    child:  DescriptionFragment(description: capitalisedDescription, createdAt: widget.createdAt, totalPackage: widget.totalPackage,
+                           dimension: widget.dimension, bedroom: widget.bedroom, agent: widget.agent, toilets: widget.toilets),
                   ),
 
                   Visibility(
