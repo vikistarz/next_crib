@@ -49,7 +49,7 @@ dependencies:
   geolocator: ^10.0.1
   permission_handler: ^11.0.1
   photo_view: ^0.14.0
-
+  flutter_card_swiper: ^7.0.0
 
 
 
@@ -104,6 +104,7 @@ flutter:
     - images/dimension.png
     - images/time_lapse.png
     - images/cancel_x.png
+    - images/Love.png
 
 
 

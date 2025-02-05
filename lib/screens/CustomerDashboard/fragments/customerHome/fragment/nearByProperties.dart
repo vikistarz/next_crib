@@ -67,9 +67,8 @@ class _NearByPropertiesPageState extends State<NearByPropertiesPage> {
   //   }
   // }
 
-  Future<List<AllPropertiesResponseModel>> fetchNearByProperties(double lat, double long) async {
+  Future<AllPropertiesResponseModel> fetchNearByProperties(double lat, double long) async {
     final String apiUrl = ApiConstant.baseUri + 'properties/properties-within/1000/center/$lat,$long/unit/km';
-    print(apiUrl);
     final response = await http.get(
         Uri.parse(apiUrl));
 
@@ -77,21 +76,40 @@ class _NearByPropertiesPageState extends State<NearByPropertiesPage> {
     print(response.statusCode);
 
     if (response.statusCode == 200) {
-      print('Response Body: ${response.body}');
-
-      final List<dynamic> data = json.decode(response.body)['data']['data'];
-      return data.map((json) => AllPropertiesResponseModel.fromJson(json))
-          .toList();
-
-      // final data = json.decode(response.body);
-      // final List propertiesJson = data['data']['data'];
-      // return propertiesJson.map((json) => AllPropertiesResponseModel.fromJson(json)).toList();
+      final jsonResponse = jsonDecode(response.body);
+      return AllPropertiesResponseModel.fromJson(jsonResponse);
     }
     else {
       print('Response Body: ${response.body}');
       throw Exception('Failed to load properties');
     }
   }
+
+  // Future<List<AllPropertiesResponseModel>> fetchNearByProperties(double lat, double long) async {
+  //   final String apiUrl = ApiConstant.baseUri + 'properties/properties-within/1000/center/$lat,$long/unit/km';
+  //   print(apiUrl);
+  //   final response = await http.get(
+  //       Uri.parse(apiUrl));
+  //
+  //   print("request: " + response.toString());
+  //   print(response.statusCode);
+  //
+  //   if (response.statusCode == 200) {
+  //     print('Response Body: ${response.body}');
+  //
+  //     final List<dynamic> data = json.decode(response.body)['data']['data'];
+  //     return data.map((json) => AllPropertiesResponseModel.fromJson(json))
+  //         .toList();
+  //
+  //     // final data = json.decode(response.body);
+  //     // final List propertiesJson = data['data']['data'];
+  //     // return propertiesJson.map((json) => AllPropertiesResponseModel.fromJson(json)).toList();
+  //   }
+  //   else {
+  //     print('Response Body: ${response.body}');
+  //     throw Exception('Failed to load properties');
+  //   }
+  // }
 
 
   @override
@@ -100,7 +118,7 @@ class _NearByPropertiesPageState extends State<NearByPropertiesPage> {
       height: 550.0,
       margin: EdgeInsets.only(
           top: 20.0, left: 10.0, right: 10.0, bottom: 10.0),
-      child: FutureBuilder<List<AllPropertiesResponseModel>>(
+      child: FutureBuilder<AllPropertiesResponseModel>(
         future: fetchNearByProperties(latitude ?? 0, longitude ?? 0),
         builder: (context, snapshot) {
           if (snapshot.connectionState ==
@@ -113,7 +131,7 @@ class _NearByPropertiesPageState extends State<NearByPropertiesPage> {
             return Center(child: Text(
                 'Error: ${snapshot.error}'));
           } else
-          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          if (!snapshot.hasData || snapshot.data!.items.isEmpty) {
             return Center(child: Text('No properties found'));
           } else {
             final properties = snapshot.data!;
@@ -121,10 +139,12 @@ class _NearByPropertiesPageState extends State<NearByPropertiesPage> {
 
             return ListView.builder(
               scrollDirection: Axis.vertical,
-              itemCount: properties.length,
+              itemCount: properties.items.length,
+              shrinkWrap: true, // Important!
+              physics: NeverScrollableScrollPhysics(),
               itemBuilder: (context, index){
 
-                final property = properties[index];
+                final property = properties.items[index];
                 String formattedAnnualCost = NumberFormat("#,##0").format(property.annualCost);
                 return GestureDetector(
                   onTap: (){
@@ -132,7 +152,7 @@ class _NearByPropertiesPageState extends State<NearByPropertiesPage> {
                       return PropertyDetailPage(ratingsAverage: property.ratingsAverage, ratingsQuantity: property.ratingsQuantity, propertyImages: property.propertyImages,
                           coordinates: property.coordinates, createdAt: property.createdAt, ids: property.ids, title: property.title, stock: property.stock, dimension: property.dimension,
                           annualCost: property.annualCost, totalPackage: property.totalPackage, description: property.description, category: property.category, state: property.state,
-                          city: property.city, location: property.location, sku: property.sku, id: property.id);
+                          city: property.city, location: property.location, sku: property.sku, id: property.id, toilets: property.toilets, agent: property.agent, bedroom: property.bedroom);
                     }));
                   },
                   child: Container(

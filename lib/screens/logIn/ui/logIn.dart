@@ -444,7 +444,7 @@ class _LogInPageState extends State<LogInPage> {
                     Text("Don't have an account?",style: TextStyle(color: HexColor("#212529"), fontWeight: FontWeight.normal, fontSize:15.0,),),
                     Padding(
                       padding: const EdgeInsets.only(left: 15.0),
-                      child: InkWell(
+                      child: GestureDetector(
                           onTap: (){
                             Navigator.push(context, MaterialPageRoute(builder: (context){
                               return SignUpPage();

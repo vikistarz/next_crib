@@ -62,24 +62,18 @@ class _ViewAllPropertiesPageState extends State<ViewAllPropertiesPage> {
   //   }
   // }
 
-  Future<List<AllPropertiesResponseModel>> fetchAllProperties() async {
+  Future<AllPropertiesResponseModel> fetchAllProperties() async {
     const String apiUrl = ApiConstant.getAllProperties;
-    final response = await http.get(
-        Uri.parse(apiUrl));
+      final response = await http.get(
+          Uri.parse(apiUrl));
 
-    print("request: " + response.toString());
-    print(response.statusCode);
+      print("request: " + response.toString());
+      print(response.statusCode);
+
 
     if (response.statusCode == 200) {
-      print('Response Body: ${response.body}');
-
-      final List<dynamic> data = json.decode(response.body)['data']['data'];
-      return data.map((json) => AllPropertiesResponseModel.fromJson(json))
-          .toList();
-
-      // final data = json.decode(response.body);
-      // final List propertiesJson = data['data']['data'];
-      // return propertiesJson.map((json) => AllPropertiesResponseModel.fromJson(json)).toList();
+      final jsonResponse = jsonDecode(response.body);
+      return AllPropertiesResponseModel.fromJson(jsonResponse);
     }
     else {
       print('Response Body: ${response.body}');
@@ -87,13 +81,14 @@ class _ViewAllPropertiesPageState extends State<ViewAllPropertiesPage> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 550.0,
       margin: EdgeInsets.only(
           top: 20.0, left: 10.0, right: 10.0, bottom: 10.0),
-      child: FutureBuilder<List<AllPropertiesResponseModel>>(
+      child: FutureBuilder<AllPropertiesResponseModel>(
         future: fetchAllProperties(),
         builder: (context, snapshot) {
           if (snapshot.connectionState ==
@@ -106,11 +101,13 @@ class _ViewAllPropertiesPageState extends State<ViewAllPropertiesPage> {
             return Center(child: Text(
                 'Error: ${snapshot.error}'));
           } else
-          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          if (!snapshot.hasData || snapshot.data!.items.isEmpty) {
             return Center(child: Text('No properties found'));
           } else {
 
-            final properties = snapshot.data!;
+          }
+
+             final properties = snapshot.data!;
 
             return GridView.builder(
               padding: EdgeInsets.all(8.0),
@@ -120,9 +117,9 @@ class _ViewAllPropertiesPageState extends State<ViewAllPropertiesPage> {
                 mainAxisSpacing: 8.0,
                 childAspectRatio: 3 / 4, // Width-to-height ratio
               ),
-              itemCount: properties.length,
+              itemCount: properties.items.length,
               itemBuilder: (context, index) {
-                final property = properties[index];
+                final property = properties.items[index];
 
                 String formattedAnnualCost = NumberFormat("#,##0").format(property.annualCost);
 
@@ -131,8 +128,9 @@ class _ViewAllPropertiesPageState extends State<ViewAllPropertiesPage> {
                     Navigator.push(context, MaterialPageRoute(builder: (context){
                       return PropertyDetailPage(ratingsAverage: property.ratingsAverage, ratingsQuantity: property.ratingsQuantity, propertyImages: property.propertyImages,
                           coordinates: property.coordinates, createdAt: property.createdAt, ids: property.ids, title: property.title, stock: property.stock, dimension: property.dimension,
-                          annualCost: property.annualCost, totalPackage: property.totalPackage, description: property.description, category: property.category, state: property.state,
-                          city: property.city, location: property.location, sku: property.sku, id: property.id);
+                          annualCost: property.annualCost, totalPackage: property.totalPackage, description: property.description, category: property.category,
+                          bedroom: property.bedroom, toilets: property.toilets, agent: property.agent, state: property.state,
+                          city: property.city, location: property.location, sku: property.sku, id: property.id );
                     }));
                   },
                   child: Card(
@@ -201,7 +199,6 @@ class _ViewAllPropertiesPageState extends State<ViewAllPropertiesPage> {
               },
             );
           }
-        },
       ),
     );
   }

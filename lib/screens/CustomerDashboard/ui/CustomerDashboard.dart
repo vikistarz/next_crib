@@ -160,7 +160,7 @@ class _CustomerDashboardPageState extends State<CustomerDashboardPage> {
                             Icon(Icons.home_outlined, size: 25.0, color: HexColor("#838383"),), enableFeedback: false,),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 38.0, left: 7.5),
+                          padding: const EdgeInsets.only(top: 38.0, left: 10.5),
                           child: new Text("Home", style: pageIndex == 0 ? TextStyle(color: HexColor("#00B578"), fontSize: 12.0) : TextStyle(color: HexColor("#838383"), fontSize: 12.0,),),
                         )
                       ],
@@ -187,7 +187,7 @@ class _CustomerDashboardPageState extends State<CustomerDashboardPage> {
                             Icon(Icons.favorite_outline_rounded, size: 25.0, color: HexColor("#838383"),), enableFeedback: false,),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 38.0, ),
+                          padding: const EdgeInsets.only(top: 38.0, left: 5.0),
                           child: new Text("Wishlist", style: pageIndex == 1 ? TextStyle(color: HexColor("#00B578"), fontSize: 12.0) : TextStyle(color: HexColor("#838383"), fontSize: 12.0),),
                         )
                       ],
@@ -239,7 +239,7 @@ class _CustomerDashboardPageState extends State<CustomerDashboardPage> {
                             Icon(Icons.person_outline, size: 25.0, color: HexColor("#838383"),), enableFeedback: false,),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 38.0, ),
+                          padding: const EdgeInsets.only(top: 38.0, left: 5.0),
                           child: new Text("Account", style: pageIndex == 3 ? TextStyle(color: HexColor("#00B578"), fontSize: 12.0) : TextStyle(color: HexColor("#838383"), fontSize: 12.0),),
                         )
                       ],

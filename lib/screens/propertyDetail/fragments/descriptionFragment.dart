@@ -1,14 +1,20 @@
 import'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
+
+import '../../CustomerDashboard/fragments/customerHome/model/AllPropertiesResponseModel.dart';
 class DescriptionFragment extends StatefulWidget {
      DescriptionFragment({super.key,required this.description, required this.createdAt,
-    required this.totalPackage, required this.dimension});
+       required this.totalPackage, required this.dimension, required this.bedroom,
+       required this.agent, required this. toilets});
 
      String description;
      String createdAt;
      int totalPackage;
-     String dimension;
+     int dimension;
+     Agent agent;
+     int bedroom;
+     int toilets;
 
 
   @override
@@ -16,8 +22,18 @@ class DescriptionFragment extends StatefulWidget {
 }
 
 class _DescriptionFragmentState extends State<DescriptionFragment> {
+
+  String capitalize(String text) {
+    if (text.isEmpty) {
+      return text;
+    }
+    return text[0].toUpperCase() + text.substring(1).toLowerCase();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final capitalisedFirstName  = capitalize(widget.agent.firstName);
+    final capitalisedLastName  = capitalize(widget.agent.lastName);
 
     String formattedTotalPackage = NumberFormat("#,##0").format(widget.totalPackage);
     // Parse the ISO 8601 date string into a DateTime object
@@ -62,63 +78,123 @@ class _DescriptionFragmentState extends State<DescriptionFragment> {
               )
             ),
 
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0, left: 10.0),
+                  child: Text("House Total Package", style: TextStyle(color: HexColor("#838383"), fontSize: 14.0, fontWeight: FontWeight.normal),
+                  ),
+                ),
+
+                Expanded(child: SizedBox()),
+
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0, right: 10.0),
+                  child: Text("₦"+formattedTotalPackage.toString(), style: TextStyle(color: HexColor("#00B578"), fontSize: 18.0, fontWeight: FontWeight.normal),
+                  ),
+                ),
+
+              ],
+            ),
+
+
             Align(
               alignment: Alignment.topLeft,
               child: Padding(
-                padding: const EdgeInsets.only(top: 10.0, left: 5.0),
-                child: Text("House Total Package", style: TextStyle(color: HexColor("#838383"), fontSize: 14.0, fontWeight: FontWeight.normal),
+                padding: const EdgeInsets.only(top: 5.0, left: 10.0),
+                child: Text("Listed by" +" " + capitalisedFirstName + " " + capitalisedLastName, style: TextStyle(color: HexColor("#838383"), fontSize: 15.0, fontWeight: FontWeight.normal),
                 ),
               ),
             ),
 
-            Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 0.0, left: 5.0),
-                child: Text("₦"+formattedTotalPackage.toString(), style: TextStyle(color: HexColor("#00B578"), fontSize: 20.0, fontWeight: FontWeight.normal),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0, top: 5.0),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 0.0, top: 0.0),
+                        child: Image(image: AssetImage("images/time_lapse.png"), width: 11.0, height: 11.0,),
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(top: 0.0, left: 8.0),
+                        child: Text("Posted, $formattedDate", style: TextStyle(color: HexColor("#838383"), fontSize: 11.0, fontWeight: FontWeight.normal),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+
+                Expanded(child: SizedBox()),
+
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0, right: 10.0,),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 0.0, top: 0.0),
+                        child: Image(image: AssetImage("images/dimension.png"), width: 11.0, height: 11.0,),
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(top: 0.0, left: 8.0),
+                        child: Text(widget.dimension.toString() +" " + "per sqft", style: TextStyle(color: HexColor("#838383"), fontSize: 11.0, fontWeight: FontWeight.normal),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
 
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0, left: 5.0,),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.0, top: 0.0),
-                    child: Image(image: AssetImage("images/time_lapse.png"), width: 11.0, height: 11.0,),
-                  ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10.0, top: 5.0),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 0.0, top: 0.0),
+                        child: Image(image: AssetImage("images/time_lapse.png"), width: 11.0, height: 11.0,),
+                      ),
 
-                  Padding(
-                    padding: const EdgeInsets.only(top: 0.0, left: 8.0),
-                    child: Text("Posted, $formattedDate", style: TextStyle(color: HexColor("#838383"), fontSize: 11.0, fontWeight: FontWeight.normal),
-                    ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 0.0, left: 8.0),
+                        child: Text("Posted, $formattedDate", style: TextStyle(color: HexColor("#838383"), fontSize: 11.0, fontWeight: FontWeight.normal),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+
+                Expanded(child: SizedBox()),
+
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0, right: 10.0,),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 0.0, top: 0.0),
+                        child: Image(image: AssetImage("images/dimension.png"), width: 11.0, height: 11.0,),
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(top: 0.0, left: 8.0),
+                        child: Text(widget.dimension.toString() +" " + "per sqft", style: TextStyle(color: HexColor("#838383"), fontSize: 11.0, fontWeight: FontWeight.normal),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
 
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0, left: 5.0,),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(left: 0.0, top: 0.0),
-                    child: Image(image: AssetImage("images/dimension.png"), width: 11.0, height: 11.0,),
-                  ),
 
-                  Padding(
-                    padding: const EdgeInsets.only(top: 0.0, left: 8.0),
-                    child: Text(widget.dimension, style: TextStyle(color: HexColor("#838383"), fontSize: 11.0, fontWeight: FontWeight.normal),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            SizedBox(
-              height: 50.0,
-            ),
           ],
         ),
       ),
