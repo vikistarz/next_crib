@@ -10,6 +10,7 @@ import '../../database/saveValues.dart';
 import '../../dialogs/errorMessageDialog.dart';
 import '../../dialogs/successMessageDialog.dart';
 import '../../signUp/signUp.dart';
+import '../../signUp/signUpCustomer/ui/customerEmailVerification.dart';
 import '../../webService/apiConstant.dart';
 import 'package:http/http.dart' as http;
 
@@ -117,23 +118,44 @@ class _CustomerFragmentState extends State<CustomerFragment> {
         // if the server return an error response
         final Map<String, dynamic> errorData = json.decode(response.body);
         errorMessage = errorData['error'] ?? 'Unknown error occurred';
+        // Check if the string contains specific words
+        if (errorMessage.contains("Email not verified")) {
+          showModalBottomSheet(
+              isDismissible: false,
+              enableDrag: false,
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorMessageDialog(
+                  content: errorMessage,
+                  onButtonPressed: () {
+                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                      return const CustomerEmailVerificationPage();
+                    }));
+                  },
+                );
+              });
+        }
 
-        showModalBottomSheet(
-            isDismissible: false,
-            enableDrag: false,
-            context: context,
-            builder: (BuildContext context) {
-              return ErrorMessageDialog(
-                content: errorMessage,
-                onButtonPressed: () {
-                  Navigator.of(context).pop();
-                  // Add any additional action here
-                  isNotLoading();
-                },
-              );
-            });
+        else {
+          showModalBottomSheet(
+              isDismissible: false,
+              enableDrag: false,
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorMessageDialog(
+                  content: errorMessage,
+                  onButtonPressed: () {
+                    Navigator.of(context).pop();
+                    // Add any additional action here
+                    isNotLoading();
+                  },
+                );
+              });
+        }
       }
     }
+
     catch (e) {
       isNotLoading();
       setState(() {

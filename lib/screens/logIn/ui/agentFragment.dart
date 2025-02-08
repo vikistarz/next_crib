@@ -10,6 +10,7 @@ import '../../dialogs/errorMessageDialog.dart';
 import '../../dialogs/successMessageDialog.dart';
 import '../../signUp/signUp.dart';
 import 'package:http/http.dart' as http;
+import '../../signUp/signUpAgent/ui/agentEmailVerification.dart';
 import '../../webService/apiConstant.dart';
 
 class AgentFragment extends StatefulWidget {
@@ -117,23 +118,46 @@ class _AgentFragmentState extends State<AgentFragment> {
         // if the server return an error response
         final Map<String, dynamic> errorData = json.decode(response.body);
         errorMessage = errorData['message'] ?? 'Unknown error occurred';
+        // Check if the string contains specific words
+        if (errorMessage.contains("Email not verified")) {
+          showModalBottomSheet(
+              isDismissible: false,
+              enableDrag: false,
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorMessageDialog(
+                  content: errorMessage,
+                  onButtonPressed: () {
+                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                      return const AgentEmailVerificationPage();
+                    }));
+                  },
+                );
+              });
+        }
 
-        showModalBottomSheet(
-            isDismissible: false,
-            enableDrag: false,
-            context: context,
-            builder: (BuildContext context) {
-              return ErrorMessageDialog(
-                content: errorMessage,
-                onButtonPressed: () {
-                  Navigator.of(context).pop();
-                  // Add any additional action here
-                  isNotLoading();
-                },
-              );
-            });
+        else {
+          showModalBottomSheet(
+              isDismissible: false,
+              enableDrag: false,
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorMessageDialog(
+                  content: errorMessage,
+                  onButtonPressed: () {
+                    Navigator.of(context).pop();
+                    // Add any additional action here
+                    isNotLoading();
+                  },
+                );
+              });
+        }
       }
     }
+
+
+
     catch (e) {
       isNotLoading();
       print('Response Body: $e');
