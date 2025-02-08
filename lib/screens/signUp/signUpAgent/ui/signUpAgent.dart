@@ -4,7 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:next_crib/screens/emailVerification/emailVerification.dart';
+import 'package:next_crib/screens/signUp/signUpAgent/ui/agentEmailVerification.dart';
 import '../../../database/appPrefHelper.dart';
 import '../../../database/saveValues.dart';
 import '../../../dialogs/errorMessageDialog.dart';
@@ -54,9 +54,6 @@ class _SignUpAgentPageState extends State<SignUpAgentPage> {
 
   TextEditingController statesController = TextEditingController();
   TextEditingController cityController = TextEditingController();
-  TextEditingController serviceTypeController = TextEditingController();
-  TextEditingController subcategoryController = TextEditingController();
-  TextEditingController openingHourController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailAddressController = TextEditingController();
@@ -71,9 +68,6 @@ class _SignUpAgentPageState extends State<SignUpAgentPage> {
   void dispose() {
     statesController.dispose();
     cityController.dispose();
-    serviceTypeController.dispose();
-    subcategoryController.dispose();
-    openingHourController.dispose();
     firstNameController.dispose();
     lastNameController.dispose();
     emailAddressController.dispose();
@@ -202,7 +196,7 @@ class _SignUpAgentPageState extends State<SignUpAgentPage> {
                   onButtonPressed: () {
                     Navigator.pop(context);
                     Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return const EmailVerificationPage();
+                      return const AgentEmailVerificationPage();
                     }));
                     // Add any additional action here
                     // saveUserDetails();

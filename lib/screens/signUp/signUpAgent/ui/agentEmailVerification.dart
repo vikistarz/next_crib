@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -7,18 +6,17 @@ import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 import 'package:next_crib/screens/logIn/ui/logIn.dart';
-
-import '../dialogs/errorMessageDialog.dart';
-import '../dialogs/successMessageDialog.dart';
-import '../webService/apiConstant.dart';
-class EmailVerificationPage extends StatefulWidget {
-  const EmailVerificationPage({super.key});
+import '../../../dialogs/errorMessageDialog.dart';
+import '../../../dialogs/successMessageDialog.dart';
+import '../../../webService/apiConstant.dart';
+class AgentEmailVerificationPage extends StatefulWidget {
+  const AgentEmailVerificationPage({super.key});
 
   @override
-  State<EmailVerificationPage> createState() => _EmailVerificationPageState();
+  State<AgentEmailVerificationPage> createState() => _AgentEmailVerificationPageState();
 }
 
-class _EmailVerificationPageState extends State<EmailVerificationPage> {
+class _AgentEmailVerificationPageState extends State<AgentEmailVerificationPage> {
 
   int? otpCode;
   String otpString = "";
@@ -42,7 +40,7 @@ class _EmailVerificationPageState extends State<EmailVerificationPage> {
 
   Future<void> makePostRequest() async {
     loading();
-    const String apiUrl = ApiConstant.emailVerification;
+    const String apiUrl = ApiConstant.agentEmailVerification;
     try {
       final response = await http.post(Uri.parse(apiUrl),
         headers:<String, String>{

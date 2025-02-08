@@ -6,13 +6,14 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:next_crib/screens/signUp/signUpAgent/dialogs/countryDialog.dart';
 import '../../../dialogs/errorMessageDialog.dart';
 import '../../../dialogs/successMessageDialog.dart';
-import '../../../emailVerification/emailVerification.dart';
+import '../../signUpAgent/ui/agentEmailVerification.dart';
 import '../../../logIn/ui/logIn.dart';
 import '../../../webService/apiConstant.dart';
 import '../../signUpAgent/dialogs/cityDialog.dart';
 import 'package:http/http.dart' as http;
 import '../../signUpAgent/dialogs/stateOfResidenceDialog.dart';
 import '../../signUpAgent/models/userData.dart';
+import 'customerEmailVerification.dart';
 
 
 class SignUpCustomerPage extends StatefulWidget {
@@ -52,16 +53,13 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
 
   TextEditingController statesController = TextEditingController();
   TextEditingController cityController = TextEditingController();
-  TextEditingController serviceTypeController = TextEditingController();
-  TextEditingController subcategoryController = TextEditingController();
-  TextEditingController openingHourController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailAddressController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-  TextEditingController officeAddressController = TextEditingController();
+  TextEditingController homeAddressController = TextEditingController();
 
 
 
@@ -69,16 +67,13 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
   void dispose() {
     statesController.dispose();
     cityController.dispose();
-    serviceTypeController.dispose();
-    subcategoryController.dispose();
-    openingHourController.dispose();
     firstNameController.dispose();
     lastNameController.dispose();
     emailAddressController.dispose();
     phoneController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
-    officeAddressController.dispose();
+    homeAddressController.dispose();
 
     super.dispose();
   }
@@ -108,71 +103,64 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
   }
 
   Future<void> signUpCustomer() async {
+
     loading();
 
-    const String apiUrl = ApiConstant.agentSignUpApi;
-    try{
+    final String apiUrl = ApiConstant.customerSignUpApi;
 
-      final uri = Uri.parse(apiUrl);
-      var request = http.MultipartRequest('POST', uri);
+    try {
+      final response = await http.post(Uri.parse(apiUrl),
+        headers:<String, String>{
+          "Content-type": "application/json"
+        },
+        body: jsonEncode(<String, dynamic>{
+          "firstName": firstNameController.text,
+          "lastName": lastNameController.text,
+          "email": emailAddressController.text,
+          "role": "customer",
+          "state": statesController.text,
+          "city": cityController.text,
+          "address": homeAddressController.text,
+          "phone": phoneController.text,
+          "password": passwordController.text,
+        }),
+      );
 
-      request.fields['email'] = emailAddressController.text;
-      request.fields['firstName'] = firstNameController.text;
-      request.fields['lastName'] = lastNameController.text;
-      request.fields['role'] = 'customer';
-      request.fields['state'] = statesController.text;
-      request.fields['city'] = cityController.text;
-      request.fields['address'] = officeAddressController.text;
-      request.fields['phone'] = phoneController.text;
-      request.fields['password'] = passwordController.text;
-
-
-      print("request: " + request.toString());
-      final response = await request.send();
+      print("request: " + response.toString());
       print(response.statusCode);
 
-      if(response.statusCode == 201){
+      if (response.statusCode == 201) {
         isNotLoading();
-        var responseData = await response.stream.toBytes();
-        var responseString = String.fromCharCodes(responseData);
-        print('Response Body: ${responseString}');
-        var jsonResponse = json.decode(responseString);
-        final Map<String, dynamic> data = jsonResponse;
-        // token = data['skillProvider']['token'];
-        // serviceProviderWalletId = data['wallet']['id'];
-        // print(serviceProviderWalletId);
-
+        print('Response Body: ${response.body}');
+        // successful post request, handle the response here
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
         setState(() {
+          // token = responseData['token'];
+          // customerWalletId = responseData['wallet']['id'];
           showModalBottomSheet(
               isDismissible: false,
               enableDrag: false,
               context: context,
               builder: (BuildContext context) {
                 return SuccessMessageDialog(
-                  content: 'Customer Sign up Successful',
+                  content: "Customer Sign up Successful",
                   onButtonPressed: () {
-                    Navigator.pop(context);
                     Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return const EmailVerificationPage();
+                      return const CustomerEmailVerificationPage();
                     }));
                     // Add any additional action here
-                    // saveUserDetails();
                   },
                 );
               });
         });
       }
 
-
       else{
         isNotLoading();
-        var responseData = await response.stream.toBytes();
-        var responseString = String.fromCharCodes(responseData);
-        print('Response Body: ${responseString}');
-        var jsonResponse = json.decode(responseString);
-        final Map<String, dynamic> errorData = jsonResponse;
-        errorMessage = errorData['message'] ?? 'Unknown error occurred';
-        print(errorMessage);
+        print('Response Body: ${response.body}');
+        // if the server return an error response
+        final Map<String, dynamic> errorData = json.decode(response.body);
+        errorMessage = errorData['error'] ?? 'Unknown error occurred';
         setState(() {
           showModalBottomSheet(
               isDismissible: false,
@@ -191,10 +179,8 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
         });
       }
     }
-    catch(e){
-      print('Exception during image upload: $e');
+    catch (e) {
       isNotLoading();
-
       setState(() {
         showModalBottomSheet(
             isDismissible: false,
@@ -214,6 +200,13 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
     }
   }
 
+  // void saveUserDetails() async {
+  //
+  //   SaveValues mySaveValues = SaveValues();
+  //
+  //   await mySaveValues.saveInt(AppPreferenceHelper.CUSTOMER_WALLET_ID, customerWalletId!);
+  //
+  // }
 
 
   @override
@@ -350,10 +343,98 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                   child: Text("Phone Number", style: TextStyle(color: HexColor("#5B5B5B"), fontSize: 12.0, fontWeight: FontWeight.bold),),
                 ),
 
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 5.0, left: 30.0, right: 30.0),
+                //   child: Stack(
+                //     children: [
+                //       TextFormField(
+                //         validator: (value) {
+                //           final regex = RegExp(r'^[+-]?\d+(\.\d+)?$');
+                //           if (value == null || value.isEmpty) {
+                //             return 'Enter phone Number';
+                //           }
+                //           if (value.length < 11) {
+                //             return 'Enter Phone Number';
+                //           }
+                //           if (!regex.hasMatch(value)) {
+                //             return 'Enter Phone Number';
+                //           }
+                //           else{
+                //             return null; // Return null if the input is valid
+                //           }
+                //         },
+                //         controller: phoneController,
+                //         keyboardType:TextInputType.phone,
+                //         maxLength: 11,
+                //         decoration: InputDecoration(
+                //           contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 100.0),
+                //           // hintText: "Mobile",
+                //           hintStyle: TextStyle(color: HexColor("#C3BDBD"), fontSize: 14.0, fontWeight: FontWeight.normal),
+                //           border: OutlineInputBorder(
+                //             borderRadius: BorderRadius.circular(5.0),
+                //           ),
+                //           enabledBorder: OutlineInputBorder(
+                //             borderSide: BorderSide(color: HexColor("#969696"), width: 1.0),
+                //             borderRadius: BorderRadius.circular(5.0),
+                //           ),
+                //           focusedBorder: OutlineInputBorder(
+                //             borderSide: BorderSide(color: HexColor("#969696"), width: 1.0),
+                //             borderRadius: BorderRadius.circular(5.0),
+                //           ),
+                //           counterText: '',
+                //         ),
+                //         style: TextStyle(color: HexColor("#212529"), fontSize: 14.0, fontWeight: FontWeight.normal),
+                //       ),
+                //
+                //       Row(
+                //         children: [
+                //           Padding(
+                //             padding: const EdgeInsets.only(top: 0.0, left: 10.0, right: 10.0),
+                //             // emailAddress == null ? "Email Address" : "$capitalisedEmail"
+                //             child: GestureDetector(
+                //                 onTap: (){
+                //                   _openCountryDialog();
+                //                 },
+                //                 child: Text(flag  == null ? "🇳🇬 +234" : '$flag + $countryCode', style: TextStyle(color: HexColor("#00B578"), fontSize: 13.0, fontWeight: FontWeight.normal),)),
+                //           ),
+                //
+                //           Container(
+                //             margin: EdgeInsets.only(left: 2.0),
+                //             height: 48.0,
+                //             width: 1.0,
+                //             color: HexColor("#A3A3A3"),
+                //           ),
+                //         ],
+                //       ),
+                //     ],
+                //   ),
+                // ),
+
                 Padding(
                   padding: const EdgeInsets.only(top: 5.0, left: 30.0, right: 30.0),
                   child: Stack(
                     children: [
+
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 0.0, left: 10.0),
+                            child: Image(image: AssetImage("images/nigerian_flag.png"), width: 30.0, height: 30.0,),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.only(top: 0.0, left: 1.0),
+                            child: Text("+234", style: TextStyle(color: HexColor("#00B578"), fontSize: 13.0, fontWeight: FontWeight.normal),),
+                          ),
+
+                          Container(
+                            margin: EdgeInsets.only(left: 2.0),
+                            height: 48.0,
+                            width: 1.0,
+                            color: HexColor("#A3A3A3"),
+                          ),
+                        ],
+                      ),
                       TextFormField(
                         validator: (value) {
                           final regex = RegExp(r'^[+-]?\d+(\.\d+)?$');
@@ -361,10 +442,10 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                             return 'Enter phone Number';
                           }
                           if (value.length < 11) {
-                            return 'Enter Phone Number';
+                            return 'Enter a valid Phone Number';
                           }
                           if (!regex.hasMatch(value)) {
-                            return 'Enter Phone Number';
+                            return 'Enter a valid Phone Number';
                           }
                           else{
                             return null; // Return null if the input is valid
@@ -374,7 +455,7 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                         keyboardType:TextInputType.phone,
                         maxLength: 11,
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 100.0),
+                          contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 80.0),
                           // hintText: "Mobile",
                           hintStyle: TextStyle(color: HexColor("#C3BDBD"), fontSize: 14.0, fontWeight: FontWeight.normal),
                           border: OutlineInputBorder(
@@ -391,27 +472,6 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                           counterText: '',
                         ),
                         style: TextStyle(color: HexColor("#212529"), fontSize: 14.0, fontWeight: FontWeight.normal),
-                      ),
-
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 0.0, left: 10.0, right: 10.0),
-                            // emailAddress == null ? "Email Address" : "$capitalisedEmail"
-                            child: GestureDetector(
-                                onTap: (){
-                                  _openCountryDialog();
-                                },
-                                child: Text(flag  == null ? "🇳🇬 +234" : '$flag + $countryCode', style: TextStyle(color: HexColor("#00B578"), fontSize: 13.0, fontWeight: FontWeight.normal),)),
-                          ),
-
-                          Container(
-                            margin: EdgeInsets.only(left: 2.0),
-                            height: 48.0,
-                            width: 1.0,
-                            color: HexColor("#A3A3A3"),
-                          ),
-                        ],
                       ),
                     ],
                   ),
@@ -583,7 +643,7 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                           return null; // Return null if the input is valid
                         }
                       },
-                      controller: officeAddressController,
+                      controller: homeAddressController,
                       keyboardType:TextInputType.text,
                       decoration: InputDecoration(
                         // hintText: "Office number and Street name",
