@@ -125,6 +125,7 @@ class _DescriptionFragmentState extends State<DescriptionFragment> {
                         child: Text("Posted, $formattedDate", style: TextStyle(color: HexColor("#838383"), fontSize: 11.0, fontWeight: FontWeight.normal),
                         ),
                       ),
+
                     ],
                   ),
                 ),
