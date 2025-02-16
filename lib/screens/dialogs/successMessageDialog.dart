@@ -27,19 +27,19 @@ class SuccessMessageDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Padding(
-            //   padding: const EdgeInsets.only(top: 50.0),
-            //   child: Image(image: AssetImage("images/success_icon.png"),width: 50.0, height: 50.0,),
-            // ),
             Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: Text("Success", style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold, color: HexColor("#068F13")),
-              ),
+              padding: const EdgeInsets.only(top: 50.0),
+              child: Image(image: AssetImage("images/success_tick.png"),width: 42.0, height: 42.0,),
             ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 10.0),
+            //   child: Text("Success", style: TextStyle(fontSize: 14.0, fontWeight: FontWeight.bold, color: HexColor("#068F13")),
+            //   ),
+            // ),
 
             Padding(
-              padding: const EdgeInsets.only(top: 30.0, left: 16.0, right: 16.0,),
-              child: Text(content!, style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.normal),
+              padding: const EdgeInsets.only(top: 20.0, left: 16.0, right: 16.0,),
+              child: Text(content!, style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.normal),
               ),
             ),
 
@@ -49,10 +49,10 @@ class SuccessMessageDialog extends StatelessWidget {
               padding: const EdgeInsets.only(top: 10.0, left: 30.0, right: 30.0, bottom: 50.0),
               child: Center(
                 child: ElevatedButton(onPressed: onButtonPressed ,
-                  child: Text("Continue", style: TextStyle(fontSize: 14.0),),
+                  child: Text("Proceed", style: TextStyle(fontSize: 15.0),),
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white, backgroundColor: HexColor("#068F13"), padding: EdgeInsets.all(10.0),
-                    minimumSize: Size(MediaQuery.of(context).size.width, 40.0),
+                    foregroundColor: Colors.white, backgroundColor: HexColor("#00B578"), padding: EdgeInsets.all(10.0),
+                    minimumSize: Size(MediaQuery.of(context).size.width, 45.0),
                     // fixedSize: Size(300.0, 50.0),
                     textStyle: TextStyle(fontSize: 15.0, fontWeight: FontWeight.normal),
                     elevation: 2,

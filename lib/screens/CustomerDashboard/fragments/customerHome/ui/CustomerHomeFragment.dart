@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:next_crib/screens/CustomerDashboard/fragments/customerHome/fragment/allProperties.dart';
-import 'package:next_crib/screens/CustomerDashboard/fragments/customerHome/fragment/nearByProperties.dart';
-import '../fragment/flipsCard.dart';
+import 'package:next_crib/screens/CustomerDashboard/fragments/customerHome/fragment/recentProperties.dart';
+import '../fragment/nearByProperties.dart';
 import 'package:next_crib/screens/CustomerDashboard/fragments/customerHome/model/AllPropertiesResponseModel.dart';
 import 'package:http/http.dart' as http;
 import '../../../../search/searchPage.dart';
@@ -26,13 +26,14 @@ class CustomerHomeFragment extends StatefulWidget {
 class _CustomerHomeFragmentState extends State<CustomerHomeFragment> {
 
   bool isAllVisible = true;
-  bool isTopVisible = true;
-  bool isNearVisible = true;
-  bool isMostVisible = true;
-  bool isFlipCardVisible = true;
-  bool isNearYouVisible = true;
-  bool isMostRecentVisible = true;
   bool isViewAllVisible = true;
+
+  bool isNearVisible = true;
+  bool isNearYouVisible = true;
+
+  bool isMostVisible = true;
+  bool isMostRecentVisible = true;
+
   bool isLoadingVisible = true;
   String locationMessage = "";
   double? longitude;
@@ -146,61 +147,40 @@ class _CustomerHomeFragmentState extends State<CustomerHomeFragment> {
     });
   }
 
-
-  void top() {
-    isTopVisible = false;
-    isAllVisible = false;
-    isNearVisible = true;
-    isMostVisible = true;
-  }
-
   void near() {
-    isNearVisible = false;
-    isTopVisible = true;
-    isAllVisible = false;
-    isMostVisible = true;
-  }
-
-  void all() {
-    isTopVisible = true;
     isAllVisible = true;
     isNearVisible = true;
     isMostVisible = true;
   }
 
+  void all() {
+    isNearVisible = false;
+    isAllVisible = false;
+    isMostVisible = true;
+  }
+
   void most() {
     isMostVisible = false;
-    isTopVisible = true;
-    isAllVisible = false;
-    isNearVisible = true;
-  }
-
-  void viewAll(){
-    isViewAllVisible = true;
-    isNearYouVisible = true;
-    isMostRecentVisible = true;
-    isFlipCardVisible = true;
-  }
-
-  void flipCard() {
-    isFlipCardVisible = false;
-    isNearYouVisible = true;
-    isMostRecentVisible = true;
-    isViewAllVisible = true;
+    isAllVisible = true;
+    isNearVisible = false;
   }
 
   void nearYou(){
+    isViewAllVisible = true;
+    isNearYouVisible = true;
+    isMostRecentVisible = true;
+  }
+
+  void viewAll(){
     isNearYouVisible = false;
     isViewAllVisible = true;
     isMostRecentVisible = true;
-    isFlipCardVisible = true;
   }
 
   void mostRecent(){
     isMostRecentVisible = false;
     isViewAllVisible = true;
-    isFlipCardVisible = true;
-    isNearYouVisible = true;
+    isNearYouVisible = false;
   }
 
   // ScrollController controller = ScrollController();
@@ -376,107 +356,13 @@ class _CustomerHomeFragmentState extends State<CustomerHomeFragment> {
 
                           Stack(
                             children: [
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    all();
-                                    viewAll();
-                                  });
-                                },
-                                child: Container(
-                                  height: 32.0,
-                                  width: 45.0,
-                                  margin: EdgeInsets.only(left: 20.0),
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(image: AssetImage(
-                                      "images/disabled_layout.png",),
-                                        fit: BoxFit.fitHeight),
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(12.0),),
-                                  ),
-                                  child: Center(
-                                    child: Text("All", style: TextStyle(
-                                        color: HexColor("#00B578"),
-                                        fontSize: 14.0),),
-                                  ),
-                                ),
-                              ),
-                              //
-                              Visibility(
-                                visible: isAllVisible,
-                                child: Container(
-                                  height: 32.0,
-                                  width: 45.0,
-                                  margin: EdgeInsets.only(left: 20.0),
-                                  decoration: BoxDecoration(
-                                    color: HexColor("#00B578"),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  child: Center(child: Text("All",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 14.0),)),
-                                ),
-                              ),
-
-                            ],
-                          ),
-
-                          Stack(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    top();
-                                    flipCard();
-                                  });
-                                },
-                                child: Container(
-                                  height: 32.0,
-                                  width: 95.0,
-                                  margin: EdgeInsets.only(left: 20.0),
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(image: AssetImage(
-                                      "images/disabled_layout.png",),
-                                        fit: BoxFit.fitHeight),
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(12.0),),
-                                  ),
-                                  child: Center(
-                                    child: Text("Top Rates", style: TextStyle(
-                                        color: HexColor("#00B578"),
-                                        fontSize: 14.0),),
-                                  ),
-                                ),
-                              ),
-                              //
-                              Visibility(
-                                visible: !isTopVisible,
-                                child: Container(
-                                  height: 32.0,
-                                  width: 95.0,
-                                  margin: EdgeInsets.only(left: 20.0),
-                                  decoration: BoxDecoration(
-                                    color: HexColor("#00B578"),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
-                                  child: Center(child: Text("Top Rates",
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 14.0),)),
-                                ),
-                              ),
-
-                            ],
-                          ),
-
-                          Stack(
-                            children: [
 
                               GestureDetector(
                                 onTap: () {
                                   setState(() {
-                                     near();
-                                     nearYou();
-                                     showLocation();
+                                    near();
+                                    nearYou();
+                                    showLocation();
                                   });
                                 },
                                 child: Container(
@@ -493,9 +379,9 @@ class _CustomerHomeFragmentState extends State<CustomerHomeFragment> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Center(
-                                        child: Text("Near You", style: TextStyle(
-                                            color: HexColor("#00B578"),
-                                            fontSize: 13.0),),
+                                      child: Text("Near You", style: TextStyle(
+                                          color: HexColor("#00B578"),
+                                          fontSize: 13.0),),
 
                                     ),
                                   ),
@@ -503,7 +389,7 @@ class _CustomerHomeFragmentState extends State<CustomerHomeFragment> {
                               ),
                               //
                               Visibility(
-                                visible: !isNearVisible,
+                                visible: isNearVisible,
                                 child: Container(
                                   height: 32.0,
                                   width: 100.0,
@@ -571,34 +457,74 @@ class _CustomerHomeFragmentState extends State<CustomerHomeFragment> {
                               ),
                             ],
                           ),
+
+                          Stack(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    all();
+                                    viewAll();
+                                  });
+                                },
+                                child: Container(
+                                  height: 32.0,
+                                  width: 45.0,
+                                  margin: EdgeInsets.only(right: 20.0),
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(image: AssetImage(
+                                      "images/disabled_layout.png",),
+                                        fit: BoxFit.fitHeight),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(12.0),),
+                                  ),
+                                  child: Center(
+                                    child: Text("All", style: TextStyle(
+                                        color: HexColor("#00B578"),
+                                        fontSize: 14.0),),
+                                  ),
+                                ),
+                              ),
+                              //
+                              Visibility(
+                                visible: !isAllVisible,
+                                child: Container(
+                                  height: 32.0,
+                                  width: 45.0,
+                                  margin: EdgeInsets.only(right: 20.0),
+                                  decoration: BoxDecoration(
+                                    color: HexColor("#00B578"),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  child: Center(child: Text("All",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 14.0),)),
+                                ),
+                              ),
+
+                            ],
+                          ),
+
                         ],
                       ),
                     ),
                   ),
 
                   Visibility(
-                    visible: isAllVisible,
-                    child: ViewAllPropertiesPage(),
-                  ),
-
-                  Visibility(
-                    visible: !isFlipCardVisible,
-                    child: FlipsCardPage(),
-                  ),
-
-                  Visibility(
-                    visible: !isNearYouVisible,
+                    visible: isNearYouVisible,
                     child: NearByPropertiesPage(),
                   ),
 
                   Visibility(
-                    visible: !isMostRecentVisible,
-                    child: Container(
-                      height: 500.0,
-                      margin: EdgeInsets.only(top: 20.0),
-                      color: Colors.amberAccent,
-                    ),
-                  )
+                    visible: !isAllVisible,
+                    child: ViewAllPropertiesPage(),
+                  ),
+
+                  Visibility(
+                    visible: !isMostVisible,
+                    child: RecentPropertiesPage(),
+                  ),
+
 
                 ]
             ),

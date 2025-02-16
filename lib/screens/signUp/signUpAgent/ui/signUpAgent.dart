@@ -192,7 +192,7 @@ class _SignUpAgentPageState extends State<SignUpAgentPage> {
               context: context,
               builder: (BuildContext context) {
                 return SuccessMessageDialog(
-                  content: 'Agent Sign up Successful',
+                  content: 'Agent Sign up Successful, please verify your Email Address',
                   onButtonPressed: () {
                     Navigator.pop(context);
                     Navigator.push(context, MaterialPageRoute(builder: (context){
@@ -790,8 +790,8 @@ class _SignUpAgentPageState extends State<SignUpAgentPage> {
                           if (value == null || value.isEmpty) {
                             return 'Enter password';
                           }
-                          if (value.length < 6) {
-                            return 'must be at least 6 characters long';
+                          if (value.length < 8) {
+                            return 'must be at least 8 characters long';
                           }
                           else{
                             return null; // Return null if the input is valid
@@ -844,8 +844,8 @@ class _SignUpAgentPageState extends State<SignUpAgentPage> {
                           if (value == null || value.isEmpty) {
                             return 'Enter password';
                           }
-                          if (value.length < 6) {
-                            return 'must be at least 6 characters long';
+                          if (value.length < 8) {
+                            return 'must be at least 8 characters long';
                           }
                           if (value != passwordController.text) {
                             return 'Passwords do not match';
@@ -962,7 +962,7 @@ class _SignUpAgentPageState extends State<SignUpAgentPage> {
                             padding: const EdgeInsets.only(right: 15.0),
                             child: Text("already have an account?", style: TextStyle(color: HexColor("#212529"), fontSize: 15.0),),
                           ),
-                          InkWell(
+                          GestureDetector(
                             onTap: (){
                               Navigator.push(context, MaterialPageRoute(builder: (context){
                                 return LogInPage();

@@ -4,14 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:next_crib/screens/database/appPrefHelper.dart';
-import '../../agentDashboard/agentDashboard.dart';
-import '../../database/saveValues.dart';
-import '../../dialogs/errorMessageDialog.dart';
-import '../../dialogs/successMessageDialog.dart';
-import '../../signUp/signUp.dart';
+import 'package:next_crib/screens/logIn/ui/agent/agentForgotPassword.dart';
+import 'package:next_crib/screens/logIn/ui/agent/agentValidateOtp.dart';
+import 'package:next_crib/screens/slider/agentSlider.dart';
+import '../../../agentDashboard/agentDashboard.dart';
+import '../../../database/saveValues.dart';
+import '../../../dialogs/errorMessageDialog.dart';
+import '../../../dialogs/successMessageDialog.dart';
+import '../../../signUp/signUp.dart';
 import 'package:http/http.dart' as http;
-import '../../signUp/signUpAgent/ui/agentEmailVerification.dart';
-import '../../webService/apiConstant.dart';
+import '../../../signUp/signUpAgent/ui/agentEmailVerification.dart';
+import '../../../webService/apiConstant.dart';
 
 class AgentFragment extends StatefulWidget {
   const AgentFragment({super.key});
@@ -71,6 +74,7 @@ class _AgentFragmentState extends State<AgentFragment> {
   Future<void> makePostRequest() async {
     loading();
     const String apiUrl = ApiConstant.agentLogInApi;
+    print("Making POST request to: $apiUrl");
     try {
       final response = await http.post(Uri.parse(apiUrl),
         headers:<String, String>{
@@ -267,8 +271,8 @@ class _AgentFragmentState extends State<AgentFragment> {
                             if (value == null || value.isEmpty) {
                               return 'Please enter password';
                             }
-                            if (value.length < 6) {
-                              return 'must be at least 6 characters long';
+                            if (value.length < 8) {
+                              return 'must be at least 8 characters long';
                             }
                             // if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
                             //     return 'Please enter a valid email';
@@ -311,20 +315,22 @@ class _AgentFragmentState extends State<AgentFragment> {
                           ),
                         ),
                       ),
-
                     ],
                   ),
                 ),
 
-               new GestureDetector(
+               GestureDetector(
                   onTap: () {
-
+                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                       return AgentForgotPasswordPage();
+                      // return AgentValidateOtpPage();
+                    }));
                   },
                   child: Align(
                     alignment: Alignment.topRight,
                     child: Container(
-                      margin: EdgeInsets.only(top: 10.0, right: 30.0),
-                      child: Text("Forgot Password?",style: TextStyle(color: HexColor("#00B578"), fontWeight: FontWeight.bold, fontSize:14.0,),),
+                      margin: EdgeInsets.only(top: 20.0, right: 30.0, bottom: 10.0),
+                      child: Text("Forgot Password?",style: TextStyle(color: HexColor("#00B578"), fontWeight: FontWeight.bold, fontSize:15.0,),),
                     ),
                   ),
                 ),
@@ -399,10 +405,11 @@ class _AgentFragmentState extends State<AgentFragment> {
                       Text("Don't have an account?",style: TextStyle(color: HexColor("#212529"), fontWeight: FontWeight.normal, fontSize:15.0,),),
                       Padding(
                         padding: const EdgeInsets.only(left: 15.0),
-                        child: InkWell(
+                        child: GestureDetector(
                             onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context){
-                            return SignUpPage();
+                            // return SignUpPage();
+                            return AgentSliderPage();
                           }));
                             },
                             child: Text("Sign Up",style: TextStyle(color: HexColor("#00B578"), fontWeight: FontWeight.bold, fontSize:15.0,),)),

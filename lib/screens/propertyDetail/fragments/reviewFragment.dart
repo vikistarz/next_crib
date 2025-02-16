@@ -5,15 +5,22 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:next_crib/screens/CustomerDashboard/fragments/customerHome/model/agentModel.dart';
+
+import '../../database/appPrefHelper.dart';
+import '../../database/saveValues.dart';
+import '../../dialogs/errorMessageDialog.dart';
+import '../../dialogs/successMessageDialog.dart';
+import '../../webService/apiConstant.dart';
+import '../ui/getRatingsReview.dart';
+import '../ui/propertydetail.dart';
 
 
 
 class ReviewFragment extends StatefulWidget {
-  ReviewFragment({super.key, required this.ratingsAverage, required this.ratingsQuantity});
+   ReviewFragment({super.key, required this.agent});
 
-  double ratingsAverage;
-  int ratingsQuantity;
-
+  Agent agent;
 
   @override
   State<ReviewFragment> createState() => _ReviewFragmentState();
@@ -23,47 +30,20 @@ class _ReviewFragmentState extends State<ReviewFragment> {
 
   final _formKey = GlobalKey<FormState>();
   bool _isButtonEnabled = false;
-  String token = "";
   String errorMessage = "";
-  int? customerId;
+  String successMessage = "";
   int? ratingValue;
   double? ratings;
   bool isLoadingVisible = true;
 
-  void loading(){
+
+
+  void _resetRating() {
     setState(() {
-      isLoadingVisible = false;
+      ratings = 0.0;
     });
   }
 
-  void isNotLoading(){
-    setState(() {
-      isLoadingVisible = true;
-    });
-  }
-
-
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   getSavedValue();
-  // }
-  //
-  // getSavedValue() async  {
-  //   SaveValues mySaveValues = SaveValues();
-  //   int? id = await mySaveValues.getInt(AppPreferenceHelper.CUSTOMER_ID);
-  //   setState(() {
-  //     customerId = id;
-  //   });
-  // }
-  //
-  // void _resetRating() {
-  //   setState(() {
-  //     ratings = 0.0;
-  //   });
-  // }
-  //
   void _validateFormField() {
     if (_formKey.currentState!.validate() && ratings! > 0 ) {
       setState(() {
@@ -78,93 +58,124 @@ class _ReviewFragmentState extends State<ReviewFragment> {
 
   final commentController = TextEditingController();
 
-  // Future<void> postComment() async {
-  //
-  //   final String apiUrl = ApiConstant.baseUri + 'skill-provider-reviews/create-review';
-  //
-  //
-  //   try {
-  //     final response = await http.post(Uri.parse(apiUrl),
-  //       headers:<String, String>{
-  //         "Content-type": "application/json"
-  //       },
-  //       body: jsonEncode(<String, dynamic>{
-  //         "skillProviderId": widget.serviceProviderId,
-  //         "customerId": customerId,
-  //         "rating": ratingValue,
-  //         "comment": commentController.text,
-  //       }),
-  //     );
-  //
-  //     print("request: " + response.toString());
-  //     print(response.statusCode);
-  //
-  //     if (response.statusCode == 201 || response.statusCode == 200){
-  //
-  //       print('Response Body: ${response.body}');
-  //       // successful post request, handle the response here
-  //       final Map<String, dynamic> responseData = jsonDecode(response.body);
-  //       setState(() {
-  //         commentController.text = "";
-  //         _resetRating();
-  //
-  //         showModalBottomSheet(
-  //             isDismissible: false,
-  //             enableDrag: false,
-  //             context: context,
-  //             builder: (BuildContext context) {
-  //               return SuccessMessageDialog(
-  //                 content: "Your review sent successfully",
-  //                 onButtonPressed: () {
-  //                   Navigator.of(context).pop();
-  //                   // Add any additional action here
-  //                 },
-  //               );
-  //             });
-  //       });
-  //     }
-  //
-  //     else{
-  //       print('Response Body: ${response.body}');
-  //       // if the server return an error response
-  //       final Map<String, dynamic> errorData = json.decode(response.body);
-  //       errorMessage = errorData['error'] ?? 'Unknown error occurred';
-  //       setState(() {
-  //         showModalBottomSheet(
-  //             isDismissible: false,
-  //             enableDrag: false,
-  //             context: context,
-  //             builder: (BuildContext context) {
-  //               return ErrorMessageDialog(
-  //                 content: errorMessage,
-  //                 onButtonPressed: () {
-  //                   Navigator.of(context).pop();
-  //                   // Add any additional action here
-  //                 },
-  //               );
-  //             });
-  //       });
-  //     }
-  //   }
-  //   catch (e) {
-  //     setState(() {
-  //       showModalBottomSheet(
-  //           isDismissible: false,
-  //           enableDrag: false,
-  //           context: context,
-  //           builder: (BuildContext context) {
-  //             return ErrorMessageDialog(
-  //               content: "Sorry no internet Connection",
-  //               onButtonPressed: () {
-  //                 Navigator.of(context).pop();
-  //                 // Add any additional action here
-  //               },
-  //             );
-  //           });
-  //     });
-  //   }
-  // }
-  //
+  void loading(){
+    setState(() {
+      isLoadingVisible = false;
+    });
+  }
+
+  void isNotLoading(){
+    setState(() {
+      isLoadingVisible = true;
+    });
+  }
+
+
+  Future<void> postComment() async {
+    loading();
+    SaveValues mySaveValues = SaveValues();
+    String? customerId = await mySaveValues.getString(AppPreferenceHelper.CUSTOMER_ID);
+    String? token = await mySaveValues.getString(AppPreferenceHelper.AUTH_TOKEN);
+
+    final String apiUrl = ApiConstant.baseUri+"agents/"+widget.agent.id+"/reviews";
+    print("Making POST request to: $apiUrl");
+    try {
+      final response = await http.post(Uri.parse(apiUrl),
+        headers:<String, String>{
+          "Content-type": "application/json",
+          "Authorization": "Bearer $token"
+        },
+        body: jsonEncode(<String, dynamic>{
+        "review": commentController.text,
+        "rating": ratingValue,
+        "customer": customerId
+
+        }),
+      );
+
+      print("request: " + response.toString());
+      print(response.statusCode);
+
+      if (response.statusCode == 201 || response.statusCode == 200){
+        isNotLoading();
+        print('Response Body: ${response.body}');
+        // successful post request, handle the response here
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        setState(() {
+          successMessage = responseData['message'];
+          commentController.text = "";
+          _resetRating();
+
+          showModalBottomSheet(
+              isDismissible: false,
+              enableDrag: false,
+              context: context,
+              builder: (BuildContext context) {
+                return SuccessMessageDialog(
+                  content: successMessage,
+                  onButtonPressed: () {
+                    Navigator.of(context).pop();
+                    // Navigator.push(context, MaterialPageRoute(builder: (context){
+                    //   return Cust;
+                    // }));
+                    // Add any additional action here
+                  },
+                );
+              });
+        });
+      }
+
+      else{
+        isNotLoading();
+        print('Response Body: ${response.body}');
+        // if the server return an error response
+        final Map<String, dynamic> errorData = json.decode(response.body);
+        errorMessage = errorData['message'] ?? 'Unknown error occurred';
+        setState(() {
+          showModalBottomSheet(
+              isDismissible: false,
+              enableDrag: false,
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorMessageDialog(
+                  content: errorMessage,
+                  onButtonPressed: () {
+                    Navigator.of(context).pop();
+                    // Add any additional action here
+                  },
+                );
+              });
+        });
+      }
+    }
+    catch (e) {
+      isNotLoading();
+      print('Response Body: $e');
+      setState(() {
+        showModalBottomSheet(
+            isDismissible: false,
+            enableDrag: false,
+            context: context,
+            builder: (BuildContext context) {
+              return ErrorMessageDialog(
+                content: "Sorry no internet Connection",
+                onButtonPressed: () {
+                  Navigator.of(context).pop();
+                  // Add any additional action here
+                },
+              );
+            });
+      });
+    }
+  }
+
+
+
+
+
+
+
+
   // Future<List<GetReviewResponseModel>> fetchReviews(int serviceProviderId) async {
   //   final String apiUrl = ApiConstant.baseUri + 'skill-provider-reviews/details/$serviceProviderId';
   //
@@ -225,7 +236,7 @@ class _ReviewFragmentState extends State<ReviewFragment> {
          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-                  child: Text("Ratings & Reviews (${widget.ratingsQuantity})", style: TextStyle(color: HexColor("#2A2B3F"), fontSize: 20.0),),
+                  child: Text("Ratings & Reviews(${widget.agent.ratingsQuantity.toString()})", style: TextStyle(color: HexColor("#2A2B3F"), fontSize: 20.0),),
                  ),
 
             Padding(
@@ -417,7 +428,7 @@ class _ReviewFragmentState extends State<ReviewFragment> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(left:20.0),
-                            child: Text(widget.ratingsAverage.toString(), style: TextStyle(color: HexColor("#2A2B3F"), fontSize: 20.0),),
+                            child: Text(widget.agent.ratingsAverage.toString(), style: TextStyle(color: HexColor("#2A2B3F"), fontSize: 20.0),),
                           ),
 
                           Padding(
@@ -430,7 +441,7 @@ class _ReviewFragmentState extends State<ReviewFragment> {
 
                     Padding(
                       padding: const EdgeInsets.only(left:20.0),
-                      child: Text("${widget.ratingsQuantity} Reviews", style: TextStyle(color: HexColor("#838383"), fontSize: 11.0),),
+                      child: Text("${widget.agent.ratingsQuantity.toString()}" + " " +"Reviews", style: TextStyle(color: HexColor("#838383"), fontSize: 11.0),),
                     ),
                   ],
                 ),
@@ -440,7 +451,9 @@ class _ReviewFragmentState extends State<ReviewFragment> {
 
       GestureDetector(
         onTap: (){
-
+          Navigator.push(context, MaterialPageRoute(builder: (context){
+            return GetRatingsReviewPage(agent: widget.agent);
+          }));
         },
         child: Container(
           height: 50.0,
@@ -552,34 +565,97 @@ class _ReviewFragmentState extends State<ReviewFragment> {
               ),
             ),
 
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: Center(
-                child: ElevatedButton(onPressed: _isButtonEnabled
-                    ? () {
-                  // Action to be taken on button press
-                  // ratingValue = ratings?.toInt();
-                  // postComment();
-
-                }
-                    : null,
-                  child: Text("Review", style: TextStyle(fontSize: 15.0),),
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white, backgroundColor: HexColor("#00B578"),
-                    minimumSize: Size(MediaQuery.of(context).size.width, 50.0),
-                    // fixedSize: Size(300.0, 50.0),
-                    textStyle: TextStyle(fontSize: 15.0, fontWeight: FontWeight.normal),
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0),
-                          topRight: Radius.circular(15.0),
-                          bottomRight: Radius.circular(15.0),
-                          bottomLeft: Radius.circular(15.0)),
+            Stack(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Center(
+                    child: ElevatedButton(onPressed: _isButtonEnabled
+                        ? () {
+                      // Action to be taken on button press
+                      ratingValue = ratings?.toInt();
+                      postComment();
+                    }
+                        : null, // Disable button if form is invalid() {
+                      child: Text("Review", style: TextStyle(fontSize: 15.0),),
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white, backgroundColor: HexColor("#00B578"), padding: EdgeInsets.all(10.0),
+                        minimumSize: Size(MediaQuery.of(context).size.width, 50.0),
+                        // fixedSize: Size(300.0, 50.0),
+                        textStyle: TextStyle(fontSize: 15.0, fontWeight: FontWeight.normal),
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0),
+                              topRight: Radius.circular(15.0),
+                              bottomRight: Radius.circular(15.0),
+                              bottomLeft: Radius.circular(15.0)),
+                        ),
+                        // side: BorderSide(color: Colors.black, width: 2),
+                        // alignment: Alignment.topCenter
+                      ),
                     ),
                   ),
                 ),
-              ),
+
+                Visibility(
+                  visible: !isLoadingVisible,
+                  child: Container(
+                    height: 50.0,
+                    width: MediaQuery.of(context).size.width,
+                    margin: EdgeInsets.only(top: 20.0),
+                    decoration: BoxDecoration(
+                      color: Colors.greenAccent,
+                      borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+
+                        SpinKitFadingCircle(
+                          color: HexColor("#F5F6F6"),
+                          size: 20.0,
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
+                          child: Text("Loading",style: TextStyle(color: Colors.white, fontWeight: FontWeight.normal, fontSize:12.0,),),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+              ],
             ),
+
+
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 20.0),
+            //   child: Center(
+            //     child: ElevatedButton(onPressed: _isButtonEnabled
+            //         ? () {
+            //       // Action to be taken on button press
+            //       ratingValue = ratings?.toInt();
+            //       postComment();
+            //     }
+            //         : null,
+            //       child: Text("Review", style: TextStyle(fontSize: 15.0),),
+            //       style: ElevatedButton.styleFrom(
+            //         foregroundColor: Colors.white, backgroundColor: HexColor("#00B578"),
+            //         minimumSize: Size(MediaQuery.of(context).size.width, 50.0),
+            //         // fixedSize: Size(300.0, 50.0),
+            //         textStyle: TextStyle(fontSize: 15.0, fontWeight: FontWeight.normal),
+            //         elevation: 2,
+            //         shape: RoundedRectangleBorder(
+            //           borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0),
+            //               topRight: Radius.circular(15.0),
+            //               bottomRight: Radius.circular(15.0),
+            //               bottomLeft: Radius.circular(15.0)),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
 
             SizedBox(
               height: 50.0,

@@ -143,7 +143,7 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
               context: context,
               builder: (BuildContext context) {
                 return SuccessMessageDialog(
-                  content: "Customer Sign up Successful",
+                  content: "Customer Sign up Successful, please verify your Email Address",
                   onButtonPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context){
                       return const CustomerEmailVerificationPage();
@@ -160,7 +160,7 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
         print('Response Body: ${response.body}');
         // if the server return an error response
         final Map<String, dynamic> errorData = json.decode(response.body);
-        errorMessage = errorData['error'] ?? 'Unknown error occurred';
+        errorMessage = errorData['message'] ?? 'Unknown error occurred';
         setState(() {
           showModalBottomSheet(
               isDismissible: false,
@@ -626,7 +626,7 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                   visible: officeAddressVisible,
                   child: Padding(
                     padding: const EdgeInsets.only(top: 10.0, left: 30.0),
-                    child: Text(" Office Address", style: TextStyle(color: HexColor("#5B5B5B"), fontSize: 12.0, fontWeight: FontWeight.bold),),
+                    child: Text("Home Address", style: TextStyle(color: HexColor("#5B5B5B"), fontSize: 12.0, fontWeight: FontWeight.bold),),
                   ),
                 ),
 
@@ -679,8 +679,8 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                       if (value == null || value.isEmpty) {
                         return 'Enter password';
                       }
-                      if (value.length < 6) {
-                        return 'must be at least 6 characters long';
+                      if (value.length < 8) {
+                        return 'must be at least 8 characters long';
                       }
                       else{
                         return null; // Return null if the input is valid
@@ -733,8 +733,8 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                       if (value == null || value.isEmpty) {
                         return 'Enter password';
                       }
-                      if (value.length < 6) {
-                        return 'must be at least 6 characters long';
+                      if (value.length < 8) {
+                        return 'must be at least 8 characters long';
                       }
                       if (value != passwordController.text) {
                         return 'Passwords do not match';
@@ -850,7 +850,7 @@ class _SignUpCustomerPageState extends State<SignUpCustomerPage> {
                         padding: const EdgeInsets.only(right: 15.0),
                         child: Text("already have an account?", style: TextStyle(color: HexColor("#212529"), fontSize: 15.0),),
                       ),
-                      InkWell(
+                      GestureDetector(
                         onTap: (){
                           Navigator.push(context, MaterialPageRoute(builder: (context){
                             return LogInPage();

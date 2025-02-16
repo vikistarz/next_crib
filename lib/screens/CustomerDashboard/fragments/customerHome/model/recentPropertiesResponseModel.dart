@@ -1,8 +1,6 @@
 
 
 
-
-
 import 'agentModel.dart';
 
 class DataItem {
@@ -82,23 +80,23 @@ class DataItem {
   }
 }
 
-class AllPropertiesResponseModel {
+class RecentPropertiesResponseModel {
   final String status;
   final int results;
   final List<DataItem> items;
 
-  AllPropertiesResponseModel({
+  RecentPropertiesResponseModel({
     required this.status,
     required this.results,
     required this.items,
   });
 
-  factory AllPropertiesResponseModel .fromJson(Map<String, dynamic> json) {
-    final dataList = json['data']['data'] as List<dynamic>;
+  factory RecentPropertiesResponseModel .fromJson(Map<String, dynamic> json) {
+    final dataList = json['data'] as List<dynamic>;
     List<DataItem> items =
     dataList.map((item) => DataItem.fromJson(item)).toList();
 
-    return AllPropertiesResponseModel (
+    return RecentPropertiesResponseModel (
       status: json['status'],
       results: json['results'],
       items: items,

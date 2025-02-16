@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'agentFragment.dart';
-import 'customerFragment.dart';
+import 'agent/agentFragment.dart';
+import 'customer/customerFragment.dart';
 class LogInPage extends StatefulWidget {
   LogInPage({super.key});
 

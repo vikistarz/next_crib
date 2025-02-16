@@ -19,7 +19,20 @@ class ApiConstant {
 
   static const String customerLogInApi = baseUri + 'customers/login';
 
+  static const String customerForgetPassword = baseUri + 'customers/forgot-password';
+
+  static const String agentForgetPassword = baseUri + 'agents/forgot-password';
+
+  static const String customerValidateOtp = baseUri + 'customers/validate-otp';
+
+  static const String agentValidateOtp = baseUri + 'agents/validate-otp';
+
+  static const String customerResetPassword = baseUri + 'customers/reset-password';
+
+  static const String agentResetPassword = baseUri + 'agents/reset-password';
+
   static const String getAllProperties = baseUri + 'properties';
 
+  static const String getRecentProperties = baseUri + 'properties/latest';
 
 }

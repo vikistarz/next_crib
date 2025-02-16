@@ -4,15 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import '../../CustomerDashboard/ui/CustomerDashboard.dart';
-import '../../database/appPrefHelper.dart';
-import '../../database/saveValues.dart';
-import '../../dialogs/errorMessageDialog.dart';
-import '../../dialogs/successMessageDialog.dart';
-import '../../signUp/signUp.dart';
-import '../../signUp/signUpCustomer/ui/customerEmailVerification.dart';
-import '../../webService/apiConstant.dart';
+import 'package:next_crib/screens/logIn/ui/customer/customerForgotPassword.dart';
+import 'package:next_crib/screens/logIn/ui/customer/customerResetPassword.dart';
+import '../../../CustomerDashboard/ui/CustomerDashboard.dart';
+import '../../../database/appPrefHelper.dart';
+import '../../../database/saveValues.dart';
+import '../../../dialogs/errorMessageDialog.dart';
+import '../../../dialogs/successMessageDialog.dart';
+import '../../../signUp/signUp.dart';
+import '../../../signUp/signUpCustomer/ui/customerEmailVerification.dart';
+import '../../../webService/apiConstant.dart';
 import 'package:http/http.dart' as http;
+
 
 class CustomerFragment extends StatefulWidget {
   const CustomerFragment({super.key});
@@ -46,13 +49,13 @@ class _CustomerFragmentState extends State<CustomerFragment> {
   }
 
 
-  TextEditingController emailAddressPhoneController = TextEditingController();
+  TextEditingController emailAddressController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
 
   @override
   void dispose() {
-    emailAddressPhoneController.dispose();
+    emailAddressController.dispose();
     passwordController.dispose();
     super.dispose();
   }
@@ -72,13 +75,14 @@ class _CustomerFragmentState extends State<CustomerFragment> {
   Future<void> makePostRequest() async {
     loading();
     final String apiUrl = ApiConstant.customerLogInApi;
+    print("Making POST request to: $apiUrl");
     try {
       final response = await http.post(Uri.parse(apiUrl),
         headers:<String, String>{
           "Content-type": "application/json"
         },
         body: jsonEncode(<String, dynamic>{
-          "emailOrPhone": emailAddressPhoneController.text,
+          "email": emailAddressController.text,
           "password": passwordController.text,
         }),
       );
@@ -86,7 +90,7 @@ class _CustomerFragmentState extends State<CustomerFragment> {
       print("request: " + response.toString());
       print(response.statusCode);
 
-      if (response.statusCode == 200 || response.statusCode == 201) {
+      if (response.statusCode == 200) {
         isNotLoading();
         print('Response Body: ${response.body}');
         // successful post request, handle the response here
@@ -117,7 +121,7 @@ class _CustomerFragmentState extends State<CustomerFragment> {
         isNotLoading();
         // if the server return an error response
         final Map<String, dynamic> errorData = json.decode(response.body);
-        errorMessage = errorData['error'] ?? 'Unknown error occurred';
+        errorMessage = errorData['message'] ?? 'Unknown error occurred';
         // Check if the string contains specific words
         if (errorMessage.contains("Email not verified")) {
           showModalBottomSheet(
@@ -228,7 +232,7 @@ class _CustomerFragmentState extends State<CustomerFragment> {
                        return null; // Return null if the input is valid
                      }
                           },
-                      controller: emailAddressPhoneController,
+                      controller: emailAddressController,
                       keyboardType:TextInputType.text,
                       decoration: InputDecoration(
                         filled: true, // Set this to true to enable the background color
@@ -265,8 +269,8 @@ class _CustomerFragmentState extends State<CustomerFragment> {
                         if (value == null || value.isEmpty) {
                           return 'Please enter password';
                         }
-                        if (value.length < 6) {
-                          return 'must be at least 6 characters long';
+                        if (value.length < 8) {
+                          return 'must be at least 8 characters long';
                         }
                         // if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
                         //     return 'Please enter a valid email';
@@ -314,15 +318,20 @@ class _CustomerFragmentState extends State<CustomerFragment> {
                   ),
                  ),
 
-               InkWell(
+                 GestureDetector(
                  onTap: () {
+                   Navigator.push(context, MaterialPageRoute(builder: (context){
 
+                       return CustomerForgotPasswordPage();
+                     // return CustomerDashboardPage();
+
+                   }));
                  },
                  child: Align(
                          alignment: Alignment.topRight,
                            child: Container(
-                             margin: EdgeInsets.only(top: 10.0, right: 30.0),
-                             child: Text("Forgot Password?",style: TextStyle(color: HexColor("#00B578"), fontWeight: FontWeight.bold, fontSize:14.0,),),
+                             margin: EdgeInsets.only(top: 20.0, right: 30.0, bottom: 10.0),
+                             child: Text("Forgot Password?",style: TextStyle(color: HexColor("#00B578"), fontWeight: FontWeight.bold, fontSize:15.0,),),
                            ),
                        ),
                ),
@@ -398,7 +407,7 @@ class _CustomerFragmentState extends State<CustomerFragment> {
                             Text("Don't have an account?",style: TextStyle(color: HexColor("#212529"), fontWeight: FontWeight.normal, fontSize:15.0,),),
                            Padding(
                              padding: const EdgeInsets.only(left: 15.0),
-                             child: InkWell(
+                             child: GestureDetector(
                                onTap: (){
                                  Navigator.push(context, MaterialPageRoute(builder: (context){
                                    return SignUpPage();

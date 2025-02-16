@@ -3,6 +3,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
 import '../../CustomerDashboard/fragments/customerHome/model/AllPropertiesResponseModel.dart';
+import '../../CustomerDashboard/fragments/customerHome/model/agentModel.dart';
 class DescriptionFragment extends StatefulWidget {
      DescriptionFragment({super.key,required this.description, required this.createdAt,
        required this.totalPackage, required this.dimension, required this.bedroom,

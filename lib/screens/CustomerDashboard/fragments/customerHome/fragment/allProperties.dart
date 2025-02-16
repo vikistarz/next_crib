@@ -126,7 +126,7 @@ class _ViewAllPropertiesPageState extends State<ViewAllPropertiesPage> {
                 return GestureDetector(
                   onTap: (){
                     Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return PropertyDetailPage(ratingsAverage: property.ratingsAverage, ratingsQuantity: property.ratingsQuantity, propertyImages: property.propertyImages,
+                      return PropertyDetailPage(propertyImages: property.propertyImages,
                           coordinates: property.coordinates, createdAt: property.createdAt, ids: property.ids, title: property.title, stock: property.stock, dimension: property.dimension,
                           annualCost: property.annualCost, totalPackage: property.totalPackage, description: property.description, category: property.category,
                           bedroom: property.bedroom, toilets: property.toilets, agent: property.agent, state: property.state,
