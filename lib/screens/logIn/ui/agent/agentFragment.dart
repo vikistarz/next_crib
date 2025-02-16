@@ -105,6 +105,7 @@ class _AgentFragmentState extends State<AgentFragment> {
                 return SuccessMessageDialog(
                   content: "Agent Login Successful",
                   onButtonPressed: () {
+                    Navigator.pop(context);
                     Navigator.push(context, MaterialPageRoute(builder: (context){
                       return const AgentDashboardPage();
                     }));

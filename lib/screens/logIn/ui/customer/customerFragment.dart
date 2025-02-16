@@ -106,6 +106,7 @@ class _CustomerFragmentState extends State<CustomerFragment> {
                 return SuccessMessageDialog(
                   content: "Customer Log in Successful",
                   onButtonPressed: () {
+                    Navigator.pop(context);
                     Navigator.push(context, MaterialPageRoute(builder: (context){
                       return CustomerDashboardPage();
                     }));
