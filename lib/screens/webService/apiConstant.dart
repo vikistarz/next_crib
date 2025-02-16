@@ -7,13 +7,32 @@ class ApiConstant {
 
   static const String getStateApi = baseUri + 'location/states/NG';
 
-  static const String agentSignUpApi = baseUri + 'users/signup';
+  static const String agentSignUpApi = baseUri + 'agents/signup';
 
-  static const String emailVerification = baseUri + 'users/verify-email';
+  static const String customerSignUpApi = baseUri + 'customers/signup';
 
-  static const String logInApi = baseUri + 'users/login';
+  static const String agentEmailVerification = baseUri + 'agents/verify-email';
+
+  static const String customerEmailVerification = baseUri + 'customers/verify-email';
+
+  static const String agentLogInApi = baseUri + 'agents/login';
+
+  static const String customerLogInApi = baseUri + 'customers/login';
+
+  static const String customerForgetPassword = baseUri + 'customers/forgot-password';
+
+  static const String agentForgetPassword = baseUri + 'agents/forgot-password';
+
+  static const String customerValidateOtp = baseUri + 'customers/validate-otp';
+
+  static const String agentValidateOtp = baseUri + 'agents/validate-otp';
+
+  static const String customerResetPassword = baseUri + 'customers/reset-password';
+
+  static const String agentResetPassword = baseUri + 'agents/reset-password';
 
   static const String getAllProperties = baseUri + 'properties';
 
+  static const String getRecentProperties = baseUri + 'properties/latest';
 
 }

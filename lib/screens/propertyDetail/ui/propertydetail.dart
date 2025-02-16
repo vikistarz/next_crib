@@ -3,18 +3,18 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:next_crib/screens/propertyDetail/fragments/galleryFragment.dart';
 import 'package:intl/intl.dart';
 import '../../CustomerDashboard/fragments/customerHome/model/AllPropertiesResponseModel.dart';
+import '../../CustomerDashboard/fragments/customerHome/model/agentModel.dart';
 import '../fragments/descriptionFragment.dart';
 import '../fragments/reviewFragment.dart';
 class PropertyDetailPage extends StatefulWidget {
-   PropertyDetailPage({super.key, required this.ratingsAverage, required this.ratingsQuantity,
-     required this.propertyImages, required this.coordinates, required this.createdAt, required this.ids,
+   PropertyDetailPage({super.key, required this.propertyImages, required this.coordinates, required this.createdAt, required this.ids,
      required this.title, required this.stock, required this.dimension, required this.annualCost,
      required this.totalPackage, required this.description, required this.category,  required this.toilets,
      required this.agent, required this.bedroom, required this.state, required this.city,required this.location,
      required this.sku, required this.id});
 
-   double ratingsAverage;
-   int ratingsQuantity;
+   // double ratingsAverage;
+   // int ratingsQuantity;
    List<String> propertyImages;
    List<double> coordinates;
    String createdAt;
@@ -74,6 +74,8 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
   @override
   Widget build(BuildContext context) {
     String formattedAnnualCost = NumberFormat("#,##0").format(widget.annualCost);
+    final capitalisedFirstName  = capitalize(widget.agent.firstName);
+    final capitalisedLastName  = capitalize(widget.agent.lastName);
     final capitalisedTitle  = capitalize(widget.title);
     final capitalisedState  = capitalize(widget.state);
     final capitalisedCity  = capitalize(widget.city);
@@ -101,24 +103,118 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                   ),
                 ),
 
-                GestureDetector(
-                  onTap: (){
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    height: 40.0,
-                    width: 40.0,
-                    margin: EdgeInsets.only(left: 16.0, top: 20.0),
-                    decoration: BoxDecoration(
-                      color: HexColor("#F5F5F5"),
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 5.0),
-                      child: Icon(Icons.arrow_back_ios, size: 20.0, color: Colors.black,),
-                    ),
+                Container(
+                  height: 270.0,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: (){
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              height: 40.0,
+                              width: 40.0,
+                              margin: EdgeInsets.only(left: 16.0, top: 20.0),
+                              decoration: BoxDecoration(
+                                color: HexColor("#F5F5F5"),
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 5.0),
+                                child: Icon(Icons.arrow_back_ios, size: 20.0, color: Colors.black,),
+                              ),
+                            ),
+                          ),
+
+                          Expanded(child: SizedBox()),
+
+                          Container(
+                            height: 40.0,
+                            width: 40.0,
+                            margin: EdgeInsets.only(right: 16.0, top: 20.0),
+                            decoration: BoxDecoration(
+                              color: HexColor("#F5F5F5"),
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 0.0),
+                              child: Icon(Icons.favorite_outline_rounded, size: 20.0, color: Colors.black,),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      Expanded(child: SizedBox()),
+
+                        Row(
+                          children: [
+                            Expanded(child: SizedBox()),
+
+                            GestureDetector(
+                              onTap: (){
+
+                              },
+                              child: Container(
+                                height: 45.0,
+                                margin: EdgeInsets.only(right: 20.0, top: 20.0, bottom: 30.0),
+                                decoration: BoxDecoration(
+                                  color: HexColor("#F5F5F5"),
+                                  borderRadius: BorderRadius.circular(3.0),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 7.0),
+                                      child:  Container(
+                                        height: 30.0,
+                                        width: 30.0,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey,
+                                          borderRadius: BorderRadius.circular(15.0),
+                                          image: DecorationImage(image: AssetImage("images/slider_image_three.png"),),
+                                        ),
+                                      ),
+                                    ),
+
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Stack(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(top: 9.0, left: 5.0),
+                                              child: Text("Verified",style: TextStyle(color:HexColor("#00B578"), fontWeight: FontWeight.normal, fontSize:9.0,),),
+                                            ),
+
+                                            Padding(
+                                              padding: const EdgeInsets.only(top: 9.0, left: 5.0),
+                                              child: Text("Not Verified",style: TextStyle(color:HexColor("#B50000"), fontWeight: FontWeight.normal, fontSize:9.0,),),
+                                            ),
+
+                                          ],
+                                        ),
+
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 0.0, left: 5.0, right: 10.0),
+                                          child: Text(capitalisedFirstName + " " + capitalisedLastName,style: TextStyle(color:Colors.black, fontWeight: FontWeight.normal, fontSize:11.0,),),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+
+                    ],
                   ),
                 ),
+
+
               ],
             ),
 
@@ -136,8 +232,8 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                   Padding(
                     padding: const EdgeInsets.only(
                         top: 12.0, left: 3.0),
-                    child: Text(widget.ratingsAverage.toString()+ " " + " (${widget.ratingsQuantity} " "review)", style: TextStyle(
-                      color: Colors.black,
+                        child: Text(widget.agent.ratingsAverage.toString() + "(${widget.agent.ratingsQuantity.toString()} review)", style: TextStyle(
+                      color: HexColor("#838383"),
                       fontWeight: FontWeight.normal,
                       fontSize: 13.0,),),
                   ),
@@ -371,7 +467,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
 
                   Visibility(
                     visible:  !isReviewVisible,
-                    child: ReviewFragment(ratingsAverage: widget.ratingsAverage, ratingsQuantity: widget.ratingsQuantity),
+                    child: ReviewFragment(agent: widget.agent),
                   ),
                 ],
               ),

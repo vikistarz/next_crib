@@ -105,6 +105,15 @@ flutter:
     - images/time_lapse.png
     - images/cancel_x.png
     - images/Love.png
+    - images/success_tick.png
+    - images/error_tick.png
+    - images/forget_password.png
+    - images/password_reset.png
+    - images/success_recovery.png
+    - images/slider_image_one.png
+    - images/slider_image_two.png
+    - images/slider_image_three.png
+    - images/man.png
 
 
 

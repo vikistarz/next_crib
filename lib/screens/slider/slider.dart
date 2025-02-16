@@ -126,8 +126,8 @@ class _SliderPageState extends State<SliderPage> {
                        child: ElevatedButton(onPressed: () {
 
                          Navigator.push(context, MaterialPageRoute(builder: (context){
-                             // return LogInPage();
-                           return const CustomerDashboardPage();
+                             return LogInPage();
+                           // return const CustomerDashboardPage();
                          }));
                        },
                          child: Text("Get Started", style: TextStyle(fontSize: 17.0),),
