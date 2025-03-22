@@ -1,16 +1,38 @@
 
 import'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import '../database/appPrefHelper.dart';
+import '../database/saveValues.dart';
 import '../logIn/ui/logIn.dart';
 
 class LogOutDialog extends StatelessWidget {
   const LogOutDialog({super.key});
 
+  Future<void> logout(BuildContext context) async {
+    SaveValues mySaveValues = SaveValues();
+
+   // Clear all stored authentication data
+    await mySaveValues.clearPrefValue(AppPreferenceHelper.AUTH_TOKEN);
+    await mySaveValues.clearPrefValue(AppPreferenceHelper.CUSTOMER_ID);
+    await mySaveValues.clearPrefValue(AppPreferenceHelper.AGENT_ID);
+
+
+    print("User logged out. Cleared token and IDs."); // Debugging log
+
+    // Navigate back to Slider Screen and remove all previous routes
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => LogInPage()),
+          (route) => false, // Remove all previous screens from stack
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: 225.0,
+      height: MediaQuery.of(context).size.height * 0.35,
       child: Column(
         children: [
           Align(
@@ -66,10 +88,7 @@ class LogOutDialog extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 20.0, left: 16.0,  bottom: 50.0),
                 child: Center(
                   child: ElevatedButton(onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return LogInPage();
-                    }));
-
+                    logout(context);
                   },
                     child: Text("Yes", style: TextStyle(fontSize: 14.0),),
                     style: ElevatedButton.styleFrom(

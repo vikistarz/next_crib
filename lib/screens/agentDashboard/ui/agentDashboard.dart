@@ -1,66 +1,39 @@
-import 'dart:convert';
+import 'dart:io';
 
-import'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:http/http.dart' as http;
-import '../fragments/customerAccountFragment.dart';
-import '../fragments/customerHome/ui/CustomerHomeFragment.dart';
-import '../fragments/CustomerMessageFragment.dart';
-import '../fragments/CustomerWishlistFragment.dart';
+import 'package:next_crib/screens/createProperty/createProperty.dart';
 
-
-class CustomerDashboardPage extends StatefulWidget {
-  const CustomerDashboardPage({super.key});
+import '../fragment/agentAccountFragment.dart';
+import '../fragment/agentHomeFragment.dart';
+import '../fragment/agentMoreFragment.dart';
+import '../fragment/agentWalletFragment.dart';
+class AgentDashboardPage extends StatefulWidget {
+  const AgentDashboardPage({super.key});
 
   @override
-  State<CustomerDashboardPage> createState() => _CustomerDashboardPageState();
+  State<AgentDashboardPage> createState() => _AgentDashboardPageState();
 }
 
-class _CustomerDashboardPageState extends State<CustomerDashboardPage> {
+class _AgentDashboardPageState extends State<AgentDashboardPage> {
 
   int pageIndex = 0;
-  int? customerId ;
-  String errorMessage = "";
-  String firstName = "";
-  String lastName = "";
-  String emailAddress = "";
-
-
-  @override
-  void initState() {
-    super.initState();
-    // getSavedValue();
-  }
-
-
   final pages = [
-    const CustomerHomeFragment(),
-    const CustomerWishlistFragment(),
-    const CustomerMessageFragment(),
-    const CustomerAccountFragment(),
+    const AgentHomeFragment(),
+    const AgentWalletFragment(),
+    const AgentMoreFragment(),
+    const AgentAccountFragment(),
   ];
-
-
-  String capitalize(String text) {
-    if (text.isEmpty) {
-      return text;
-    }
-    return text[0].toUpperCase() + text.substring(1).toLowerCase();
-  }
-
 
   @override
   Widget build(BuildContext context) {
-    final capitalisedFirstName = capitalize(firstName);
-    final capitalisedLastName = capitalize(lastName);
-    final capitalisedEmail = capitalize(emailAddress);
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) async {
-       _showExitDialog(context);
+        // _showExitDialog(context);
         // return exitApp; // Return true to exit, false to stay
-        SystemNavigator.pop();
+         SystemNavigator.pop();
       },
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -136,15 +109,15 @@ class _CustomerDashboardPageState extends State<CustomerDashboardPage> {
                           padding: const EdgeInsets.only(right: 2.0, top: 2.0),
                           child: IconButton(onPressed: null,
                             icon: pageIndex == 1 ? Icon(
-                              Icons.favorite, size: 25.0,
+                              Icons.wallet, size: 25.0,
                               color: HexColor("#00B578"),) :
-                            Icon(Icons.favorite_outline_rounded, size: 25.0,
+                            Icon(Icons.wallet_outlined, size: 25.0,
                               color: HexColor("#838383"),),
                             enableFeedback: false,),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 38.0, left: 5.0),
-                          child: new Text("Wishlist", style: pageIndex == 1
+                          padding: const EdgeInsets.only(top: 38.0, left: 8.0),
+                          child: new Text("Wallet", style: pageIndex == 1
                               ? TextStyle(
                               color: HexColor("#00B578"), fontSize: 12.0)
                               : TextStyle(
@@ -158,6 +131,24 @@ class _CustomerDashboardPageState extends State<CustomerDashboardPage> {
 
               InkWell(
                 onTap: () {
+
+                  Navigator.push(context, MaterialPageRoute(builder: (context){
+                    // return LogInPage();
+                    return const CreatePropertyPage();
+                  }));
+                },
+                child:
+                        Padding(
+                          padding: const EdgeInsets.only(right: 0.0, top: 0.0),
+                          child: IconButton(onPressed: null,
+                            icon:Icon(Icons.add_circle, size: 45.0,
+                              color: HexColor("#838383"),)
+                          ),
+                        ),
+                 ),
+
+              InkWell(
+                onTap: () {
                   setState(() {
                     pageIndex = 2;
                   });
@@ -167,18 +158,18 @@ class _CustomerDashboardPageState extends State<CustomerDashboardPage> {
                     Stack(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 0.0, top: 2.0),
+                          padding: const EdgeInsets.only(right: 2.0, top: 2.0),
                           child: IconButton(onPressed: null,
                             icon: pageIndex == 2 ? Icon(
-                              Icons.message_sharp, size: 25.0,
+                              Icons.settings, size: 25.0,
                               color: HexColor("#00B578"),) :
-                            Icon(Icons.message_sharp, size: 25.0,
+                            Icon(Icons.settings, size: 25.0,
                               color: HexColor("#838383"),),
                             enableFeedback: false,),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 38.0,),
-                          child: new Text("Message", style: pageIndex == 2
+                          padding: const EdgeInsets.only(left: 3.0, top: 38.0,),
+                          child: new Text("Settings", style: pageIndex == 2
                               ? TextStyle(
                               color: HexColor("#00B578"), fontSize: 12.0)
                               : TextStyle(
@@ -229,27 +220,5 @@ class _CustomerDashboardPageState extends State<CustomerDashboardPage> {
       ),
     );
   }
-
-  Future<bool> _showExitDialog(BuildContext context) async {
-    return await showDialog(
-      context: context,
-      barrierDismissible: false, // Prevent dismissing by tapping outside
-      builder: (context) => AlertDialog(
-        title: Text("Exit App"),
-        content: Text("Are you sure you want to exit?"),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false), // Stay in app
-            child: Text("Cancel"),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true), // Exit app
-            child: Text("Exit"),
-          ),
-        ],
-      ),
-    ) ??
-        false; // Return false if dialog is dismissed
-  }
-
 }
+

@@ -106,15 +106,15 @@ class _GetRatingsReviewPageState extends State<GetRatingsReviewPage> {
                   children: [
                     Row(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 40.0, left: 25.0),
-                          child: Image(image: AssetImage("images/error_icon.png"), width: 40.0, height: 40.0,),
-                        ),
+
+                      Expanded(child: SizedBox(),),
 
                         Padding(
                           padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 20.0),
                           child: Text('Sorry an error occurred', style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.normal,),),
-                        )
+                        ),
+
+                        Expanded(child: SizedBox(),),
                       ],
                     ),
 
@@ -151,55 +151,62 @@ class _GetRatingsReviewPageState extends State<GetRatingsReviewPage> {
             );
           }
           else if(!snapshot.hasData || snapshot.data!.items.isEmpty || snapshot.data == null){
-            return Dialog(
-              backgroundColor: Colors.white,
-              child: Container(
-                height: 170.0,
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 40.0, left: 25.0),
-                          child: Image(image: AssetImage("images/error_icon.png"), width: 40.0, height: 40.0,),
-                        ),
+            // return Dialog(
+            //   backgroundColor: Colors.white,
+            //   child: Container(
+            //     height: 170.0,
+            //     child: Column(
+            //       children: [
+            //         Row(
+            //           children: [
+            //             // Padding(
+            //             //   padding: const EdgeInsets.only(top: 40.0, left: 25.0),
+            //             //   child: Image(image: AssetImage("images/error_icon.png"), width: 40.0, height: 40.0,),
+            //             // ),
+            //
+            //             Padding(
+            //               padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 20.0),
+            //               child: Text('No Item Found', style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.normal,),),
+            //             )
+            //           ],
+            //         ),
+            //
+            //         Padding(
+            //           padding: const EdgeInsets.only(top: 15.0, left: 16.0, right: 16.0),
+            //           child: Center(
+            //             child: ElevatedButton(onPressed: () {
+            //
+            //               Navigator.pop(context);
+            //             },
+            //               child: Text("Try Again", style: TextStyle(fontSize: 14.0),),
+            //               style: ElevatedButton.styleFrom(
+            //                 foregroundColor: Colors.white, backgroundColor: HexColor("#FF2121"), padding: EdgeInsets.all(10.0),
+            //                 minimumSize: Size(200.0, 30.0),
+            //                 // fixedSize: Size(300.0, 50.0),
+            //                 textStyle: TextStyle(fontSize: 15.0, fontWeight: FontWeight.normal),
+            //                 elevation: 5,
+            //                 shape: RoundedRectangleBorder(
+            //                   borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0),
+            //                       topRight: Radius.circular(15.0),
+            //                       bottomRight: Radius.circular(15.0),
+            //                       bottomLeft: Radius.circular(15.0)),
+            //                 ),
+            //                 // side: BorderSide(color: Colors.black, width: 2),
+            //                 // alignment: Alignment.topCenter
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //     // child: Center(child: Text('Error: ${snapshot.error}')),
+            //   ),
+            // );
 
-                        Padding(
-                          padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 20.0),
-                          child: Text('No Item Found', style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.normal,),),
-                        )
-                      ],
-                    ),
 
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15.0, left: 16.0, right: 16.0),
-                      child: Center(
-                        child: ElevatedButton(onPressed: () {
-
-                          Navigator.pop(context);
-                        },
-                          child: Text("Try Again", style: TextStyle(fontSize: 14.0),),
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.white, backgroundColor: HexColor("#FF2121"), padding: EdgeInsets.all(10.0),
-                            minimumSize: Size(200.0, 30.0),
-                            // fixedSize: Size(300.0, 50.0),
-                            textStyle: TextStyle(fontSize: 15.0, fontWeight: FontWeight.normal),
-                            elevation: 5,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0),
-                                  topRight: Radius.circular(15.0),
-                                  bottomRight: Radius.circular(15.0),
-                                  bottomLeft: Radius.circular(15.0)),
-                            ),
-                            // side: BorderSide(color: Colors.black, width: 2),
-                            // alignment: Alignment.topCenter
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                // child: Center(child: Text('Error: ${snapshot.error}')),
+            return Center(
+              child: Text("No Results Found",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             );
 

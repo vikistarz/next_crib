@@ -102,7 +102,7 @@ class _ReviewFragmentState extends State<ReviewFragment> {
         // successful post request, handle the response here
         final Map<String, dynamic> responseData = jsonDecode(response.body);
         setState(() {
-          successMessage = responseData['message'];
+          // successMessage = responseData['message'];
           commentController.text = "";
           _resetRating();
 
@@ -112,7 +112,7 @@ class _ReviewFragmentState extends State<ReviewFragment> {
               context: context,
               builder: (BuildContext context) {
                 return SuccessMessageDialog(
-                  content: successMessage,
+                  content: "Rating and Review Submitted",
                   onButtonPressed: () {
                     Navigator.of(context).pop();
                     // Navigator.push(context, MaterialPageRoute(builder: (context){
@@ -558,6 +558,7 @@ class _ReviewFragmentState extends State<ReviewFragment> {
                     contentPadding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 10.0),
                     counterText: '',
                   ),
+
                   maxLines: 2,
                   maxLength: 100,
                   style: TextStyle(color: HexColor("#212529"), fontSize: 14.0, fontWeight: FontWeight.normal),
