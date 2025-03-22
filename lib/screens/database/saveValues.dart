@@ -3,6 +3,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SaveValues{
 
+
+
+  // clear a string value
+  Future<void> clearPrefValue(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(key);
+  }
+
   // Save a string value
   Future<void> saveString(String key, String value) async {
     final prefs = await SharedPreferences.getInstance();

@@ -45,6 +45,26 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
   bool isDescriptionVisible =  true;
   bool isGalleryVisible = true;
   bool isReviewVisible = true;
+  bool isVerifiedVisible = true;
+  bool isNotVerifiedVisible = true;
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      showVerified();
+    });
+  }
+
+  void showVerified(){
+    if(widget.agent.isVerified == true){
+      isVerifiedVisible = false;
+    }
+    else{
+      isNotVerifiedVisible = false;
+    }
+  }
+
 
   void description(){
     isDescriptionVisible = true;
@@ -184,14 +204,20 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                                       children: [
                                         Stack(
                                           children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(top: 9.0, left: 5.0),
-                                              child: Text("Verified",style: TextStyle(color:HexColor("#00B578"), fontWeight: FontWeight.normal, fontSize:9.0,),),
+                                            Visibility(
+                                              visible: !isVerifiedVisible,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(top: 9.0, left: 5.0),
+                                                child: Text("Verified",style: TextStyle(color:HexColor("#00B578"), fontWeight: FontWeight.normal, fontSize:9.0,),),
+                                              ),
                                             ),
 
-                                            Padding(
-                                              padding: const EdgeInsets.only(top: 9.0, left: 5.0),
-                                              child: Text("Not Verified",style: TextStyle(color:HexColor("#B50000"), fontWeight: FontWeight.normal, fontSize:9.0,),),
+                                            Visibility(
+                                              visible: !isNotVerifiedVisible,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(top: 9.0, left: 5.0),
+                                                child: Text("Not Verified",style: TextStyle(color:HexColor("#B50000"), fontWeight: FontWeight.normal, fontSize:9.0,),),
+                                              ),
                                             ),
 
                                           ],

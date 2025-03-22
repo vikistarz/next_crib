@@ -1,8 +1,4 @@
 
-
-
-
-
 import 'agentModel.dart';
 
 class DataItem {
@@ -16,9 +12,9 @@ class DataItem {
   final int annualCost;
   final int totalPackage;
   final String description;
-  final bool parkingSpace;
-  final bool water;
-  final bool fence;
+  final String parkingSpace;
+  final String water;
+  final String fence;
   final String category;
   final int bedroom;
   final int toilets;

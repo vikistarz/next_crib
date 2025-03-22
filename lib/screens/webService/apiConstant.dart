@@ -35,4 +35,11 @@ class ApiConstant {
 
   static const String getRecentProperties = baseUri + 'properties/latest';
 
+  static const String editAgentProfile = baseUri + 'agents/update-me';
+
+  static const String editCustomerProfile = baseUri + 'customers/update-me';
+
+  static const String createProperty = baseUri + 'properties';
+
+
 }

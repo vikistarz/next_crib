@@ -100,10 +100,10 @@ class _SearchPageState extends State<SearchPage> {
              mainAxisAlignment: MainAxisAlignment.start,
              children: [
                Container(
-          height: 40.0,
-          width: 170.0,
-          margin: const EdgeInsets.only(left: 16.0, right: 10.0),
-          child: TextFormField(
+                height: 40.0,
+                width: 170.0,
+                margin: const EdgeInsets.only(left: 16.0, right: 10.0),
+                child: TextFormField(
             // controller: _searchController,
             decoration: InputDecoration(
               filled: true,

@@ -5,6 +5,10 @@ import 'package:flutter/widgets.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../CustomerDashboard/ui/CustomerDashboard.dart';
+import '../createProperty/createProperty.dart';
+import '../agentDashboard/ui/agentDashboard.dart';
+import '../database/appPrefHelper.dart';
+import '../database/saveValues.dart';
 import '../logIn/ui/logIn.dart';
 
 
@@ -17,6 +21,7 @@ class SliderPage extends StatefulWidget {
 }
 
 class _SliderPageState extends State<SliderPage> {
+
 
   final PageController _pageController = PageController();
   final List<Map<String, String>> slides = [
@@ -37,6 +42,7 @@ class _SliderPageState extends State<SliderPage> {
       'text3': 'Your new beginnings start here',
     },
   ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -126,8 +132,10 @@ class _SliderPageState extends State<SliderPage> {
                        child: ElevatedButton(onPressed: () {
 
                          Navigator.push(context, MaterialPageRoute(builder: (context){
-                             return LogInPage();
-                           // return const CustomerDashboardPage();
+
+                               return LogInPage();
+                         // return CreatePropertyPage();
+
                          }));
                        },
                          child: Text("Get Started", style: TextStyle(fontSize: 17.0),),

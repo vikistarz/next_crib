@@ -5,14 +5,18 @@ import 'package:next_crib/screens/slider/slider.dart';
 import 'package:next_crib/screens/splashScreen/splashScreenPage.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: HexColor("#212529"),
-
       systemNavigationBarIconBrightness: Brightness.light));
 
-  runApp(NextCrib());
-}
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,  // Lock to portrait
+  ]).then((_) {
+    runApp(NextCrib());
+  });
 
+}
 
 class NextCrib extends StatelessWidget {
   const NextCrib({super.key});
@@ -23,12 +27,12 @@ class NextCrib extends StatelessWidget {
       title: 'Next Crib',
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
-      initialRoute: '/splash',
-      routes: {
-        '/splash':(context) => SplashScreenPage(),
-        '/slider': (context) => SliderPage(),
-      },
-      // home: NewHomePage()
+      // initialRoute: '/splash',
+      // routes: {
+      //   '/splash':(context) => SplashScreenPage(),
+      //   '/slider': (context) => SliderPage(),
+      // },
+       home: SplashScreenPage(),
     );
   }
 }
