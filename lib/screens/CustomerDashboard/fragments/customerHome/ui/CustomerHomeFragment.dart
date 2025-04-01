@@ -525,7 +525,6 @@ class _CustomerHomeFragmentState extends State<CustomerHomeFragment> {
                     child: RecentPropertiesPage(),
                   ),
 
-
                 ]
             ),
           ),
