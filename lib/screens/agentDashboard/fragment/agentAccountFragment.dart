@@ -8,6 +8,7 @@ import 'package:next_crib/screens/agentDashboard/ui/editAgentprofile.dart';
 import '../../database/appPrefHelper.dart';
 import '../../database/saveValues.dart';
 import '../../dialogs/errorMessageDialog.dart';
+import '../../dialogs/logOutDialog.dart';
 import '../../webService/apiConstant.dart';
 class AgentAccountFragment extends StatefulWidget {
   const AgentAccountFragment({super.key});
@@ -174,6 +175,13 @@ class _AgentAccountFragmentState extends State<AgentAccountFragment> {
   //   await mySaveValues.saveString(AppPreferenceHelper.HOME_ADDRESS, homeAddress);
   // }
 
+  void _openLogOutDialog(){
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: context, builder: (ctx) => LogOutDialog());
+  }
+
+
 
   String capitalize(String text) {
     if (text.isEmpty) {
@@ -308,6 +316,17 @@ class _AgentAccountFragmentState extends State<AgentAccountFragment> {
                         ]
                     ),
                   ),
+
+                  GestureDetector(
+                    onTap: (){
+                      _openLogOutDialog();
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 50.0, left: 10.0),
+                      child: Text("Log out", style: TextStyle(color: HexColor("#838383"), fontSize: 15.0, fontWeight: FontWeight.normal),),
+                    ),
+                  ),
+
                 ],
               ),
             ),

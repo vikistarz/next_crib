@@ -1072,7 +1072,12 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                 child: Text("Property features", style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: HexColor("#212529"),),),
               ),
 
-                 Row(
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, top: 10.0, right: 20.0),
+                child: Text(imageDescription.toString(), style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.bold, color: HexColor("#212529"),),),
+              ),
+
+              Row(
                    children: [
 
                      Expanded(child: SizedBox()),

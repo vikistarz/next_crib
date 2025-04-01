@@ -326,6 +326,7 @@ class _CustomerAccountFragmentState extends State<CustomerAccountFragment> {
                       child: Text("Log out", style: TextStyle(color: HexColor("#838383"), fontSize: 15.0, fontWeight: FontWeight.normal),),
                     ),
                   ),
+
                 ],
               ),
             ),
