@@ -34,7 +34,7 @@ class _GalleryFragmentState extends State<GalleryFragment> {
 
                   Padding(
                     padding: const EdgeInsets.only(top: 0.0, left: 5.0),
-                    child: Text("(4)", style: TextStyle(color: HexColor("#00B578"), fontSize: 16.0, fontWeight: FontWeight.normal),
+                    child: Text("("+widget.propertyImages.length.toString()+")", style: TextStyle(color: HexColor("#00B578"), fontSize: 16.0, fontWeight: FontWeight.normal),
                     ),
                   ),
                 ],

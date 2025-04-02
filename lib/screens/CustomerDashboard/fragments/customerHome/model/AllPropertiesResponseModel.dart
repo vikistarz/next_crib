@@ -50,6 +50,8 @@ class DataItem {
     required this.id});
 
 
+
+
   factory DataItem.fromJson(Map<String, dynamic> json) {
     return DataItem(
       propertyImages: List<String>.from(json['propertyImages']),

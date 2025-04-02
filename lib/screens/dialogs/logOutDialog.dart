@@ -35,11 +35,12 @@ class LogOutDialog extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.35,
       child: Column(
         children: [
+
           Align(
             alignment: Alignment.topCenter,
               child: Padding(
-                padding: const EdgeInsets.only(top: 50.0),
-                child: Image(image: AssetImage("images/log_out_icon.png"),width: 25.0, height: 25.0,),
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Image(image: AssetImage("images/sad_log_out.png"),width: 100.0, height: 100.0,),
               )
           ),
 
@@ -76,7 +77,7 @@ class LogOutDialog extends StatelessWidget {
                             bottomRight: Radius.circular(5.0),
                             bottomLeft: Radius.circular(5.0)),
                       ),
-                       side: BorderSide(color: HexColor("#5E60CE"), width: 0.5),
+
                       // alignment: Alignment.topCenter
                     ),
                   ),
@@ -92,7 +93,7 @@ class LogOutDialog extends StatelessWidget {
                   },
                     child: Text("Yes", style: TextStyle(fontSize: 14.0),),
                     style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white, backgroundColor: HexColor("#5E60CE"), padding: EdgeInsets.all(10.0),
+                      foregroundColor: Colors.white, backgroundColor: HexColor("#00B578"), padding: EdgeInsets.all(10.0),
                       minimumSize: Size(70.0, 40.0),
                       // fixedSize: Size(300.0, 50.0),
                       textStyle: TextStyle(fontSize: 15.0, fontWeight: FontWeight.normal),

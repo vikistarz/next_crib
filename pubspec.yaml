@@ -49,6 +49,8 @@ dependencies:
   photo_view: ^0.14.0
   flutter_card_swiper: ^7.0.0
   flutter_multi_formatter: ^2.13.0
+  upgrader: ^8.2.0
+  package_info_plus: ^5.0.1
 
 
 
@@ -120,6 +122,7 @@ flutter:
     - images/image_upload_picture.png
     - images/upload_add.png
     - images/add_property_photo.png
+    - images/sad_log_out.png
 
 
 

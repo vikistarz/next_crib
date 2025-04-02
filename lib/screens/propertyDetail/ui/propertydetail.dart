@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:next_crib/screens/propertyDetail/fragments/galleryFragment.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../CustomerDashboard/fragments/customerHome/model/AllPropertiesResponseModel.dart';
 import '../../CustomerDashboard/fragments/customerHome/model/agentModel.dart';
 import '../fragments/descriptionFragment.dart';
@@ -11,7 +12,7 @@ class PropertyDetailPage extends StatefulWidget {
      required this.title, required this.stock, required this.dimension, required this.annualCost,
      required this.totalPackage, required this.description, required this.category,  required this.toilets,
      required this.agent, required this.bedroom, required this.state, required this.city,required this.location,
-     required this.sku, required this.id});
+     required this.sku, required this.id, required this.fence, required this.water, required this.parkingSpace});
 
    // double ratingsAverage;
    // int ratingsQuantity;
@@ -34,6 +35,9 @@ class PropertyDetailPage extends StatefulWidget {
    String location;
    String sku;
    String id;
+   String water;
+   String fence;
+   String parkingSpace;
 
 
   @override
@@ -47,6 +51,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
   bool isReviewVisible = true;
   bool isVerifiedVisible = true;
   bool isNotVerifiedVisible = true;
+  String phoneNumber = "08029425815";
 
   @override
   void initState() {
@@ -82,6 +87,17 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
     isDescriptionVisible = false;
     isGalleryVisible =  true;
     isReviewVisible =  false;
+  }
+
+
+  void makePhoneCall() async {
+    var callUri = Uri.parse("tel:$phoneNumber");
+    try{
+      launchUrl(callUri);
+    }
+    catch(e){
+      debugPrint.toString();
+    }
   }
 
   String capitalize(String text) {
@@ -482,8 +498,9 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                 children: [
                   Visibility(
                     visible:  isDescriptionVisible,
-                    child:  DescriptionFragment(description: capitalisedDescription, createdAt: widget.createdAt, totalPackage: widget.totalPackage,
-                           dimension: widget.dimension, bedroom: widget.bedroom, agent: widget.agent, toilets: widget.toilets),
+                    child: DescriptionFragment(description: capitalisedDescription, createdAt: widget.createdAt, totalPackage: widget.totalPackage,
+                           dimension: widget.dimension, bedroom: widget.bedroom, agent: widget.agent, toilets: widget.toilets, fence: widget.fence,
+                           water: widget.water, parkingSpace: widget.parkingSpace),
                   ),
 
                   Visibility(
@@ -551,7 +568,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
             Expanded(
               child: GestureDetector(
                 onTap: () {
-
+                  makePhoneCall();
                 },
                 child: Container(
                   height: 50.0,
@@ -564,7 +581,7 @@ class _PropertyDetailPageState extends State<PropertyDetailPage> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(left: 10.0),
-                        child: Icon(Icons.phone_android_outlined, color: Colors.white),
+                        child: Icon(Icons.phone, color: Colors.white),
                       ),
                       SizedBox(width: 5),
                       Text("Inspect Now", style: TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.normal),

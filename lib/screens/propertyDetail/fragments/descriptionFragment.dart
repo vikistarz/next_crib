@@ -7,7 +7,7 @@ import '../../CustomerDashboard/fragments/customerHome/model/agentModel.dart';
 class DescriptionFragment extends StatefulWidget {
      DescriptionFragment({super.key,required this.description, required this.createdAt,
        required this.totalPackage, required this.dimension, required this.bedroom,
-       required this.agent, required this. toilets});
+       required this.agent, required this. toilets, required this.fence, required this.water, required this.parkingSpace});
 
      String description;
      String createdAt;
@@ -16,6 +16,9 @@ class DescriptionFragment extends StatefulWidget {
      Agent agent;
      int bedroom;
      int toilets;
+     String water;
+     String fence;
+     String parkingSpace;
 
 
   @override
@@ -84,7 +87,7 @@ class _DescriptionFragmentState extends State<DescriptionFragment> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 10.0, left: 10.0),
-                  child: Text("House Total Package", style: TextStyle(color: HexColor("#838383"), fontSize: 14.0, fontWeight: FontWeight.normal),
+                  child: Text("House Total Package", style: TextStyle(color: HexColor("#838383"), fontSize: 15.0, fontWeight: FontWeight.normal),
                   ),
                 ),
 
@@ -104,7 +107,7 @@ class _DescriptionFragmentState extends State<DescriptionFragment> {
               alignment: Alignment.topLeft,
               child: Padding(
                 padding: const EdgeInsets.only(top: 5.0, left: 10.0),
-                child: Text("Listed by" +" " + capitalisedFirstName + " " + capitalisedLastName, style: TextStyle(color: HexColor("#838383"), fontSize: 15.0, fontWeight: FontWeight.normal),
+                child: Text("Listed by" +" " + capitalisedFirstName + " " + capitalisedLastName, style: TextStyle(color: HexColor("#838383"), fontSize: 12.0, fontWeight: FontWeight.normal),
                 ),
               ),
             ),
@@ -112,8 +115,9 @@ class _DescriptionFragmentState extends State<DescriptionFragment> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10.0, top: 5.0),
+                Container(
+                  width: 155.0,
+                  margin: const EdgeInsets.only(left: 10.0, top: 5.0),
                   child: Row(
                     children: [
                       Padding(
@@ -131,20 +135,20 @@ class _DescriptionFragmentState extends State<DescriptionFragment> {
                   ),
                 ),
 
-                Expanded(child: SizedBox()),
+                // Expanded(child: SizedBox()),
 
                 Padding(
-                  padding: const EdgeInsets.only(top: 10.0, right: 10.0,),
+                  padding: const EdgeInsets.only(top: 10.0, right: 10.0, left: 50.0 ),
                   child: Row(
                     children: [
                       Padding(
                         padding: EdgeInsets.only(left: 0.0, top: 0.0),
-                        child: Image(image: AssetImage("images/dimension.png"), width: 11.0, height: 11.0,),
+                        child: Icon(Icons.fence, size: 15.0, color: Colors.black,),
                       ),
 
                       Padding(
                         padding: const EdgeInsets.only(top: 0.0, left: 8.0),
-                        child: Text(widget.dimension.toString() +" " + "per sqft", style: TextStyle(color: HexColor("#838383"), fontSize: 11.0, fontWeight: FontWeight.normal),
+                        child: Text(widget.fence, style: TextStyle(color: HexColor("#838383"), fontSize: 11.0, fontWeight: FontWeight.normal),
                         ),
                       ),
                     ],
@@ -156,28 +160,9 @@ class _DescriptionFragmentState extends State<DescriptionFragment> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10.0, top: 5.0),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 0.0, top: 0.0),
-                        child: Image(image: AssetImage("images/time_lapse.png"), width: 11.0, height: 11.0,),
-                      ),
-
-                      Padding(
-                        padding: const EdgeInsets.only(top: 0.0, left: 8.0),
-                        child: Text("Posted, $formattedDate", style: TextStyle(color: HexColor("#838383"), fontSize: 11.0, fontWeight: FontWeight.normal),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                Expanded(child: SizedBox()),
-
-                Padding(
-                  padding: const EdgeInsets.only(top: 10.0, right: 10.0,),
+                Container(
+                  width: 155.0,
+                  margin: const EdgeInsets.only(left: 10.0, top: 5.0),
                   child: Row(
                     children: [
                       Padding(
@@ -193,9 +178,31 @@ class _DescriptionFragmentState extends State<DescriptionFragment> {
                     ],
                   ),
                 ),
+
+                // Expanded(child: SizedBox()),
+
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0, right: 10.0, left: 50.0 ),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: 0.0, top: 0.0),
+                        child: Icon(Icons.garage_outlined, size: 15.0, color: Colors.black,),
+                        // child: Image(image: AssetImage("images/dimension.png"), width: 11.0, height: 11.0,),
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.only(top: 0.0, left: 8.0),
+                        child: Text(widget.parkingSpace, style: TextStyle(color: HexColor("#838383"), fontSize: 11.0, fontWeight: FontWeight.normal),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
 
+            SizedBox(height: 100.0,),
 
           ],
         ),
