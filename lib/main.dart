@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:next_crib/screens/slider/slider.dart';
 import 'package:next_crib/screens/splashScreen/splashScreenPage.dart';
+import 'package:next_crib/screens/utilities/updateChecker.dart';
+import 'package:upgrader/upgrader.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +34,16 @@ class NextCrib extends StatelessWidget {
       //   '/splash':(context) => SplashScreenPage(),
       //   '/slider': (context) => SliderPage(),
       // },
-       home: SplashScreenPage(),
+      //  home: Builder(
+      //    builder: (context) {
+      //      Future.delayed(Duration.zero, () => UpdateChecker.checkForUpdate(context));
+      //      return const SplashScreenPage();
+      //    }
+      //  ),
+
+      home: UpgradeAlert(
+        child: const SplashScreenPage(),
+      ),
     );
   }
 }

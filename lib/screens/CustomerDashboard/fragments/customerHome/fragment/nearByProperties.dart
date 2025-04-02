@@ -115,7 +115,8 @@ class _NearByPropertiesPageState extends State<NearByPropertiesPage> {
                                     return PropertyDetailPage(propertyImages: property.propertyImages,
                                         coordinates: property.coordinates, createdAt: property.createdAt, ids: property.ids, title: property.title, stock: property.stock, dimension: property.dimension,
                                         annualCost: property.annualCost, totalPackage: property.totalPackage, description: property.description, category: property.category, state: property.state,
-                                        city: property.city, location: property.location, sku: property.sku, id: property.id, toilets: property.toilets, agent: property.agent, bedroom: property.bedroom);
+                                        city: property.city, location: property.location, sku: property.sku, id: property.id, toilets: property.toilets, agent: property.agent, bedroom: property.bedroom,
+                                      water: property.water, fence: property.fence, parkingSpace: property.parkingSpace,);
                                   }));
                                 },
                                 child: Container(

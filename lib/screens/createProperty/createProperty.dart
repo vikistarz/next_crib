@@ -57,6 +57,7 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
   String? selectedFence = "";
   String? selectedWater = "";
   String? selectedParkingSpace = "";
+  String? imageDescription ="";
   int? selectedStock;
 
   final _formKey = GlobalKey<FormState>();
@@ -189,12 +190,40 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
     if (pickedFiles != null) {
       setState(() {
         selectedImages = pickedFiles.map((file) => File(file.path)).toList();
-        if (selectedImages.length > 4) {
-          selectedImages = selectedImages.sublist(0, 4); // Limit to 4 images
+
+        if(selectedPropertyTypeValue == "Room Self Contain"){
+          setState(() {
+            imageDescription = "You are only allowed to snap 4 images so make it count";
+          });
+
+          if(selectedImages.length > 4) {
+            selectedImages = selectedImages.sublist(0, 4); // Limit to 4 images
+          }
+        }
+
+        else if(selectedPropertyTypeValue == "Flat"){
+          imageDescription = "You are only allowed to snap 6 images so make it count";
+          if(selectedImages.length > 6) {
+            selectedImages = selectedImages.sublist(0, 6); // Limit to 6 images
+          }
+        }
+
+        else if(selectedPropertyTypeValue == "Duplex"){
+          imageDescription = "You are only allowed to snap 8 images so make it count";
+          if(selectedImages.length > 8) {
+            selectedImages = selectedImages.sublist(0, 8); // Limit to 8 images
+          } // Limit to 8 images
         }
       });
     }
   }
+
+  void _clearImage() {
+    setState(() {
+      selectedImages.clear(); // Set image to null to remove it
+    });
+  }
+
 
   Future<void> createProperty() async {
     print("📢 Button Clicked!");
@@ -442,7 +471,23 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                     ).toList(),
                     onChanged: (value){
                       setState(() {
+
+                        _clearImage();
                         selectedPropertyTypeValue = value.toString();
+
+                        if(selectedPropertyTypeValue == "Room Self Contain"){
+                          setState(() {
+                            imageDescription = "You are only allowed to snap 4 images so make it count";
+                          });
+                        } else if (selectedPropertyTypeValue == "Flat") {
+                          setState(() {
+                            imageDescription = "You are only allowed to snap 6 images so make it count";
+                          });
+                        } else if (selectedPropertyTypeValue == "Duplex") {
+                          setState(() {
+                            imageDescription = "You are only allowed to snap 8 images so make it count";
+                          });
+                        }
                       });
                     },
                     dropdownColor: Colors.white,
@@ -1027,7 +1072,12 @@ class _CreatePropertyPageState extends State<CreatePropertyPage> {
                 child: Text("Property features", style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: HexColor("#212529"),),),
               ),
 
-                 Row(
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0, top: 10.0, right: 20.0),
+                child: Text(imageDescription.toString(), style: TextStyle(fontSize: 13.0, fontWeight: FontWeight.bold, color: HexColor("#212529"),),),
+              ),
+
+              Row(
                    children: [
 
                      Expanded(child: SizedBox()),

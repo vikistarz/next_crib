@@ -52,9 +52,6 @@ class _CustomerDashboardPageState extends State<CustomerDashboardPage> {
 
   @override
   Widget build(BuildContext context) {
-    final capitalisedFirstName = capitalize(firstName);
-    final capitalisedLastName = capitalize(lastName);
-    final capitalisedEmail = capitalize(emailAddress);
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) async {
