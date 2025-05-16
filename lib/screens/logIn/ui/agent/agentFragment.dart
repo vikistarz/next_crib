@@ -96,6 +96,7 @@ class _AgentFragmentState extends State<AgentFragment> {
         setState(() {
           token = responseData['token'];
           agentId = responseData['data']['user']['id'];
+          saveUserDetails();
           showModalBottomSheet(
               isDismissible: false,
               enableDrag: false,
@@ -109,7 +110,6 @@ class _AgentFragmentState extends State<AgentFragment> {
                       return const AgentDashboardPage();
                     }));
 
-                    saveUserDetails();
                   },
                 );
               });

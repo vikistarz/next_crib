@@ -98,6 +98,7 @@ class _CustomerFragmentState extends State<CustomerFragment> {
         setState(() {
           token = responseData['token'];
           customerId = responseData['data']['user']['id'];
+          saveUserDetails();
           showModalBottomSheet(
               isDismissible: false,
               enableDrag: false,
@@ -111,7 +112,6 @@ class _CustomerFragmentState extends State<CustomerFragment> {
                       return CustomerDashboardPage();
                     }));
                     // Add any additional action here
-                    saveUserDetails();
                   },
                 );
               });
