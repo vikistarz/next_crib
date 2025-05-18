@@ -130,7 +130,7 @@ class _CustomerDashboardPageState extends State<CustomerDashboardPage> {
                     Stack(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(right: 2.0, top: 2.0),
+                          padding: const EdgeInsets.only(right: 0.0, top: 2.0),
                           child: IconButton(onPressed: null,
                             icon: pageIndex == 1 ? Icon(
                               Icons.favorite, size: 25.0,
@@ -153,39 +153,39 @@ class _CustomerDashboardPageState extends State<CustomerDashboardPage> {
                 ),
               ),
 
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    pageIndex = 2;
-                  });
-                },
-                child: Column(
-                  children: [
-                    Stack(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 0.0, top: 2.0),
-                          child: IconButton(onPressed: null,
-                            icon: pageIndex == 2 ? Icon(
-                              Icons.message_sharp, size: 25.0,
-                              color: HexColor("#00B578"),) :
-                            Icon(Icons.message_sharp, size: 25.0,
-                              color: HexColor("#838383"),),
-                            enableFeedback: false,),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 38.0,),
-                          child: new Text("Message", style: pageIndex == 2
-                              ? TextStyle(
-                              color: HexColor("#00B578"), fontSize: 12.0)
-                              : TextStyle(
-                              color: HexColor("#838383"), fontSize: 12.0),),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
+              // InkWell(
+              //   onTap: () {
+              //     setState(() {
+              //       pageIndex = 2;
+              //     });
+              //   },
+              //   child: Column(
+              //     children: [
+              //       Stack(
+              //         children: [
+              //           Padding(
+              //             padding: const EdgeInsets.only(left: 0.0, top: 2.0),
+              //             child: IconButton(onPressed: null,
+              //               icon: pageIndex == 2 ? Icon(
+              //                 Icons.message_sharp, size: 25.0,
+              //                 color: HexColor("#00B578"),) :
+              //               Icon(Icons.message_sharp, size: 25.0,
+              //                 color: HexColor("#838383"),),
+              //               enableFeedback: false,),
+              //           ),
+              //           Padding(
+              //             padding: const EdgeInsets.only(top: 38.0,),
+              //             child: new Text("Message", style: pageIndex == 2
+              //                 ? TextStyle(
+              //                 color: HexColor("#00B578"), fontSize: 12.0)
+              //                 : TextStyle(
+              //                 color: HexColor("#838383"), fontSize: 12.0),),
+              //           )
+              //         ],
+              //       )
+              //     ],
+              //   ),
+              // ),
 
               InkWell(
                 onTap: () {

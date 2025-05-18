@@ -131,6 +131,9 @@ class _CustomerAccountFragmentState extends State<CustomerAccountFragment> {
                     onButtonPressed: () {
                       Navigator.of(context).pop();
                       // Add any additional action here
+                      setState(() {
+                        fetchUserData();
+                      });
                       isNotLoading();
                     },
                   );
