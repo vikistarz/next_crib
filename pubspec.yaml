@@ -30,30 +30,45 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.8
-
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
   cupertino_icons: ^1.0.6
   font_awesome_flutter: ^9.2.0
   image_picker: ^1.0.1
   hexcolor: ^3.0.1
   flutter_otp_text_field: ^1.1.0+2
-  pinput: ^1.2.0
   url_launcher: ^6.1.10
   flutter_rating_bar: ^4.0.0
   text_marquee: ^0.0.2
   shared_preferences: ^2.1.0
-  file_picker: ^5.0.0
-  flutter_pdfview: ^1.0.4
   flutter_spinkit: ^5.1.0
   http: ^0.13.3
   intl: ^0.18.0
+  smooth_page_indicator: ^1.0.0
+  google_maps_flutter: ^2.3.2
+  geolocator: ^10.0.1
+  permission_handler: ^11.0.1
+  photo_view: ^0.14.0
+  flutter_card_swiper: ^7.0.0
+  flutter_multi_formatter: ^2.13.0
+  upgrader: ^8.2.0
+  package_info_plus: ^5.0.1
+  provider: ^6.1.1
+
+
+
+
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  image_path: "images/next_crib_logo_trans.png"
+  android: true
+  ios: true
+  adaptive_icon_background: "#FFFFFF"
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -76,6 +91,41 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/next_crib_logo.png
+    - images/login_logo.png
+    - images/nigerian_flag.png
+    - images/slider_background.png
+    - images/add_file.png
+    - images/location_icon.png
+    - images/filter.png
+    - images/disabled_layout.png
+    - images/house_image.png
+    - images/location_grey.png
+    - images/lock_image.png
+    - images/naira_logo.png
+    - images/map_image.png
+    - images/wishlist.png
+    - images/new_house.png
+    - images/dimension.png
+    - images/time_lapse.png
+    - images/cancel_x.png
+    - images/Love.png
+    - images/success_tick.png
+    - images/error_tick.png
+    - images/forget_password.png
+    - images/password_reset.png
+    - images/success_recovery.png
+    - images/slider_image_one.png
+    - images/slider_image_two.png
+    - images/slider_image_three.png
+    - images/man.png
+    - images/arrow_back.png
+    - images/rent.png
+    - images/image_upload_picture.png
+    - images/upload_add.png
+    - images/add_property_photo.png
+    - images/sad_log_out.png
+
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

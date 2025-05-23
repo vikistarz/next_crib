@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:next_crib/screens/slider/slider.dart';
 import 'package:next_crib/screens/splashScreen/splashScreenPage.dart';
+import 'package:next_crib/screens/utilities/updateChecker.dart';
+import 'package:upgrader/upgrader.dart';
 
 void main() {
-  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-  //     systemNavigationBarColor:
-  //     // systemNavigationBarColor: HexColor("#212529"),
-  //
-  //     systemNavigationBarIconBrightness: Brightness.light));
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: HexColor("#212529"),
+      systemNavigationBarIconBrightness: Brightness.light));
 
-  runApp(const NextCrib());
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,  // Lock to portrait
+  ]).then((_) {
+    runApp(NextCrib());
+  });
+
 }
 
 class NextCrib extends StatelessWidget {
@@ -21,12 +29,21 @@ class NextCrib extends StatelessWidget {
       title: 'Next Crib',
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
-      initialRoute: '/splash',
-      routes: {
-        '/splash':(context) => SplashScreenPage(),
-        '/slider': (context) => SliderPage(),
-      },
-      // home: NewHomePage()
+      // initialRoute: '/splash',
+      // routes: {
+      //   '/splash':(context) => SplashScreenPage(),
+      //   '/slider': (context) => SliderPage(),
+      // },
+      //  home: Builder(
+      //    builder: (context) {
+      //      Future.delayed(Duration.zero, () => UpdateChecker.checkForUpdate(context));
+      //      return const SplashScreenPage();
+      //    }
+      //  ),
+
+      home: UpgradeAlert(
+        child: const SplashScreenPage(),
+      ),
     );
   }
 }
