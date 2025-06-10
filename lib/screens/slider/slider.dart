@@ -37,6 +37,7 @@ class _SliderPageState extends State<SliderPage> {
       'text1': 'Your dream home is',
       'text2': 'just a key away!',
       'text3': 'Let’s find it together',
+      
     },
     {
       'text1': 'Find the space that',
