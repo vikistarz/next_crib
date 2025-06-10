@@ -23,7 +23,9 @@ class SliderPage extends StatefulWidget {
 class _SliderPageState extends State<SliderPage> {
 
 
-  final PageController _pageController = PageController();
+  PageController _pageController = PageController();
+  int _currentPage = 0;
+
   final List<Map<String, String>> slides = [
     {
       'text1': 'Find your Dream Home',
@@ -35,6 +37,7 @@ class _SliderPageState extends State<SliderPage> {
       'text1': 'Your dream home is',
       'text2': 'just a key away!',
       'text3': 'Let’s find it together',
+      
     },
     {
       'text1': 'Find the space that',
@@ -42,6 +45,30 @@ class _SliderPageState extends State<SliderPage> {
       'text3': 'Your new beginnings start here',
     },
   ];
+
+  void _nextPage() {
+    if (_currentPage < slides.length - 1) {
+      _pageController.nextPage(
+          duration: Duration(milliseconds: 300), curve: Curves.easeIn);
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LogInPage()),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+    _pageController.addListener(() {
+      setState(() {
+        _currentPage = _pageController.page!.round();
+      });
+    });
+  }
+
 
 
   @override
@@ -130,15 +157,9 @@ class _SliderPageState extends State<SliderPage> {
                      padding: const EdgeInsets.only(top: 20.0, left: 30.0, right: 30.0, bottom: 20.0),
                      child: Center(
                        child: ElevatedButton(onPressed: () {
-
-                         Navigator.push(context, MaterialPageRoute(builder: (context){
-
-                               return LogInPage();
-                         // return CreatePropertyPage();
-
-                         }));
+                         _nextPage();
                        },
-                         child: Text("Get Started", style: TextStyle(fontSize: 17.0),),
+                         child: Text(_currentPage == slides.length - 1 ? "Get Started" : "Next", style: TextStyle(fontSize: 17.0)),
                          style: ElevatedButton.styleFrom(
                            foregroundColor: Colors.white, backgroundColor: HexColor("#00B578"), padding: EdgeInsets.all(10.0),
                            minimumSize: Size(MediaQuery.of(context).size.width, 45.0),

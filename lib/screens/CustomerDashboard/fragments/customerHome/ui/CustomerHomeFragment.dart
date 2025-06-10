@@ -189,9 +189,7 @@ class _CustomerHomeFragmentState extends State<CustomerHomeFragment> {
       return data.map((json) => AllPropertiesResponseModel.fromJson(json))
           .toList();
 
-      // final data = json.decode(response.body);
-      // final List propertiesJson = data['data']['data'];
-      // return propertiesJson.map((json) => AllPropertiesResponseModel.fromJson(json)).toList();
+
     }
     else {
       print('Response Body: ${response.body}');

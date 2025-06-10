@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
+import 'package:flutter/foundation.dart'; // For kIsWeb
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -36,7 +38,8 @@ class _SignUpAgentPageState extends State<SignUpAgentPage> {
   String token = "";
   String errorMessage = "";
   int customerWalletId = 0;
-  File? _image;
+  Uint8List? _webImage;
+  File? _image; // Only for mobile
 
   // Function to validate the form and update button state
   void _validateFormField() {
@@ -112,29 +115,36 @@ class _SignUpAgentPageState extends State<SignUpAgentPage> {
 
 
   // Function to pick an image
-  Future<void> pickImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-
-    if (image != null) {
-      setState(() {
-        _image = File(image.path);
-      });
-    }
-  }
-
-  // Future getImage(ImageSource source) async {
-  //   final image = await ImagePicker().pickImage(source: source, imageQuality: 100);
+  // Future<void> pickImage() async {
+  //   final ImagePicker picker = ImagePicker();
+  //   final XFile? image = await picker.pickImage(source: ImageSource.gallery);
   //
-  //   if (image == null) return;
-  //
-  //   final imageTemporary = File(image.path);
-  //
-  //   setState(() {
-  //     _image = imageTemporary;
-  //   });
+  //   if (image != null) {
+  //     setState(() {
+  //       _image = File(image.path);
+  //     });
+  //   }
   // }
 
+  Future<void> pickImage() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      if (kIsWeb) {
+        final bytes = await pickedFile.readAsBytes();
+        setState(() {
+          _webImage = bytes;
+          // imageVisible = true;
+        });
+      } else {
+        setState(() {
+          _image = File(pickedFile.path);
+          // imageVisible = true;
+        });
+      }
+    }
+  }
 
   Future<void> signUpAgent() async {
     loading();
@@ -257,14 +267,6 @@ class _SignUpAgentPageState extends State<SignUpAgentPage> {
     }
   }
 
-
-  // void saveUserDetails() async {
-  //
-  //   SaveValues mySaveValues = SaveValues();
-  //
-  //   await mySaveValues.saveInt(AppPreferenceHelper.SERVICE_PROVIDER_WALLET_ID, serviceProviderWalletId!);
-  //
-  // }
 
   // Function to get MIME type
   String _getMimeType(String filePath) {
@@ -759,23 +761,47 @@ class _SignUpAgentPageState extends State<SignUpAgentPage> {
                           ),
                         ),
                   ),
+                              //
+                              // Visibility(
+                              //   visible: imageVisible,
+                              //   child: Container(
+                              //   height: 150.0,
+                              //   margin: EdgeInsets.only(top: 5.0, left: 30.0, right: 30.0),
+                              //   decoration: BoxDecoration(
+                              //   color: Colors.white,
+                              //   borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              //   border: Border.all(color: HexColor("#969696"), width: 1.0),
+                              //    image: _image != null ? DecorationImage(
+                              //         image: FileImage(_image!), fit: BoxFit.cover,) : null,
+                              //     ),
+                              //     child: _image == null ? Center(child: Text("No Image Selected"))
+                              //         : null,
+                              //   ),
+                              // ),
 
-                              Visibility(
-                                visible: imageVisible,
-                                child: Container(
-                                height: 150.0,
-                                margin: EdgeInsets.only(top: 5.0, left: 30.0, right: 30.0),
-                                decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                border: Border.all(color: HexColor("#969696"), width: 1.0),
-                                 image: _image != null ? DecorationImage(
-                                      image: FileImage(_image!), fit: BoxFit.cover,) : null,
-                                  ),
-                                  child: _image == null ? Center(child: Text("No Image Selected"))
-                                      : null,
-                                ),
-                              ),
+                    Visibility(
+                      visible: imageVisible,
+                      child: Container(
+                        height: 150.0,
+                        margin: EdgeInsets.only(top: 5.0, left: 30.0, right: 30.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                          border: Border.all(color: HexColor("#969696"), width: 1.0),
+                          image: (_image != null || _webImage != null)
+                              ? DecorationImage(
+                            image: kIsWeb
+                                ? MemoryImage(_webImage!) as ImageProvider
+                                : FileImage(_image!),
+                            fit: BoxFit.cover,
+                          )
+                              : null,
+                        ),
+                        child: (_image == null && _webImage == null)
+                            ? Center(child: Text("No Image Selected"))
+                            : null,
+                      ),
+                    ),
 
 
                     Padding(
